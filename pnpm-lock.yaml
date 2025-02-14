@@ -59,6 +59,9 @@ importers:
       eslint-plugin-react-hooks:
         specifier: ^4.6.2
         version: 4.6.2(eslint@8.57.1)
+      laravel-precognition-react-inertia:
+        specifier: ^0.6.1
+        version: 0.6.1(@inertiajs/react@2.0.3(react@18.3.1))(react@18.3.1)
       laravel-vite-plugin:
         specifier: ^1.2.0
         version: 1.2.0(vite@6.1.0(@types/node@18.19.76)(jiti@1.21.7)(yaml@2.7.0))
@@ -1409,6 +1412,20 @@ packages:
   keyv@4.5.4:
     resolution: {integrity: sha512-oxVHkHR/EJf2CNXnWxRLW6mg7JyCCUcG0DtEGmL2ctUo1PNTin1PUil+r/+4r5MpVgC/fn1kjsx7mjSujKqIpw==}
 
+  laravel-precognition-react-inertia@0.6.1:
+    resolution: {integrity: sha512-uR9BiFnRAyK/nonqtY/TaLY18X3GkxTEdfrTSkARSebI0yXD2tyVhCfBv3eo3Y2+qKqbE2soSB3eUoXZDO82iQ==}
+    peerDependencies:
+      '@inertiajs/react': ^1.0.0 || ^2.0.0
+      react: ^18.0.0 || ^19.0.0
+
+  laravel-precognition-react@0.6.1:
+    resolution: {integrity: sha512-ErsoHorucV2i5IXojRAgONVfL9Ap4qPtRqNSZApFu5zDAqkNejfFQF0v5p0iV5a9Cniesfs3v2Wk3SZvycanMA==}
+    peerDependencies:
+      react: ^18.0.0 || ^19.0.0
+
+  laravel-precognition@0.6.1:
+    resolution: {integrity: sha512-AxMCTjzYloTNGSckdYO65GytqPhTWjRBHUkTeWiPQgN2NUiq3Rc3WWfkBeeIqoqamSZ4C+WNe6hieSUo7Bs8xg==}
+
   laravel-vite-plugin@1.2.0:
     resolution: {integrity: sha512-R0pJ+IcTVeqEMoKz/B2Ij57QVq3sFTABiFmb06gAwFdivbOgsUtuhX6N2MGLEArajrS3U5JbberzwOe7uXHMHQ==}
     engines: {node: ^18.0.0 || ^20.0.0 || >=22.0.0}
@@ -1430,6 +1447,9 @@ packages:
   locate-path@6.0.0:
     resolution: {integrity: sha512-iPZK6eYjbxRu3uB4/WZ3EsEIMJFMqAoopl3R+zuq0UjcAm/MO6KCweDgPfP3elTztoKP3KtnVHxTn2NHBSDVUw==}
     engines: {node: '>=10'}
+
+  lodash-es@4.17.21:
+    resolution: {integrity: sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw==}
 
   lodash.isequal@4.5.0:
     resolution: {integrity: sha512-pDo3lu8Jhfjqls6GkMgpahsF9kCyayhgykjyLMNFTKWrpVdAQtYyB4muAMWozBB4ig/dtWAmsMxLEI8wuz+DYQ==}
@@ -3607,6 +3627,30 @@ snapshots:
     dependencies:
       json-buffer: 3.0.1
 
+  laravel-precognition-react-inertia@0.6.1(@inertiajs/react@2.0.3(react@18.3.1))(react@18.3.1):
+    dependencies:
+      '@inertiajs/react': 2.0.3(react@18.3.1)
+      laravel-precognition: 0.6.1
+      laravel-precognition-react: 0.6.1(react@18.3.1)
+      react: 18.3.1
+    transitivePeerDependencies:
+      - debug
+
+  laravel-precognition-react@0.6.1(react@18.3.1):
+    dependencies:
+      laravel-precognition: 0.6.1
+      lodash-es: 4.17.21
+      react: 18.3.1
+    transitivePeerDependencies:
+      - debug
+
+  laravel-precognition@0.6.1:
+    dependencies:
+      axios: 1.7.9
+      lodash-es: 4.17.21
+    transitivePeerDependencies:
+      - debug
+
   laravel-vite-plugin@1.2.0(vite@6.1.0(@types/node@18.19.76)(jiti@1.21.7)(yaml@2.7.0)):
     dependencies:
       picocolors: 1.1.1
@@ -3625,6 +3669,8 @@ snapshots:
   locate-path@6.0.0:
     dependencies:
       p-locate: 5.0.0
+
+  lodash-es@4.17.21: {}
 
   lodash.isequal@4.5.0: {}
 
