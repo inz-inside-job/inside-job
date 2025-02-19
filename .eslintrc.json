@@ -3,6 +3,7 @@
         "browser": true,
         "node": true
     },
+    "plugins": ["eslint-plugin-react-compiler"],
     "extends": [
         "eslint:recommended",
         "plugin:@typescript-eslint/recommended",
@@ -18,7 +19,8 @@
     "rules": {
         "react/react-in-jsx-scope": "off",
         "react/prop-types": "off",
-        "react/no-unescaped-entities": "off"
+        "react/no-unescaped-entities": "off",
+        "react-compiler/react-compiler": "error"
     },
     "settings": {
         "react": {

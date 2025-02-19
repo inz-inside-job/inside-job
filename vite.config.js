@@ -1,6 +1,10 @@
-import { defineConfig } from 'vite';
-import laravel from 'laravel-vite-plugin';
 import react from '@vitejs/plugin-react';
+import laravel from 'laravel-vite-plugin';
+import { defineConfig } from 'vite';
+
+const ReactCompilerConfig = {
+    target: '18',
+};
 
 export default defineConfig({
     plugins: [
@@ -9,6 +13,10 @@ export default defineConfig({
             ssr: 'resources/js/ssr.tsx',
             refresh: true,
         }),
-        react(),
+        react({
+            babel: {
+                plugins: [['babel-plugin-react-compiler', ReactCompilerConfig]],
+            },
+        }),
     ],
 });

@@ -4,6 +4,7 @@ import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import ReactDOMServer from 'react-dom/server';
 import { RouteName } from 'ziggy-js';
 import { route } from '../../vendor/tightenco/ziggy';
+import Providers from './components/providers';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
@@ -14,8 +15,8 @@ createServer((page) =>
         title: (title) => `${title} - ${appName}`,
         resolve: (name) =>
             resolvePageComponent(
-                `./Pages/${name}.tsx`,
-                import.meta.glob('./Pages/**/*.tsx'),
+                `./pages/${name}.tsx`,
+                import.meta.glob('./pages/**/*.tsx'),
             ),
         setup: ({ App, props }) => {
             /* eslint-disable */
@@ -27,7 +28,11 @@ createServer((page) =>
                 });
             /* eslint-enable */
 
-            return <App {...props} />;
+            return (
+                <Providers>
+                    <App {...props} />
+                </Providers>
+            );
         },
     }),
 );

@@ -12,20 +12,25 @@
         "php": "^8.2",
         "inertiajs/inertia-laravel": "^2.0",
         "laravel/framework": "^11.31",
+        "laravel/horizon": "^5.30",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9",
         "tightenco/ziggy": "^2.0"
     },
     "require-dev": {
+        "barryvdh/laravel-debugbar": "^3.14",
+        "brianium/paratest": "^7.7",
         "fakerphp/faker": "^1.23",
         "laravel/breeze": "^2.3",
         "laravel/pail": "^1.1",
         "laravel/pint": "^1.20",
         "laravel/sail": "^1.41",
+        "laravel/telescope": "^5.5",
         "mockery/mockery": "^1.6",
         "nunomaduro/collision": "^8.1",
         "pestphp/pest": "^3.7",
-        "pestphp/pest-plugin-laravel": "^3.1"
+        "pestphp/pest-plugin-laravel": "^3.1",
+        "spatie/laravel-ignition": "^2.9"
     },
     "autoload": {
         "psr-4": {
@@ -57,7 +62,7 @@
         ],
         "dev": [
             "Composer\\Config::disableProcessTimeout",
-            "npx concurrently -c \"#93c5fd,#c4b5fd,#fb7185,#fdba74\" \"php artisan serve\" \"php artisan queue:listen --tries=1\" \"php artisan pail --timeout=0\" \"npm run dev\" --names=server,queue,logs,vite"
+            "npx concurrently -c \"#93c5fd,#c4b5fd,#fb7185,#fdba74,#a020f0\" \"php artisan serve\" \"php artisan horizon\" \"php artisan pail --timeout=0\" \"npm run dev\" \"php artisan schedule:work\" --names=server,horizon,logs,vite,schedule"
         ]
     },
     "extra": {
