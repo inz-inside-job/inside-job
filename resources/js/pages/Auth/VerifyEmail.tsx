@@ -5,12 +5,12 @@ import { useForm } from 'laravel-precognition-react-inertia';
 import { FormEventHandler } from 'react';
 
 export default function VerifyEmail({ status }: { status?: string }) {
-    const { post, processing } = useForm({});
+    const { submit: post, processing } = useForm('post', route('verification.send'),{});
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
 
-        post(route('verification.send'));
+        post();
     };
 
     return (
