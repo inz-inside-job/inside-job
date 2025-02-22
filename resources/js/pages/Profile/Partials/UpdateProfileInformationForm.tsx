@@ -3,7 +3,8 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Transition } from '@headlessui/react';
-import { Link, useForm, usePage } from '@inertiajs/react';
+import { Link, usePage } from '@inertiajs/react';
+import { useForm } from 'laravel-precognition-react-inertia';
 import { FormEventHandler } from 'react';
 
 export default function UpdateProfileInformation({
@@ -17,8 +18,8 @@ export default function UpdateProfileInformation({
 }) {
     const user = usePage().props.auth.user;
 
-    const { data, setData, patch, errors, processing, recentlySuccessful } =
-        useForm({
+    const { data, setData, submit: patch, errors, processing, recentlySuccessful, validate } =
+        useForm('patch', route('profile.update'), {
             name: user.name,
             email: user.email,
         });
@@ -26,7 +27,7 @@ export default function UpdateProfileInformation({
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
 
-        patch(route('profile.update'));
+        patch();
     };
 
     return (
@@ -50,6 +51,7 @@ export default function UpdateProfileInformation({
                         className="mt-1 block w-full"
                         value={data.name}
                         onChange={(e) => setData('name', e.target.value)}
+                        onBlur={() => validate('name')}
                         required
                         autoFocus
                         autoComplete="name"
@@ -67,6 +69,7 @@ export default function UpdateProfileInformation({
                         className="mt-1 block w-full"
                         value={data.email}
                         onChange={(e) => setData('email', e.target.value)}
+                        onBlur={() => validate('email')}
                         required
                         autoComplete="username"
                     />

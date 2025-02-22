@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Transition } from '@headlessui/react';
-import { useForm } from '@inertiajs/react';
+import { useForm } from 'laravel-precognition-react-inertia';
 import { FormEventHandler, useRef } from 'react';
 
 export default function UpdatePasswordForm({
@@ -18,11 +18,12 @@ export default function UpdatePasswordForm({
         data,
         setData,
         errors,
-        put,
+        submit: put,
         reset,
         processing,
         recentlySuccessful,
-    } = useForm({
+        validate
+    } = useForm('put', route('password.update'), {
         current_password: '',
         password: '',
         password_confirmation: '',
@@ -31,7 +32,7 @@ export default function UpdatePasswordForm({
     const updatePassword: FormEventHandler = (e) => {
         e.preventDefault();
 
-        put(route('password.update'), {
+        put({
             preserveScroll: true,
             onSuccess: () => reset(),
             onError: (errors) => {
@@ -72,6 +73,7 @@ export default function UpdatePasswordForm({
                         onChange={(e) =>
                             setData('current_password', e.target.value)
                         }
+                        onBlur={() => validate('current_password')}
                         type="password"
                         className="mt-1 block w-full"
                         autoComplete="current-password"
@@ -91,6 +93,7 @@ export default function UpdatePasswordForm({
                         ref={passwordInput}
                         value={data.password}
                         onChange={(e) => setData('password', e.target.value)}
+                        onBlur={() => validate('password')}
                         type="password"
                         className="mt-1 block w-full"
                         autoComplete="new-password"
@@ -110,6 +113,7 @@ export default function UpdatePasswordForm({
                         onChange={(e) =>
                             setData('password_confirmation', e.target.value)
                         }
+                        onBlur={() => validate('password_confirmation')}
                         type="password"
                         className="mt-1 block w-full"
                         autoComplete="new-password"

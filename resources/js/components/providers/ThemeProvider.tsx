@@ -27,10 +27,15 @@ export function ThemeProvider({
     ...props
 }: ThemeProviderProps) {
     const [theme, setTheme] = useState<Theme>(
-        () => (localStorage.getItem(storageKey) as Theme) || defaultTheme,
+        () => {
+            if (import.meta.env.SSR) return defaultTheme;
+            return (localStorage.getItem(storageKey) as Theme) || defaultTheme
+        },
     );
 
     useEffect(() => {
+        if (import.meta.env.SSR) return;
+
         const root = window.document.documentElement;
 
         root.classList.remove('light', 'dark');
