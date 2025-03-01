@@ -1,6 +1,6 @@
-import * as React from 'react';
+import { type ComponentProps } from 'react';
 
-type AppContentProps = React.ComponentProps<'div'>;
+type AppContentProps = ComponentProps<'main'>;
 
 export function AppContent({ children, ...props }: AppContentProps) {
     return (

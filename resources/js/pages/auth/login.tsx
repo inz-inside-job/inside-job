@@ -10,13 +10,21 @@ import { useForm } from 'laravel-precognition-react-inertia';
 import { LoaderCircle } from 'lucide-react';
 import { FormEventHandler } from 'react';
 
+type LoginForm = {
+    email: string;
+
+    password: string;
+
+    remember: boolean;
+};
+
 interface LoginProps {
     status?: string;
     canResetPassword: boolean;
 }
 
 export default function Login({ status, canResetPassword }: LoginProps) {
-    const { data, setData, submit, processing, errors, reset, validate } = useForm('post', route('login'), {
+    const { data, setData, submit, processing, errors, reset, validate } = useForm<LoginForm>('post', route('login'), {
         email: '',
         password: '',
         remember: false,
@@ -76,7 +84,14 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                     </div>
 
                     <div className="flex items-center space-x-3">
-                        <Checkbox id="remember" name="remember" tabIndex={3} />
+                        <Checkbox
+                            id="remember"
+                            name="remember"
+                            tabIndex={3}
+                            checked={data.remember}
+                            onClick={() => setData('remember', !data.remember)}
+                            onBlur={() => validate('remember')}
+                        />
                         <Label htmlFor="remember">Remember me</Label>
                     </div>
 

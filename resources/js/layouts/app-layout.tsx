@@ -1,8 +1,8 @@
 import AppLayoutTemplate from '@/layouts/app/app-header-layout';
 import { type BreadcrumbItem } from '@/types';
+import { type PropsWithChildren } from 'react';
 
-interface AppLayoutProps {
-    children: React.ReactNode;
+interface AppLayoutProps extends PropsWithChildren {
     breadcrumbs?: BreadcrumbItem[];
 }
 

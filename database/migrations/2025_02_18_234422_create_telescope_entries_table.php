@@ -22,7 +22,7 @@ return new class extends Migration
         if (config('app.env') !== 'local') {
             return;
         }
-        
+
         $schema = Schema::connection($this->getConnection());
 
         $schema->create('telescope_entries', function (Blueprint $table) {
