@@ -1,4 +1,4 @@
-name: Lint And Format
+name: Lint
 
 on:
   push:
@@ -55,3 +55,20 @@ jobs:
         run: pnpm install --frozen-lockfile
       - name: Run ESLint (Lint)
         run: pnpm format:check
+  typescript:
+    name: Check TS types
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 10.4.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'pnpm'
+      - name: Install NPM Dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Run tsc (TypeScript Compiler)
+        run: pnpm types
