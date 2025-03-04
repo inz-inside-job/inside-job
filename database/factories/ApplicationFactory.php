@@ -8,7 +8,8 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Carbon;
 
-class ApplicationFactory extends Factory{
+class ApplicationFactory extends Factory
+{
     protected $model = Application::class;
 
     public function definition(): array

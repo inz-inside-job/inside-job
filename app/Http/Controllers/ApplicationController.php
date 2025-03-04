@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-    use App\Http\Requests\ApplicationRequest;
-    use App\Models\Application;
+use App\Http\Requests\ApplicationRequest;
+use App\Models\Application;
 
 class ApplicationController
 {

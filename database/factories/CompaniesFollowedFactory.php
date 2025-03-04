@@ -8,7 +8,8 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Carbon;
 
-class CompaniesFollowedFactory extends Factory{
+class CompaniesFollowedFactory extends Factory
+{
     protected $model = CompaniesFollowed::class;
 
     public function definition(): array
@@ -20,6 +21,6 @@ class CompaniesFollowedFactory extends Factory{
 
             'user_id' => User::factory(),
             'company_id' => Company::factory(),
-                    ];
+        ];
     }
 }
