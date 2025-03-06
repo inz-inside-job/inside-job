@@ -1,4 +1,4 @@
-# InsideJob Web Application
+# InsideJob
 
 InsideJob is a web application inspired by Glassdoor, providing a platform for employees to share their experiences and reviews about their workplaces.
 
