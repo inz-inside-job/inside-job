@@ -11,7 +11,6 @@ InsideJob is a web application inspired by Glassdoor, providing a platform for e
     - [Setting up the Development Environment](#setting-up-the-development-environment)
         - [Using Laravel Sail](#using-laravel-sail)
     - [Using Devcontainer](#using-devcontainer)
-- [Contributing](#contributing)
 - [License](#license)
 
 ## Features
