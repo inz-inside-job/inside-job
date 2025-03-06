@@ -35,8 +35,8 @@ InsideJob is a web application inspired by Glassdoor, providing a platform for e
 
 Make sure you have the following installed on your machine:
 
-- [Docker Desktop](https://www.docker.com/products/docker-desktop) (Ensure it is configured to run within WSL on Windows, if applicable)
-- [WSL 2](https://docs.microsoft.com/en-us/windows/wsl/install) (for Windows users, if using Docker Desktop)
+- [WSL 2](https://docs.microsoft.com/en-us/windows/wsl/install) (for Windows users)
+- [Docker Desktop](https://www.docker.com/products/docker-desktop) (Ensure it is configured to run within WSL on Windows)
 - [Docker Engine](https://docs.docker.com/engine/install/) (for Linux users)
 
 ### Setting up the Development Environment
@@ -70,7 +70,13 @@ Make sure you have the following installed on your machine:
     ./vendor/bin/sail artisan key:generate
     ```
 
-5. **Access the application:**
+5. **Start dev server:**
+
+    ```bash
+    ./vendor/bin/sail composer dev
+    ```
+
+6. **Access the application:**
 
     Open your browser and navigate to `http://localhost`.
 
@@ -86,7 +92,13 @@ This project includes a devcontainer configuration, which allows you to develop 
 
 3. **Wait for the container to build and start.**
 
-4. **Access the application:**
+4. **Start dev server:**
+
+    ```bash
+    composer dev
+    ```
+
+5. **Access the application:**
 
     Open your browser and navigate to `http://localhost`.
 
