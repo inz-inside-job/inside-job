@@ -1,66 +1,95 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# InsideJob Web Application
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+InsideJob is a web application inspired by Glassdoor, providing a platform for employees to share their experiences and reviews about their workplaces.
 
-## About Laravel
+## Table of Contents
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- [Features](#features)
+- [Technologies Used](#technologies-used)
+- [Getting Started](#getting-started)
+    - [Prerequisites](#prerequisites)
+    - [Setting up the Development Environment](#setting-up-the-development-environment)
+        - [Using Laravel Sail](#using-laravel-sail)
+    - [Using Devcontainer](#using-devcontainer)
+- [Contributing](#contributing)
+- [License](#license)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Features
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- Employee reviews and ratings of companies
+- Company profiles with detailed information
+- Job listings and application tracking
+- User authentication and profiles
+- Admin dashboard for managing content
 
-## Learning Laravel
+## Technologies Used
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- **Laravel**: Backend framework
+- **Inertia.js**: For single-page application behavior
+- **React**: Frontend library
+- **shadcn/ui**: UI components
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Getting Started
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Prerequisites
 
-## Laravel Sponsors
+Make sure you have the following installed on your machine:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+- [Docker Desktop](https://www.docker.com/products/docker-desktop) (Ensure it is configured to run within WSL on Windows, if applicable)
+- [WSL 2](https://docs.microsoft.com/en-us/windows/wsl/install) (for Windows users, if using Docker Desktop)
+- [Docker Engine](https://docs.docker.com/engine/install/) (for Linux users)
 
-### Premium Partners
+### Setting up the Development Environment
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+#### Using Laravel Sail
 
-## Contributing
+1. **Clone the repository:**
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+    ```bash
+    git clone https://github.com/inz-inside-job/inside-job.git
+    cd inside-job
+    ```
 
-## Code of Conduct
+2. **Copy `.env.example` to `.env` and update the `DB_PASSWORD`:**
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+    ```bash
+    cp .env.example .env
+    # Open .env in your favorite text editor and update the DB_PASSWORD field
+    ```
 
-## Security Vulnerabilities
+3. **Start the development environment using Sail:**
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+    ```bash
+    ./vendor/bin/sail up -d
+    ```
+
+4. **Run database migrations and generate application key:**
+
+    ```bash
+    ./vendor/bin/sail artisan migrate
+    ./vendor/bin/sail artisan key:generate
+    ```
+
+5. **Access the application:**
+
+    Open your browser and navigate to `http://localhost`.
+
+### Using Devcontainer
+
+This project includes a devcontainer configuration, which allows you to develop inside a containerized environment using Visual Studio Code and the Remote - Containers extension. Ensure you have set up the project using Laravel Sail before proceeding with this step.
+
+1. **Open the project in Visual Studio Code.**
+
+2. **Reopen in Container:**
+
+    Press `F1` and select `Remote-Containers: Reopen in Container`.
+
+3. **Wait for the container to build and start.**
+
+4. **Access the application:**
+
+    Open your browser and navigate to `http://localhost`.
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
