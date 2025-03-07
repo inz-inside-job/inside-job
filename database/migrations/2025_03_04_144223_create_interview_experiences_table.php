@@ -1,5 +1,7 @@
 <?php
 
+use App\Enums\InterviewDifficulty;
+use App\Enums\InterviewExperience;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,9 +15,9 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users');
             $table->foreignId('company_id')->constrained('companies');
             $table->string('job_title');
-            $table->string('difficulty_level');
+            $table->enum('difficulty_level', array_column(InterviewDifficulty::cases(), 'value'));
             $table->text('interview_questions');
-            $table->string('overall_experience');
+            $table->enum('overall_experience', array_column(InterviewExperience::cases(), 'value'));
             $table->timestamp('submitted_date');
             $table->timestamps();
         });

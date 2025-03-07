@@ -12,7 +12,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users');
             $table->foreignId('company_id')->constrained('companies');
-            $table->integer('rating');
+            $table->tinyInteger('rating');
             $table->string('review');
             $table->timestamp('submitted_date');
             $table->timestamps();

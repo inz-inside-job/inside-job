@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\EmploymentType;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,7 +14,7 @@ return new class extends Migration
             $table->foreignId('company_id')->constrained('companies');
             $table->string('title');
             $table->string('location');
-            $table->string('employment_type');
+            $table->enum('employment_type', array_column(EmploymentType::cases(),'value'));
             $table->timestamp('posted_date');
             $table->string('salary_range')->nullable();
             $table->string('description');
