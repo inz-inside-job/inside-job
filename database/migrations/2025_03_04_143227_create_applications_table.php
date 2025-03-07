@@ -11,8 +11,8 @@ return new class extends Migration
     {
         Schema::create('applications', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->foreignId('job_id')->constrained('jobs')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
+            $table->foreignId('job_id')->constrained('jobs')->cascadeOnDelete();
             $table->enum('status', array_column(ApplicationStatus::cases(), 'value'))->default(ApplicationStatus::APPLIED);
             $table->timestamp('applied_date');
             $table->timestamps();

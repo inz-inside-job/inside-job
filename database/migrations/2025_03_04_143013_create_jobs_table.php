@@ -11,7 +11,7 @@ return new class extends Migration
     {
         Schema::create('jobs', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('company_id')->constrained('companies')->onDelete('cascade');
+            $table->foreignId('company_id')->constrained('companies')->cascadeOnDelete();
             $table->string('title');
             $table->string('location');
             $table->enum('employment_type', array_column(EmploymentType::cases(), 'value'));

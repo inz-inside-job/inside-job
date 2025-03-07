@@ -12,8 +12,8 @@ return new class extends Migration
     {
         Schema::create('interview_experiences', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->foreignId('company_id')->constrained('companies')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
+            $table->foreignId('company_id')->constrained('companies')->cascadeOnDelete();
             $table->string('job_title');
             $table->enum('difficulty_level', array_column(InterviewDifficulty::cases(), 'value'));
             $table->text('interview_questions')->nullable();
