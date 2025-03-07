@@ -30,6 +30,7 @@ class Company extends Model
     {
         return $this->belongsToMany(User::class, 'companies_followed', 'company_id', 'user_id')
             ->as('followers')
+            ->withTimestamps()
             ->withPivot('followed_date');
     }
 
@@ -37,6 +38,7 @@ class Company extends Model
     {
         return $this->belongsToMany(User::class, 'interview_experiences', 'company_id', 'user_id')
             ->as('interview_experiences')
+            ->withTimestamps()
             ->withPivot('job_title', 'difficulty_level', 'interview_questions', 'overall_experience', 'submitted_date');
     }
 
@@ -44,6 +46,7 @@ class Company extends Model
     {
         return $this->belongsToMany(User::class, 'reviews', 'company_id', 'user_id')
             ->as('reviews')
+            ->withTimestamps()
             ->withPivot('rating', 'review', 'submitted_date');
     }
 
@@ -51,6 +54,7 @@ class Company extends Model
     {
         return $this->belongsToMany(User::class, 'salaries', 'company_id', 'user_id')
             ->as('salaries')
+            ->withTimestamps()
             ->withPivot('job_title', 'salary_amount', 'location', 'submitted_date');
     }
 }

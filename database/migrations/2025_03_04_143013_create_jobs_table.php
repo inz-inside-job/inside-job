@@ -11,13 +11,13 @@ return new class extends Migration
     {
         Schema::create('jobs', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('company_id')->constrained('companies');
+            $table->foreignId('company_id')->constrained('companies')->onDelete('cascade');
             $table->string('title');
             $table->string('location');
             $table->enum('employment_type', array_column(EmploymentType::cases(), 'value'));
             $table->timestamp('posted_date');
             $table->string('salary_range')->nullable();
-            $table->string('description');
+            $table->text('description');
             $table->timestamps();
         });
     }

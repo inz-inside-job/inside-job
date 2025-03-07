@@ -52,6 +52,7 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->belongsToMany(Company::class, 'companies_followed', 'user_id', 'company_id')
             ->as('companies_followed')
+            ->withTimestamps()
             ->withPivot('followed_date');
     }
 
@@ -59,6 +60,7 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->belongsToMany(Job::class, 'applications', 'user_id', 'job_id')
             ->as('applications')
+            ->withTimestamps()
             ->withPivot('status', 'applied_date');
     }
 
@@ -66,6 +68,7 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->belongsToMany(Company::class, 'interview_experiences', 'user_id', 'company_id')
             ->as('interview_experiences')
+            ->withTimestamps()
             ->withPivot('job_title', 'difficulty_level', 'interview_questions', 'overall_experience', 'submitted_date');
     }
 
@@ -73,6 +76,7 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->belongsToMany(Company::class, 'reviews', 'user_id', 'company_id')
             ->as('reviews')
+            ->withTimestamps()
             ->withPivot('rating', 'review', 'submitted_date');
     }
 
@@ -80,6 +84,7 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->belongsToMany(Company::class, 'salaries', 'user_id', 'company_id')
             ->as('salaries')
+            ->withTimestamps()
             ->withPivot('job_title', 'salary_amount', 'location', 'submitted_date');
     }
 }

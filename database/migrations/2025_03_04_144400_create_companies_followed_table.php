@@ -10,9 +10,10 @@ return new class extends Migration
     {
         Schema::create('companies_followed', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users');
-            $table->foreignId('company_id')->constrained('companies');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('company_id')->constrained('companies')->onDelete('cascade');
             $table->timestamp('followed_date');
+            $table->timestamps();
         });
     }
 

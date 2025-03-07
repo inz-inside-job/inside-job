@@ -12,11 +12,11 @@ return new class extends Migration
     {
         Schema::create('interview_experiences', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users');
-            $table->foreignId('company_id')->constrained('companies');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('company_id')->constrained('companies')->onDelete('cascade');
             $table->string('job_title');
             $table->enum('difficulty_level', array_column(InterviewDifficulty::cases(), 'value'));
-            $table->text('interview_questions');
+            $table->text('interview_questions')->nullable();
             $table->enum('overall_experience', array_column(InterviewExperience::cases(), 'value'));
             $table->timestamp('submitted_date');
             $table->timestamps();

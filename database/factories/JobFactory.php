@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\EmploymentType;
 use App\Models\Company;
 use App\Models\Job;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -16,7 +17,7 @@ class JobFactory extends Factory
         return [
             'title' => $this->faker->word(),
             'location' => $this->faker->word(),
-            'employment_type' => $this->faker->word(),
+            'employment_type' => $this->faker->randomElement([array_column(EmploymentType::cases(), 'value')]),
             'posted_date' => Carbon::now(),
             'salary_range' => $this->faker->word(),
             'description' => $this->faker->text(),

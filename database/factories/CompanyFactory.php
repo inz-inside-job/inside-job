@@ -14,6 +14,8 @@ class CompanyFactory extends Factory
     {
         return [
             'name' => $this->faker->name(),
+            'description' => $this->faker->text(),
+            'logo' => $this->faker->word(),
             'industry' => $this->faker->word(),
             'location' => $this->faker->word(),
             'website' => $this->faker->word(),
