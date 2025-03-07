@@ -14,7 +14,7 @@ return new class extends Migration
             $table->foreignId('company_id')->constrained('companies');
             $table->string('title');
             $table->string('location');
-            $table->enum('employment_type', array_column(EmploymentType::cases(),'value'));
+            $table->enum('employment_type', array_column(EmploymentType::cases(), 'value'));
             $table->timestamp('posted_date');
             $table->string('salary_range')->nullable();
             $table->string('description');

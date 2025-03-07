@@ -2,7 +2,8 @@
 
 namespace App\Enums;
 
-enum InterviewDifficulty: string {
+enum InterviewDifficulty: string
+{
     case EASY = 'Easy';
     case MEDIUM = 'Medium';
     case HARD = 'Hard';

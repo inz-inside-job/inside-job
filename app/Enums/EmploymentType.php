@@ -2,7 +2,8 @@
 
 namespace App\Enums;
 
-enum EmploymentType: string {
+enum EmploymentType: string
+{
     case FULL_TIME = 'Full Time';
     case PART_TIME = 'Part Time';
     case CONTRACT = 'Contract';

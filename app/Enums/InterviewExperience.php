@@ -2,7 +2,8 @@
 
 namespace App\Enums;
 
-enum InterviewExperience: string {
+enum InterviewExperience: string
+{
     case POSITIVE = 'Positive';
     case NEGATIVE = 'Negative';
     case NEUTRAL = 'Neutral';
