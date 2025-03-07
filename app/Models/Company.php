@@ -26,7 +26,7 @@ class Company extends Model
         ];
     }
 
-    public function companiesFollowed(): BelongsToMany
+    public function followers(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'companies_followed', 'company_id', 'user_id')
             ->as('followed')
