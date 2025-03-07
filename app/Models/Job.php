@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\EmploymentType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -31,13 +32,15 @@ class Job extends Model
         return $this->belongsToMany(User::class, 'applications', 'job_id', 'user_id')
             ->as('applications')
             ->withTimestamps()
-            ->withPivot('status', 'applied_date');
+            ->withPivot('status', 'applied_date')
+            ->using(Application::class);
     }
 
     protected function casts(): array
     {
         return [
             'posted_date' => 'timestamp',
+            'employment_type' => EmploymentType::class,
         ];
     }
 }
