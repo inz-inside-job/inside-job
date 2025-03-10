@@ -1,6 +1,5 @@
-// https://aka.ms/devcontainer.json
 {
-    "name": "Existing Docker Compose (Extend)",
+    "name": "InsideJob Dev",
     "dockerComposeFile": ["../docker-compose.yml"],
     "service": "laravel.test",
     "workspaceFolder": "/var/www/html",
@@ -14,12 +13,12 @@
                 "esbenp.prettier-vscode",
                 "bradlc.vscode-tailwindcss"
             ],
-            "settings": {}
+            "settings": {
+                "editor.formatOnSave": true,
+                "editor.defaultFormatter": "esbenp.prettier-vscode"
+            }
         }
     },
     "remoteUser": "sail",
     "postCreateCommand": "chown -R 1000:1000 /var/www/html 2>/dev/null || true"
-    // "forwardPorts": [],
-    // "runServices": [],
-    // "shutdownAction": "none",
 }
