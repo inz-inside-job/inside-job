@@ -1,4 +1,4 @@
-name: Lint
+name: Format and Lint
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
 
 jobs:
   pint:
-    name: Fomatting PHP
+    name: Pint
     runs-on: ubuntu-latest
 
     steps:
@@ -22,7 +22,7 @@ jobs:
       - name: Run Pint (Lint)
         run: ./vendor/bin/pint --test
   eslint:
-    name: Lint TS
+    name: Eslint
     runs-on: ubuntu-latest
 
     steps:
@@ -39,7 +39,7 @@ jobs:
       - name: Run ESLint (Lint)
         run: pnpm lint:check
   prettier:
-    name: Format TS
+    name: Prettier
     runs-on: ubuntu-latest
 
     steps:
@@ -53,5 +53,5 @@ jobs:
           cache: 'pnpm'
       - name: Install NPM Dependencies
         run: pnpm install --frozen-lockfile
-      - name: Run ESLint (Lint)
+      - name: Run Prettier (Format)
         run: pnpm format:check
