@@ -1,30 +1,23 @@
-import { useState, useEffect } from "react"
-import { Building2, Menu, Search, X } from "lucide-react"
+import { useState } from "react"
+import { Building2, Menu, Search, X, Moon, Sun  } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Moon, Sun } from 'lucide-react';
 import {useAppearance } from '@/hooks/use-appearance';
 
 export function Header() {
     const [isMenuOpen, setIsMenuOpen] = useState(false)
     const { appearance, updateAppearance } = useAppearance();
-    const [mounted, setMounted] = useState(false)
-
-    useEffect(() => {
-        setMounted(true)
-      }, [])
-    
 
   return (
     <header className="border-b sticky top-0 foreground z-50">
-      <div className="container mx-auto px-4 py-3 flex items-center justify-between">
+      <div className="mx-auto px-4 py-3 flex items-center justify-between">
         <div className="flex items-center gap-8">
           <a href="/" className="flex items-center gap-2">
             <Building2 className="h-8 w-8 text-orange-500" />
             <span className="text-xl font-bold">glassdoor</span>
           </a>
 
-          <nav className="hidden md:flex items-center gap-6">
+          <nav className="hidden lg:flex items-center gap-6">
             <a href="#" className="text-sm font-medium hover:text-emerald-600 transition-colors">
               Jobs
             </a>
@@ -40,14 +33,14 @@ export function Header() {
           </nav>
         </div>
 
-        <div className="hidden md:flex items-center gap-4">
+        <div className="hidden lg:flex items-center gap-4">
         <Button
             variant="ghost"
             size="icon"
             onClick={() => updateAppearance(appearance === "dark" ? "light" : "dark")}
             aria-label="Toggle theme"
           >
-            {mounted && (appearance === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />)}
+            {appearance === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
           </Button>
           <div className="relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
@@ -61,14 +54,14 @@ export function Header() {
           </Button>
         </div>
 
-        <button className="md:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+        <button className="lg:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>
           {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
         </button>
       </div>
 
       {/* Mobile menu */}
       {isMenuOpen && (
-        <div className="md:hidden px-4 py-4 border-t">
+        <div className="lg:hidden px-4 py-4 border-t">
           <nav className="flex flex-col gap-4 mb-4">
             <a href="#" className="text-sm font-medium hover:text-emerald-600 transition-colors">
               Jobs
