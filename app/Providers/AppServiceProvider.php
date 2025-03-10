@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Vite;
@@ -27,7 +28,9 @@ class AppServiceProvider extends ServiceProvider
     {
         Vite::prefetch(concurrency: 3);
 
-        Model::shouldBeStrict(! $this->app->isProduction());
+        Model::shouldBeStrict(!$this->app->isProduction());
         DB::prohibitDestructiveCommands($this->app->isProduction());
+
+        EncryptCookies::except('appearance');
     }
 }
