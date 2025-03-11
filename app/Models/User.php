@@ -93,4 +93,12 @@ class User extends Authenticatable implements MustVerifyEmail
             ->withPivot('job_title', 'salary_amount', 'location', 'submitted_date')
             ->using(Salary::class);
     }
+
+    public function companies(): BelongsToMany
+    {
+        return $this->belongsToMany(Company::class, 'user_company', 'user_id', 'company_id')
+            ->as('companies')
+            ->withTimestamps()
+            ->using(UserCompany::class);
+    }
 }
