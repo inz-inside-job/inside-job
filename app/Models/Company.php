@@ -61,4 +61,12 @@ class Company extends Model
             ->withPivot('job_title', 'salary_amount', 'location', 'submitted_date')
             ->using(Salary::class);
     }
+
+    public function users(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'user_company', 'company_id', 'user_id')
+            ->as('users')
+            ->withTimestamps()
+            ->using(UserCompany::class);
+    }
 }
