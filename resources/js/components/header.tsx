@@ -9,12 +9,12 @@ export function Header() {
     const { appearance, updateAppearance } = useAppearance();
 
     return (
-        <header className="foreground sticky top-0 z-50 border-b">
+        <header className="bg-background sticky top-0 z-50 border-b">
             <div className="mx-auto flex items-center justify-between px-4 py-3">
                 <div className="flex items-center gap-8">
                     <a href="/" className="flex items-center gap-2">
                         <Building2 className="h-8 w-8 text-orange-500" />
-                        <span className="text-xl font-bold">glassdoor</span>
+                        <span className="text-xl font-bold">insidejob</span>
                     </a>
 
                     <nav className="hidden items-center gap-6 lg:flex">
