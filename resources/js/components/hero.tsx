@@ -18,7 +18,7 @@ export function Hero() {
 
                 <div className="bg-background mx-auto max-w-3xl rounded-lg p-4 shadow-lg">
                     <Tabs defaultValue="jobs">
-                        <TabsList className="mb-4 flex w-full justify-between">
+                        <TabsList className="bg-muted mb-4 flex w-full justify-between">
                             <TabsTrigger value="jobs" className="flex-1">
                                 Jobs
                             </TabsTrigger>
