@@ -61,7 +61,7 @@ export function CompanyReviews() {
                     <Button variant="outline">View All Reviews</Button>
                 </div>
 
-                <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+                <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
                     {companyReviews.map((review) => (
                         <Card key={review.id} className="overflow-hidden transition-shadow hover:shadow-lg">
                             <CardContent className="p-6">
@@ -83,7 +83,7 @@ export function CompanyReviews() {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="text-xs text-gray-500">{review.reviewCount} reviews</div>
+                                    <div className="p-2 text-xs text-gray-500">{review.reviewCount} reviews</div>
                                 </div>
 
                                 <div className="mb-4">
