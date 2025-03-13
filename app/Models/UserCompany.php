@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Relations\Pivot;
+use Spatie\Permission\Traits\HasRoles;
 
 class UserCompany extends Pivot
 {
+    use HasRoles;
+
     public $incrementing = true;
 
     public $table = 'user_company';
