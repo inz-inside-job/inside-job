@@ -46,10 +46,10 @@ export function Header() {
                         <Search className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 transform text-gray-400" />
                         <Input className="w-[200px] pl-10 lg:w-[300px]" placeholder="Search jobs, companies..." />
                     </div>
-                    <Button variant="outline" size="sm">
+                    <Button variant="outline" className="cursor-pointer" size="sm">
                         Sign In
                     </Button>
-                    <Button size="sm" className="bg-orange-500 hover:bg-orange-600">
+                    <Button size="sm" className="cursor-pointer bg-orange-500 hover:bg-orange-600">
                         Sign Up
                     </Button>
                 </div>

@@ -4,8 +4,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Building2, MapPin, Search } from 'lucide-react';
 
 export function Hero() {
-    // const [searchTab, setSearchTab] = useState('jobs');
-
     return (
         <div className="bg-gradient-to-r from-orange-500 to-orange-400 text-white">
             <div className="container mx-auto px-4 py-16 md:py-24">
@@ -40,7 +38,7 @@ export function Hero() {
                                     <MapPin className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 transform text-gray-400" />
                                     <Input className="pl-10" placeholder="City, state, or zip code" />
                                 </div>
-                                <Button className="bg-orange-500 hover:bg-orange-600">Search Jobs</Button>
+                                <Button className="cursor-pointer bg-orange-500 hover:bg-orange-600">Search Jobs</Button>
                             </div>
                         </TabsContent>
 
@@ -50,7 +48,7 @@ export function Hero() {
                                     <Building2 className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 transform text-gray-400" />
                                     <Input className="pl-10" placeholder="Company name" />
                                 </div>
-                                <Button className="bg-orange-500 hover:bg-orange-600">Search Companies</Button>
+                                <Button className="cursor-pointer bg-orange-500 hover:bg-orange-600">Search Companies</Button>
                             </div>
                         </TabsContent>
 
@@ -64,7 +62,7 @@ export function Hero() {
                                     <MapPin className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 transform text-gray-400" />
                                     <Input className="pl-10" placeholder="Location" />
                                 </div>
-                                <Button className="bg-orange-500 hover:bg-orange-600">Search Salaries</Button>
+                                <Button className="cursor-pointer bg-orange-500 hover:bg-orange-600">Search Salaries</Button>
                             </div>
                         </TabsContent>
                     </Tabs>

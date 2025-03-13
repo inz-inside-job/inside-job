@@ -2,7 +2,7 @@ import { Building2, Facebook, Instagram, Linkedin, Twitter } from 'lucide-react'
 
 export function Footer() {
     return (
-        <footer className="bg-footer-background text-gray-300">
+        <footer className="bg-footer text-footer-foreground">
             <div className="container mx-auto px-4 py-12">
                 <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-5">
                     <div className="lg:col-span-2">
@@ -140,7 +140,7 @@ export function Footer() {
                                 Do Not Sell My Personal Information
                             </a>
                         </div>
-                        <div className="text-gray-500">© 2024 Agile Avengers All Rights Reserved.</div>
+                        <div className="text-footer-foreground">© 2024 Agile Avengers All Rights Reserved.</div>
                     </div>
                 </div>
             </div>

@@ -1,5 +1,4 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Star } from 'lucide-react';
 
@@ -58,7 +57,6 @@ export function CompanyReviews() {
             <div className="container mx-auto px-4">
                 <div className="mb-8 flex items-center justify-between">
                     <h2 className="text-2xl font-bold md:text-3xl">Company Reviews</h2>
-                    <Button variant="outline">View All Reviews</Button>
                 </div>
 
                 <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
