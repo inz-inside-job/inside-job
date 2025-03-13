@@ -19,4 +19,6 @@ class CompanyUser extends Pivot
         'user_id',
         'company_id',
     ];
+
+    protected string $guard_name = 'web';
 }
