@@ -2,17 +2,20 @@
 
 namespace App\Models;
 
+use App\Enums\UserRole;
 use Database\Factories\UserFactory;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Lab404\Impersonate\Models\Impersonate;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
     /** @use HasFactory<UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, HasRoles, Impersonate, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -49,12 +52,17 @@ class User extends Authenticatable implements MustVerifyEmail
         ];
     }
 
+    public function canImpersonate(): bool
+    {
+        return $this->hasRole(UserRole::ADMIN);
+    }
+
     public function companiesFollowed(): BelongsToMany
     {
         return $this->belongsToMany(Company::class, 'companies_followed', 'user_id', 'company_id')
             ->as('companies_followed')
             ->withTimestamps()
-            ->withPivot('followed_date')
+            ->withPivot('id', 'followed_date')
             ->using(CompanyFollowed::class);
     }
 
@@ -63,7 +71,7 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsToMany(Job::class, 'applications', 'user_id', 'job_id')
             ->as('applications')
             ->withTimestamps()
-            ->withPivot('status', 'applied_date')
+            ->withPivot('id', 'status', 'applied_date')
             ->using(Application::class);
     }
 
@@ -72,7 +80,7 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsToMany(Company::class, 'interview_experiences', 'user_id', 'company_id')
             ->as('interview_experiences')
             ->withTimestamps()
-            ->withPivot('job_title', 'difficulty_level', 'interview_questions', 'overall_experience', 'submitted_date')
+            ->withPivot('id', 'job_title', 'difficulty_level', 'interview_questions', 'overall_experience', 'submitted_date')
             ->using(InterviewExperience::class);
     }
 
@@ -81,7 +89,7 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsToMany(Company::class, 'reviews', 'user_id', 'company_id')
             ->as('reviews')
             ->withTimestamps()
-            ->withPivot('rating', 'review', 'submitted_date')
+            ->withPivot('id', 'rating', 'review', 'submitted_date')
             ->using(Review::class);
     }
 
@@ -90,7 +98,7 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsToMany(Company::class, 'salaries', 'user_id', 'company_id')
             ->as('salaries')
             ->withTimestamps()
-            ->withPivot('job_title', 'salary_amount', 'location', 'submitted_date')
+            ->withPivot('id', 'job_title', 'salary_amount', 'location', 'submitted_date')
             ->using(Salary::class);
     }
 
@@ -99,6 +107,7 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsToMany(Company::class, 'user_company', 'user_id', 'company_id')
             ->as('companies')
             ->withTimestamps()
-            ->using(UserCompany::class);
+            ->withPivot('id')
+            ->using(CompanyUser::class);
     }
 }
