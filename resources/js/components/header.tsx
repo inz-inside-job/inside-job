@@ -57,9 +57,9 @@ export function Header() {
                 </div>
 
                 {/* Hamburger menu button - shown on mobile, hidden on lg screens */}
-                <button className="lg:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+                <Button className="bg-orange-500 hover:bg-orange-600 lg:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>
                     {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-                </button>
+                </Button>
             </div>
 
             {/* Mobile menu - shown when isMenuOpen is true, hidden on lg screens */}
