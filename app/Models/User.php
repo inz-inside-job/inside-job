@@ -2,18 +2,20 @@
 
 namespace App\Models;
 
+use App\Enums\UserRole;
 use Database\Factories\UserFactory;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Lab404\Impersonate\Models\Impersonate;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
     /** @use HasFactory<UserFactory> */
-    use HasFactory, Notifiable, HasRoles;
+    use HasFactory, HasRoles, Impersonate, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -48,6 +50,11 @@ class User extends Authenticatable implements MustVerifyEmail
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function canImpersonate(): bool
+    {
+        return $this->hasRole(UserRole::ADMIN);
     }
 
     public function companiesFollowed(): BelongsToMany
@@ -100,6 +107,6 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsToMany(Company::class, 'user_company', 'user_id', 'company_id')
             ->as('companies')
             ->withTimestamps()
-            ->using(UserCompany::class);
+            ->using(CompanyUser::class);
     }
 }

@@ -79,6 +79,6 @@ class Company extends Model
         return $this->belongsToMany(User::class, 'user_company', 'company_id', 'user_id')
             ->as('users')
             ->withTimestamps()
-            ->using(UserCompany::class);
+            ->using(CompanyUser::class);
     }
 }

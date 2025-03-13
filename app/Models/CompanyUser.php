@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 use Spatie\Permission\Traits\HasRoles;
 
-class UserCompany extends Pivot
+class CompanyUser extends Pivot
 {
     use HasRoles;
 
