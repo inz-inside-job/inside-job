@@ -17,6 +17,7 @@ export function Header() {
                         <span className="text-xl font-bold">insidejob</span>
                     </a>
 
+                    {/* Navigation links - hidden on mobile, shown on lg screens */}
                     <nav className="hidden items-center gap-6 lg:flex">
                         <a href="#" className="text-sm font-medium transition-colors hover:text-emerald-600">
                             Jobs
@@ -33,6 +34,7 @@ export function Header() {
                     </nav>
                 </div>
 
+                {/* Right side buttons - hidden on mobile, shown on lg screens */}
                 <div className="hidden items-center gap-4 lg:flex">
                     <Button
                         variant="ghost"
@@ -54,44 +56,43 @@ export function Header() {
                     </Button>
                 </div>
 
+                {/* Hamburger menu button - shown on mobile, hidden on lg screens */}
                 <button className="lg:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>
                     {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
                 </button>
             </div>
 
-            {/* Mobile menu */}
-            {isMenuOpen && (
-                <div className="border-t px-4 py-4 lg:hidden">
-                    <nav className="mb-4 flex flex-col gap-4">
-                        <a href="#" className="text-sm font-medium transition-colors hover:text-emerald-600">
-                            Jobs
-                        </a>
-                        <a href="#" className="text-sm font-medium transition-colors hover:text-emerald-600">
-                            Companies
-                        </a>
-                        <a href="#" className="text-sm font-medium transition-colors hover:text-emerald-600">
-                            Salaries
-                        </a>
-                        <a href="#" className="text-sm font-medium transition-colors hover:text-emerald-600">
-                            Interviews
-                        </a>
-                    </nav>
-                    <div className="flex flex-col gap-3">
-                        <div className="relative">
-                            <Search className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 transform text-gray-400" />
-                            <Input className="pl-10" placeholder="Search jobs, companies..." />
-                        </div>
-                        <div className="flex gap-2">
-                            <Button variant="outline" size="sm" className="flex-1">
-                                Sign In
-                            </Button>
-                            <Button size="sm" className="flex-1 bg-orange-500 hover:bg-orange-600">
-                                Sign Up
-                            </Button>
-                        </div>
+            {/* Mobile menu - shown when isMenuOpen is true, hidden on lg screens */}
+            <div className={`${isMenuOpen ? 'block' : 'hidden'} border-t px-4 py-4 lg:hidden`}>
+                <nav className="mb-4 flex flex-col gap-4">
+                    <a href="#" className="text-sm font-medium transition-colors hover:text-emerald-600">
+                        Jobs
+                    </a>
+                    <a href="#" className="text-sm font-medium transition-colors hover:text-emerald-600">
+                        Companies
+                    </a>
+                    <a href="#" className="text-sm font-medium transition-colors hover:text-emerald-600">
+                        Salaries
+                    </a>
+                    <a href="#" className="text-sm font-medium transition-colors hover:text-emerald-600">
+                        Interviews
+                    </a>
+                </nav>
+                <div className="flex flex-col gap-3">
+                    <div className="relative">
+                        <Search className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 transform text-gray-400" />
+                        <Input className="pl-10" placeholder="Search jobs, companies..." />
+                    </div>
+                    <div className="flex gap-2">
+                        <Button variant="outline" size="sm" className="flex-1 cursor-pointer">
+                            Sign In
+                        </Button>
+                        <Button size="sm" className="flex-1 cursor-pointer bg-orange-500 hover:bg-orange-600">
+                            Sign Up
+                        </Button>
                     </div>
                 </div>
-            )}
+            </div>
         </header>
     );
 }
