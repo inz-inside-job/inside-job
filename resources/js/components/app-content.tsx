@@ -4,7 +4,7 @@ type AppContentProps = ComponentProps<'main'>;
 
 export function AppContent({ children, ...props }: AppContentProps) {
     return (
-        <main className="mx-auto flex h-full w-full max-w-7xl flex-1 flex-col gap-4 rounded-xl" {...props}>
+        <main className="mx-auto flex h-full w-full max-w-8xl flex-1 flex-col" {...props}>
             {children}
         </main>
     );
