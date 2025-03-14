@@ -5,7 +5,7 @@ import { Building2, MapPin, Search } from 'lucide-react';
 
 export function Hero() {
     return (
-        <div className="bg-gradient-to-r from-orange-500 to-orange-400 text-white">
+        <div className="relative right-[50%] left-[50%] mx-[-50vw] w-screen bg-gradient-to-r from-orange-500 to-orange-400 text-white">
             <div className="container mx-auto px-4 py-16 md:py-24">
                 <div className="mx-auto mb-8 max-w-3xl text-center">
                     <h1 className="mb-4 text-3xl font-bold md:text-4xl lg:text-5xl">Find your dream job</h1>
