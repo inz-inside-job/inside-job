@@ -1,7 +1,6 @@
-import TextLink from '@/components/text-link';
 import { Button } from '@/components/ui/button';
 import AuthLayout from '@/layouts/auth-layout';
-import { Head } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
 import { useForm } from 'laravel-precognition-react-inertia';
 import { LoaderCircle } from 'lucide-react';
 import { FormEventHandler } from 'react';
@@ -31,9 +30,9 @@ export default function VerifyEmail({ status }: { status?: string }) {
                     Resend verification email
                 </Button>
 
-                <TextLink href={route('logout')} method="post" className="mx-auto block text-sm">
+                <Link href={route('logout')} method="post" className="mx-auto block text-sm">
                     Log out
-                </TextLink>
+                </Link>
             </form>
         </AuthLayout>
     );

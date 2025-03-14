@@ -17,13 +17,13 @@ export function Hero() {
                 <div className="bg-background mx-auto max-w-3xl rounded-lg p-4 shadow-lg">
                     <Tabs defaultValue="jobs">
                         <TabsList className="bg-muted mb-4 flex w-full justify-between">
-                            <TabsTrigger value="jobs" className="flex-1">
+                            <TabsTrigger value="jobs" className="flex-1 cursor-pointer">
                                 Jobs
                             </TabsTrigger>
-                            <TabsTrigger value="companies" className="flex-1">
+                            <TabsTrigger value="companies" className="flex-1 cursor-pointer">
                                 Companies
                             </TabsTrigger>
-                            <TabsTrigger value="salaries" className="flex-1">
+                            <TabsTrigger value="salaries" className="flex-1 cursor-pointer">
                                 Salaries
                             </TabsTrigger>
                         </TabsList>

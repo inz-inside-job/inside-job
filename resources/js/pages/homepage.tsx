@@ -1,15 +1,13 @@
-import { CompanyReviews } from '@/components/company-reviews';
+import { CompanyReviews } from '@/components/homepage/company-reviews';
 import { Head } from '@inertiajs/react';
-import { Hero } from '../components/hero';
+import { Hero } from '../components/homepage/hero';
 
 export default function Homepage() {
     return (
         <div className="flex min-h-screen flex-col">
             <Head title="Home" />
-            <main className="flex-1">
-                <Hero />
-                <CompanyReviews />
-            </main>
+            <Hero />
+            <CompanyReviews />
         </div>
     );
 }

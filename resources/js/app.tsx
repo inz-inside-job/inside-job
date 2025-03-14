@@ -1,26 +1,30 @@
 import '../css/app.css';
 
 import { createInertiaApp } from '@inertiajs/react';
-import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
+import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { initializeTheme } from './hooks/use-appearance';
 import AppLayout from './layouts/app-layout';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
-//bandziau daryt pagal inertia dokumentacija, bet neveike del typescript shit, nzn kaip kitaip padaryt taip veikia for now
+interface Page {
+    default: {
+        layout: React.ReactNode | ((page: React.ReactNode) => React.ReactNode);
+    };
+}
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
-    resolve: (name) => resolvePageComponent(`./pages/${name}.tsx`, import.meta.glob('./pages/**/*.tsx')),
+    resolve: (name) => {
+        const pages = import.meta.glob('./pages/**/*.tsx', { eager: true });
+        const page = pages[`./pages/${name}.tsx`] as Page;
+        page.default.layout = page.default.layout || ((page) => <AppLayout children={page} />);
+        return page;
+    },
     setup({ el, App, props }) {
         const root = createRoot(el);
-
-        root.render(
-            <AppLayout>
-                <App {...props} />
-            </AppLayout>,
-        );
+        root.render(<App {...props} />);
     },
     progress: {
         color: '#4B5563',
