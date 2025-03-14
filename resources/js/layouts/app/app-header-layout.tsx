@@ -8,10 +8,10 @@ interface AppHeaderLayoutProps extends PropsWithChildren {
     breadcrumbs?: BreadcrumbItem[];
 }
 
-export default function AppHeaderLayout({ children, breadcrumbs }: AppHeaderLayoutProps) {
+export default function AppHeaderLayout({ children }: AppHeaderLayoutProps) {
     return (
         <AppShell>
-            <AppHeader breadcrumbs={breadcrumbs} />
+            <AppHeader />
             <AppContent>{children}</AppContent>
         </AppShell>
     );

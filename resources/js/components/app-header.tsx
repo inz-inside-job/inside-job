@@ -4,7 +4,7 @@ import { useAppearance } from '@/hooks/use-appearance';
 import { Building2, Menu, Moon, Search, Sun, X } from 'lucide-react';
 import { useState } from 'react';
 
-export function Header() {
+export function AppHeader() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const { appearance, updateAppearance } = useAppearance();
 
