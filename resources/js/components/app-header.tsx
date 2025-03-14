@@ -20,9 +20,9 @@ export function AppHeader() {
                     </Link>
                 </div>
 
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-4 lg:hidden">
                     <AppearanceToggleDropdown />
-                    <Button className="bg-primary cursor-pointer hover:bg-orange-600 lg:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+                    <Button className="bg-primary cursor-pointer hover:bg-orange-600" onClick={() => setIsMenuOpen(!isMenuOpen)}>
                         {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
                     </Button>
                 </div>
