@@ -4,8 +4,11 @@ import { createInertiaApp } from '@inertiajs/react';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { createRoot } from 'react-dom/client';
 import { initializeTheme } from './hooks/use-appearance';
+import AppLayout from './layouts/app-layout';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
+
+//bandziau daryt pagal inertia dokumentacija, bet neveike del typescript shit, nzn kaip kitaip padaryt taip veikia for now
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
@@ -13,7 +16,11 @@ createInertiaApp({
     setup({ el, App, props }) {
         const root = createRoot(el);
 
-        root.render(<App {...props} />);
+        root.render(
+            <AppLayout>
+                <App {...props} />
+            </AppLayout>,
+        );
     },
     progress: {
         color: '#4B5563',
