@@ -7,10 +7,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 
 class Job extends Model
 {
-    use HasFactory;
+    use HasFactory, HasSlug;
 
     protected $fillable = [
         'company_id',
@@ -22,6 +24,16 @@ class Job extends Model
         'description',
     ];
 
+    /**
+     * Get the options for generating the slug.
+     */
+    public function getSlugOptions(): SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom('title')
+            ->saveSlugsTo('slug');
+    }
+
     public function company(): BelongsTo
     {
         return $this->belongsTo(Company::class);
@@ -32,7 +44,7 @@ class Job extends Model
         return $this->belongsToMany(User::class, 'applications', 'job_id', 'user_id')
             ->as('applications')
             ->withTimestamps()
-            ->withPivot('status', 'applied_date')
+            ->withPivot('id', 'status', 'applied_date')
             ->using(Application::class);
     }
 
