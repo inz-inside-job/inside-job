@@ -1,7 +1,7 @@
 import { CompanyReviews } from '@/components/company-reviews';
 import { Footer } from '@/components/footer';
 import { Head } from '@inertiajs/react';
-import { Header } from '../components/header';
+import { Header } from '../components/app-header';
 import { Hero } from '../components/hero';
 
 export default function Homepage() {
