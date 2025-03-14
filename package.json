@@ -49,6 +49,8 @@
         "class-variance-authority": "^0.7.1",
         "clsx": "^2.1.1",
         "concurrently": "^9.1.2",
+        "embla-carousel-autoplay": "^8.5.2",
+        "embla-carousel-react": "^8.5.2",
         "globals": "^15.15.0",
         "laravel-precognition-react-inertia": "^0.7.2",
         "laravel-vite-plugin": "^1.2.0",
