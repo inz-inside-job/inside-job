@@ -1,19 +1,13 @@
 import '../css/app.css';
 
+import AppLayout from '@/layouts/app-layout';
+import { Page } from '@/types';
 import { createInertiaApp } from '@inertiajs/react';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
-import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { initializeTheme } from './hooks/use-appearance';
-import AppLayout from './layouts/app-layout';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
-
-interface Page {
-    default: {
-        layout: React.ReactNode | ((page: React.ReactNode) => React.ReactNode);
-    };
-}
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
