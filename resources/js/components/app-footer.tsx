@@ -142,7 +142,7 @@ export function Footer() {
                                 Do Not Sell My Personal Information
                             </Link>
                         </div>
-                        <div className="text-footer-foreground">© 2024 Agile Avengers All Rights Reserved.</div>
+                        <div className="text-footer-foreground">© {new Date().getFullYear()} Agile Avengers All Rights Reserved.</div>
                     </div>
                 </div>
             </div>
