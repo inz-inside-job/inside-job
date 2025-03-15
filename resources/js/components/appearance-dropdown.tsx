@@ -1,11 +1,11 @@
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import { useAppearance } from '@/hooks/use-appearance';
+import { useAppearanceStore } from '@/store/appearance';
 import { Monitor, Moon, Sun } from 'lucide-react';
 import { HTMLAttributes } from 'react';
 
 export default function AppearanceToggleDropdown({ className = '', ...props }: HTMLAttributes<HTMLDivElement>) {
-    const { appearance, updateAppearance } = useAppearance();
+    const { appearance, updateAppearance } = useAppearanceStore();
 
     const getCurrentIcon = () => {
         switch (appearance) {
