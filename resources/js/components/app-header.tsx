@@ -60,7 +60,7 @@ export function AppHeader() {
                         </div>
                         <div className="flex w-full gap-3 lg:w-auto">
                             <Button variant="outline" className="w-full cursor-pointer" size="sm">
-                                Sign In
+                                Login
                             </Button>
                             <Button size="sm" className="bg-primary w-full cursor-pointer hover:bg-orange-600">
                                 Sign Up
