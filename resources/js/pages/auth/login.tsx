@@ -1,11 +1,10 @@
 import InputError from '@/components/input-error';
-import TextLink from '@/components/text-link';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import AuthLayout from '@/layouts/auth-layout';
-import { Head } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
 import { useForm } from 'laravel-precognition-react-inertia';
 import { LoaderCircle } from 'lucide-react';
 import { FormEventHandler } from 'react';
@@ -64,9 +63,9 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                         <div className="flex items-center">
                             <Label htmlFor="password">Password</Label>
                             {canResetPassword && (
-                                <TextLink href={route('password.request')} className="ml-auto text-sm" tabIndex={5}>
+                                <Link href={route('password.request')} className="ml-auto text-sm" tabIndex={5}>
                                     Forgot password?
-                                </TextLink>
+                                </Link>
                             )}
                         </div>
                         <Input
@@ -103,9 +102,9 @@ export default function Login({ status, canResetPassword }: LoginProps) {
 
                 <div className="text-muted-foreground text-center text-sm">
                     Don't have an account?{' '}
-                    <TextLink href={route('register')} tabIndex={5}>
+                    <Link href={route('register')} tabIndex={5}>
                         Sign up
-                    </TextLink>
+                    </Link>
                 </div>
             </form>
 
