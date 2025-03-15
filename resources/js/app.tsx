@@ -1,11 +1,11 @@
 import '../css/app.css';
 
 import AppLayout from '@/layouts/app-layout';
+import { initializeAppearance } from '@/store/appearance';
 import { Page } from '@/types';
 import { createInertiaApp } from '@inertiajs/react';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { createRoot } from 'react-dom/client';
-import {initializeAppearance} from '@/store/appearance'
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
