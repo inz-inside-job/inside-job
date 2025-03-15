@@ -14,9 +14,9 @@ export default function ForgotPassword() {
     });
 
     const page = usePage();
-        const {
-            auth: { status },
-        } = page.props;
+    const {
+        auth: { status },
+    } = page.props;
 
     const onSubmit: FormEventHandler = (e) => {
         e.preventDefault();

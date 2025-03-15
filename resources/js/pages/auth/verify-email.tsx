@@ -9,9 +9,9 @@ export default function VerifyEmail() {
     const { submit, processing } = useForm('post', route('verification.send'), {});
 
     const page = usePage();
-        const {
-            auth: { status },
-        } = page.props;
+    const {
+        auth: { status },
+    } = page.props;
 
     const onSubmit: FormEventHandler = (e) => {
         e.preventDefault();
