@@ -40,6 +40,7 @@ class HandleInertiaRequests extends Middleware
             ...parent::share($request),
             'name' => config('app.name'),
             'auth' => [
+                'status' => $request->session()->get('status'),
                 'user' => $request->user(),
             ],
             'ziggy' => fn (): array => [

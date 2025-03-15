@@ -3,15 +3,20 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import AuthLayout from '@/layouts/auth-layout';
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, usePage } from '@inertiajs/react';
 import { useForm } from 'laravel-precognition-react-inertia';
 import { LoaderCircle } from 'lucide-react';
 import { FormEventHandler } from 'react';
 
-export default function ForgotPassword({ status }: { status?: string }) {
+export default function ForgotPassword() {
     const { data, setData, submit, processing, errors, validate } = useForm('post', route('password.email'), {
         email: '',
     });
+
+    const page = usePage();
+        const {
+            auth: { status },
+        } = page.props;
 
     const onSubmit: FormEventHandler = (e) => {
         e.preventDefault();

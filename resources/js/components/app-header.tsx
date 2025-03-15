@@ -1,14 +1,34 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Link } from '@inertiajs/react';
+import { useInitials } from '@/hooks/use-initials';
+import { useMediaQuery } from '@/hooks/use-media-query';
+import { Link, router, usePage } from '@inertiajs/react';
 import clsx from 'clsx';
 import { Menu, Search, X } from 'lucide-react';
-import { useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import AppLogoIcon from './app-logo-icon';
 import AppearanceToggleDropdown from './appearance-dropdown';
+import LoginModal from './login-modal';
+import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from './ui/dropdown-menu';
+import { UserMenuContent } from './user-menu-content';
 
 export function AppHeader() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+
+    const page = usePage();
+    const { auth } = page.props;
+    const getInitials = useInitials();
+
+    const isDesktop = useMediaQuery('(min-width: 1024px)');
+
+    const openLoginModal = useCallback(() => {
+        setIsMenuOpen(false);
+        setIsLoginModalOpen(true);
+    }, [setIsMenuOpen, setIsLoginModalOpen]);
+
+    const inAuthPage = useMemo(() => page.url.startsWith('/auth'), [page.url]);
 
     return (
         <header className="bg-background sticky top-0 z-50 border-b">
@@ -59,12 +79,68 @@ export function AppHeader() {
                             <Input className="w-full pl-10 lg:w-[300px]" placeholder="Search jobs, companies..." />
                         </div>
                         <div className="flex w-full gap-3 lg:w-auto">
-                            <Button variant="outline" className="w-full cursor-pointer" size="sm">
-                                Login
-                            </Button>
-                            <Button size="sm" className="bg-primary w-full cursor-pointer hover:bg-orange-600">
-                                Sign Up
-                            </Button>
+                            {auth.user ? (
+                                isMenuOpen && !isDesktop ? (
+                                    <div className="flex w-full items-center gap-2">
+                                        <Avatar className="size-8 overflow-hidden rounded-full">
+                                            <AvatarImage src={auth.user.avatar} alt={auth.user.name} />
+                                            <AvatarFallback className="rounded-lg bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white">
+                                                {getInitials(auth.user.name)}
+                                            </AvatarFallback>
+                                        </Avatar>
+                                        <div className="flex w-full gap-2">
+                                            <Button variant="outline" className="w-full cursor-pointer" size="sm">
+                                                Settings
+                                            </Button>
+                                            <Button size="sm" className="bg-primary w-full cursor-pointer hover:bg-orange-600">
+                                                Logout
+                                            </Button>
+                                        </div>
+                                    </div>
+                                ) : (
+                                    <DropdownMenu>
+                                        <DropdownMenuTrigger asChild>
+                                            <Button variant="ghost" className="size-10 rounded-full p-1">
+                                                <Avatar className="size-8 overflow-hidden rounded-full">
+                                                    <AvatarImage src={auth.user.avatar} alt={auth.user.name} />
+                                                    <AvatarFallback className="rounded-lg bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white">
+                                                        {getInitials(auth.user.name)}
+                                                    </AvatarFallback>
+                                                </Avatar>
+                                            </Button>
+                                        </DropdownMenuTrigger>
+                                        <DropdownMenuContent className="w-56" align="end">
+                                            <UserMenuContent user={auth.user} />
+                                        </DropdownMenuContent>
+                                    </DropdownMenu>
+                                )
+                            ) : (
+                                <>
+                                    <LoginModal open={isLoginModalOpen} onOpenChange={setIsLoginModalOpen} />
+                                    <Button
+                                        variant="outline"
+                                        className="w-full cursor-pointer"
+                                        size="sm"
+                                        onClick={() => {
+                                            setIsMenuOpen(false);
+
+                                            if (inAuthPage) {
+                                                router.visit(route('login'));
+                                                return;
+                                            }
+
+                                            openLoginModal();
+                                        }}
+                                    >
+                                        Login
+                                    </Button>
+                                    <Link href={route('register')} onClick={() => setIsMenuOpen(false)} className="w-full">
+                                        <Button size="sm" className="bg-primary w-full cursor-pointer hover:bg-orange-600">
+                                            Sign Up
+                                        </Button>
+                                    </Link>
+                                </>
+                            )}
                         </div>
                     </div>
                 </div>

@@ -1,12 +1,17 @@
 import { Button } from '@/components/ui/button';
 import AuthLayout from '@/layouts/auth-layout';
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, usePage } from '@inertiajs/react';
 import { useForm } from 'laravel-precognition-react-inertia';
 import { LoaderCircle } from 'lucide-react';
 import { FormEventHandler } from 'react';
 
-export default function VerifyEmail({ status }: { status?: string }) {
+export default function VerifyEmail() {
     const { submit, processing } = useForm('post', route('verification.send'), {});
+
+    const page = usePage();
+        const {
+            auth: { status },
+        } = page.props;
 
     const onSubmit: FormEventHandler = (e) => {
         e.preventDefault();
