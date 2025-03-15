@@ -161,8 +161,8 @@ export function CompanyReviews() {
                                 </CarouselItem>
                             ))}
                         </CarouselContent>
-                        <CarouselPrevious className="bg-primary absolute top-1/2 left-0 -translate-x-1/2 -translate-y-1/2 cursor-pointer hover:bg-orange-600" />
-                        <CarouselNext className="bg-primary absolute top-1/2 right-0 translate-x-1/2 -translate-y-1/2 cursor-pointer hover:bg-orange-600" />
+                        <CarouselPrevious className="bg-primary absolute top-1/2 left-0 -translate-x-1/2 -translate-y-1/2 cursor-pointer border-0 hover:bg-orange-600" />
+                        <CarouselNext className="bg-primary absolute top-1/2 right-0 translate-x-1/2 -translate-y-1/2 cursor-pointer border-0 hover:bg-orange-600" />
                     </Carousel>
 
                     <div className="mt-2 flex w-full justify-center gap-1">
