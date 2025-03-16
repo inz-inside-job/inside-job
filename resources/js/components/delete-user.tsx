@@ -1,15 +1,17 @@
 import HeadingSmall from '@/components/heading-small';
 import InputError from '@/components/input-error';
 import { Button } from '@/components/ui/button';
-import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useForm } from 'laravel-precognition-react-inertia';
-import { FormEventHandler, useRef } from 'react';
+import { FormEventHandler, useRef, useState } from 'react';
+import { ResponsiveModal, ResponsiveModalDescription, ResponsiveModalFooter, ResponsiveModalTitle } from './responsive-modal';
 
 export default function DeleteUser() {
     const passwordInput = useRef<HTMLInputElement>(null);
     const { data, setData, submit, processing, reset, errors, clearErrors, validate } = useForm('delete', route('profile.destroy'), { password: '' });
+
+    const [open, setOpen] = useState(false);
 
     const deleteUser: FormEventHandler = (e) => {
         e.preventDefault();
@@ -25,6 +27,7 @@ export default function DeleteUser() {
     const closeModal = () => {
         clearErrors();
         reset();
+        setOpen(false);
     };
 
     return (
@@ -36,51 +39,48 @@ export default function DeleteUser() {
                     <p className="text-sm">Please proceed with caution, this cannot be undone.</p>
                 </div>
 
-                <Dialog>
-                    <DialogTrigger asChild>
-                        <Button variant="destructive">Delete account</Button>
-                    </DialogTrigger>
-                    <DialogContent>
-                        <DialogTitle>Are you sure you want to delete your account?</DialogTitle>
-                        <DialogDescription>
-                            Once your account is deleted, all of its resources and data will also be permanently deleted. Please enter your password
-                            to confirm you would like to permanently delete your account.
-                        </DialogDescription>
-                        <form className="space-y-6" onSubmit={deleteUser}>
-                            <div className="grid gap-2">
-                                <Label htmlFor="password" className="sr-only">
-                                    Password
-                                </Label>
+                <Button variant="destructive" onClick={() => setOpen(true)} className="cursor-pointer">
+                    Delete account
+                </Button>
 
-                                <Input
-                                    id="password"
-                                    type="password"
-                                    name="password"
-                                    ref={passwordInput}
-                                    value={data.password}
-                                    onChange={(e) => setData('password', e.target.value)}
-                                    onBlur={() => validate('password')}
-                                    placeholder="Password"
-                                    autoComplete="current-password"
-                                />
+                <ResponsiveModal open={open} onOpenChange={setOpen}>
+                    <ResponsiveModalTitle>Are you sure you want to delete your account?</ResponsiveModalTitle>
+                    <ResponsiveModalDescription className="mt-2 mb-4">
+                        Once your account is deleted, all of its resources and data will also be permanently deleted. Please enter your password to
+                        confirm you would like to permanently delete your account.
+                    </ResponsiveModalDescription>
+                    <form className="space-y-6" onSubmit={deleteUser}>
+                        <div className="grid gap-2">
+                            <Label htmlFor="password" className="sr-only">
+                                Password
+                            </Label>
 
-                                <InputError message={errors.password} />
-                            </div>
+                            <Input
+                                id="password"
+                                type="password"
+                                name="password"
+                                ref={passwordInput}
+                                value={data.password}
+                                onChange={(e) => setData('password', e.target.value)}
+                                onBlur={() => validate('password')}
+                                placeholder="Password"
+                                autoComplete="current-password"
+                            />
 
-                            <DialogFooter className="gap-2">
-                                <DialogClose asChild>
-                                    <Button variant="secondary" onClick={closeModal}>
-                                        Cancel
-                                    </Button>
-                                </DialogClose>
+                            <InputError message={errors.password} />
+                        </div>
 
-                                <Button variant="destructive" disabled={processing} asChild>
-                                    <button type="submit">Delete account</button>
-                                </Button>
-                            </DialogFooter>
-                        </form>
-                    </DialogContent>
-                </Dialog>
+                        <ResponsiveModalFooter className="gap-2">
+                            <Button variant="secondary" onClick={closeModal}>
+                                Cancel
+                            </Button>
+
+                            <Button variant="destructive" disabled={processing} asChild>
+                                <button type="submit">Delete account</button>
+                            </Button>
+                        </ResponsiveModalFooter>
+                    </form>
+                </ResponsiveModal>
             </div>
         </div>
     );
