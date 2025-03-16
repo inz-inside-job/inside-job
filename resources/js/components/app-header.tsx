@@ -89,12 +89,16 @@ export function AppHeader() {
                                             </AvatarFallback>
                                         </Avatar>
                                         <div className="flex w-full gap-2">
-                                            <Button variant="outline" className="w-full cursor-pointer" size="sm">
-                                                Settings
-                                            </Button>
-                                            <Button size="sm" className="bg-primary w-full cursor-pointer hover:bg-orange-600">
-                                                Logout
-                                            </Button>
+                                            <Link href={route('profile.edit')} className="w-full" onClick={() => setIsMenuOpen(false)}>
+                                                <Button variant="outline" className="w-full cursor-pointer" size="sm">
+                                                    Settings
+                                                </Button>
+                                            </Link>
+                                            <Link href={route('logout')} method="post" className="w-full" onClick={() => setIsMenuOpen(false)}>
+                                                <Button size="sm" className="bg-primary w-full cursor-pointer hover:bg-orange-600">
+                                                    Logout
+                                                </Button>
+                                            </Link>
                                         </div>
                                     </div>
                                 ) : (
