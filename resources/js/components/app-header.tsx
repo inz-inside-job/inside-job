@@ -136,7 +136,7 @@ export function AppHeader() {
                                             openLoginModal();
                                         }}
                                     >
-                                        Login
+                                        Log In
                                     </Button>
                                     <Link href={route('register')} onClick={() => setIsMenuOpen(false)} className="w-full">
                                         <Button size="sm" className="bg-primary w-full cursor-pointer hover:bg-orange-600">
