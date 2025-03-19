@@ -1,10 +1,11 @@
-import HeadingSmall from '@/components/heading-small';
 import InputError from '@/components/input-error';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useForm } from 'laravel-precognition-react-inertia';
+import { TriangleAlert } from 'lucide-react';
 import { FormEventHandler, useRef, useState } from 'react';
+import Heading from './heading';
 import { ResponsiveModal, ResponsiveModalDescription, ResponsiveModalFooter, ResponsiveModalTitle } from './responsive-modal';
 
 export default function DeleteUser() {
@@ -32,16 +33,19 @@ export default function DeleteUser() {
 
     return (
         <div className="space-y-6">
-            <HeadingSmall title="Delete account" description="Delete your account and all of its resources" />
-            <div className="space-y-4 rounded-lg border border-red-100 bg-red-50 p-4 dark:border-red-200/10 dark:bg-red-700/10">
-                <div className="relative space-y-0.5 text-red-600 dark:text-red-100">
-                    <p className="font-medium">Warning</p>
-                    <p className="text-sm">Please proceed with caution, this cannot be undone.</p>
-                </div>
+            <Heading title="Delete account" description="Delete your account and all of its resources" />
+            <div className="flex flex-row items-start gap-4 space-y-4 rounded-lg border border-red-100 bg-red-50 p-4 dark:border-red-200/10 dark:bg-red-700/10">
+                <TriangleAlert className="h-6 w-6 text-red-600 dark:text-red-100" />
+                <div className="space-y-4 text-red-600 dark:text-red-100">
+                    <div className="relative space-y-0.5 text-red-600 dark:text-red-100">
+                        <p className="font-medium">Warning</p>
+                        <p className="text-sm">Please proceed with caution, this cannot be undone. All of your data will be permanently removed.</p>
+                    </div>
 
-                <Button variant="destructive" onClick={() => setOpen(true)} className="cursor-pointer">
-                    Delete account
-                </Button>
+                    <Button variant="destructive" onClick={() => setOpen(true)} className="cursor-pointer">
+                        Delete account
+                    </Button>
+                </div>
 
                 <ResponsiveModal open={open} onOpenChange={setOpen}>
                     <ResponsiveModalTitle>Are you sure you want to delete your account?</ResponsiveModalTitle>
