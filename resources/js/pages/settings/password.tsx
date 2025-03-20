@@ -7,6 +7,7 @@ import { Separator } from '@/components/ui/separator';
 import SettingsLayout from '@/layouts/settings/layout';
 import { Transition } from '@headlessui/react';
 import { Head } from '@inertiajs/react';
+import clsx from 'clsx';
 import { useForm } from 'laravel-precognition-react-inertia';
 import { AlertCircle, Check, Eye, EyeOff, Lock, Shield } from 'lucide-react';
 import { FormEventHandler, useRef, useState } from 'react';
@@ -161,24 +162,30 @@ export default function Password() {
                                         <div className="flex items-center justify-between">
                                             <span className="text-muted-foreground text-sm">Password strength:</span>
                                             <span
-                                                className={`text-sm font-medium ${
-                                                    passwordStrength < 40
-                                                        ? 'text-destructive'
-                                                        : passwordStrength < 80
-                                                          ? 'text-amber-500'
-                                                          : 'text-emerald-500'
-                                                }`}
+                                                className={clsx('text-sm font-medium', {
+                                                    'text-destructive': passwordStrength < 40,
+                                                    'text-amber-500': passwordStrength < 80,
+                                                    'text-emerald-500': passwordStrength >= 80,
+                                                })}
                                             >
                                                 {getStrengthText()}
                                             </span>
                                         </div>
-                                        <Progress value={passwordStrength} className={`h-2 ${getStrengthColor()}`} />
+                                        <Progress value={passwordStrength} className={clsx('h-2', getStrengthColor())} />
 
                                         <div className="mt-4 grid grid-cols-1 gap-2 sm:grid-cols-2">
                                             <div className="flex items-center gap-2 text-sm">
-                                                <div className={`rounded-full p-0.5 ${data.password.length > 7 ? 'bg-emerald-500' : 'bg-muted'}`}>
+                                                <div
+                                                    className={clsx('rounded-full p-0.5', {
+                                                        'bg-emerald-500': data.password.length > 0,
+                                                        'bg-muted': data.password.length === 0,
+                                                    })}
+                                                >
                                                     <Check
-                                                        className={`h-3 w-3 ${data.password.length > 7 ? 'text-white' : 'text-muted-foreground'}`}
+                                                        className={clsx('h-3 w-3', {
+                                                            'text-white': data.password.length > 7,
+                                                            'text-muted-foreground': data.password.length <= 7,
+                                                        })}
                                                     />
                                                 </div>
                                                 <span className={data.password.length > 7 ? 'text-foreground' : 'text-muted-foreground'}>
@@ -186,34 +193,71 @@ export default function Password() {
                                                 </span>
                                             </div>
                                             <div className="flex items-center gap-2 text-sm">
-                                                <div className={`rounded-full p-0.5 ${/[A-Z]/.test(data.password) ? 'bg-emerald-500' : 'bg-muted'}`}>
+                                                <div
+                                                    className={clsx('rounded-full p-0.5', {
+                                                        'bg-emerald-500': /[A-Z]/.test(data.password),
+                                                        'bg-muted': !/[A-Z]/.test(data.password),
+                                                    })}
+                                                >
                                                     <Check
-                                                        className={`h-3 w-3 ${/[A-Z]/.test(data.password) ? 'text-white' : 'text-muted-foreground'}`}
+                                                        className={clsx('h-3 w-3', {
+                                                            'text-white': /[A-Z]/.test(data.password),
+                                                            'text-muted-foreground': !/[A-Z]/.test(data.password),
+                                                        })}
                                                     />
                                                 </div>
-                                                <span className={/[A-Z]/.test(data.password) ? 'text-foreground' : 'text-muted-foreground'}>
+                                                <span
+                                                    className={clsx({
+                                                        'text-foreground': /[A-Z]/.test(data.password),
+                                                        'text-muted-foreground': !/[A-Z]/.test(data.password),
+                                                    })}
+                                                >
                                                     Uppercase letter
                                                 </span>
                                             </div>
                                             <div className="flex items-center gap-2 text-sm">
-                                                <div className={`rounded-full p-0.5 ${/[0-9]/.test(data.password) ? 'bg-emerald-500' : 'bg-muted'}`}>
+                                                <div
+                                                    className={clsx('rounded-full p-0.5', {
+                                                        'bg-emerald-500': /[0-9]/.test(data.password),
+                                                        'bg-muted': !/[0-9]/.test(data.password),
+                                                    })}
+                                                >
                                                     <Check
-                                                        className={`h-3 w-3 ${/[0-9]/.test(data.password) ? 'text-white' : 'text-muted-foreground'}`}
+                                                        className={clsx('h-3 w-3', {
+                                                            'text-white': /[0-9]/.test(data.password),
+                                                            'text-muted-foreground': !/[0-9]/.test(data.password),
+                                                        })}
                                                     />
                                                 </div>
-                                                <span className={/[0-9]/.test(data.password) ? 'text-foreground' : 'text-muted-foreground'}>
+                                                <span
+                                                    className={clsx({
+                                                        'text-foreground': /[0-9]/.test(data.password),
+                                                        'text-muted-foreground': !/[0-9]/.test(data.password),
+                                                    })}
+                                                >
                                                     Number
                                                 </span>
                                             </div>
                                             <div className="flex items-center gap-2 text-sm">
                                                 <div
-                                                    className={`rounded-full p-0.5 ${/[^A-Za-z0-9]/.test(data.password) ? 'bg-emerald-500' : 'bg-muted'}`}
+                                                    className={clsx('rounded-full p-0.5', {
+                                                        'bg-emerald-500': /[^A-Za-z0-9]/.test(data.password),
+                                                        'bg-muted': !/[^A-Za-z0-9]/.test(data.password),
+                                                    })}
                                                 >
                                                     <Check
-                                                        className={`h-3 w-3 ${/[^A-Za-z0-9]/.test(data.password) ? 'text-white' : 'text-muted-foreground'}`}
+                                                        className={clsx('h-3 w-3', {
+                                                            'text-white': /[^A-Za-z0-9]/.test(data.password),
+                                                            'text-muted-foreground': !/[^A-Za-z0-9]/.test(data.password),
+                                                        })}
                                                     />
                                                 </div>
-                                                <span className={/[^A-Za-z0-9]/.test(data.password) ? 'text-foreground' : 'text-muted-foreground'}>
+                                                <span
+                                                    className={clsx({
+                                                        'text-foreground': /[^A-Za-z0-9]/.test(data.password),
+                                                        'text-muted-foreground': !/[^A-Za-z0-9]/.test(data.password),
+                                                    })}
+                                                >
                                                     Special character
                                                 </span>
                                             </div>
