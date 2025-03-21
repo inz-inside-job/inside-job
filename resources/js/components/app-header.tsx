@@ -59,7 +59,7 @@ export function AppHeader() {
                         <Link href="#" className="text-sm font-medium transition-colors hover:text-emerald-600">
                             Jobs
                         </Link>
-                        <Link href="#" className="text-sm font-medium transition-colors hover:text-emerald-600">
+                        <Link href={route('companies')} className="text-sm font-medium transition-colors hover:text-emerald-600">
                             Companies
                         </Link>
                         <Link href="#" className="text-sm font-medium transition-colors hover:text-emerald-600">
