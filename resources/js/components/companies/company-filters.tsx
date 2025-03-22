@@ -54,7 +54,7 @@ export function CompanyFilters() {
     };
 
     return (
-        <div className="bg-background sticky top-20 rounded-lg border p-4">
+        <div className="bg-background sticky top-20 max-h-[calc(100vh-9rem)] overflow-y-auto rounded-lg border p-4">
             <div className="mb-4 flex items-center justify-between">
                 <h2 className="text-lg font-semibold">Filters</h2>
                 <Button variant="ghost" size="sm" className="cursor-pointer text-orange-500 hover:text-orange-600" onClick={resetFilters}>
@@ -62,7 +62,7 @@ export function CompanyFilters() {
                 </Button>
             </div>
 
-            <Accordion type="multiple" defaultValue={['rating', 'reviewCategories', 'industry', 'size']}>
+            <Accordion type="multiple" defaultValue={['rating']}>
                 <AccordionItem value="rating">
                     <AccordionTrigger>Overall Rating</AccordionTrigger>
                     <AccordionContent>

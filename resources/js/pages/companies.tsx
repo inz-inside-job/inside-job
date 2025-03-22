@@ -1,6 +1,6 @@
-import { CompaniesHero } from '@/components/companies-hero';
-import { CompanyFilters } from '@/components/company-filters';
-import { CompanyGrid } from '@/components/company-grid';
+import { CompaniesHero } from '@/components/companies/companies-hero';
+import { CompanyFilters } from '@/components/companies/company-filters';
+import { CompanyGrid } from '@/components/companies/company-grid';
 
 export default function CompaniesPage() {
     return (

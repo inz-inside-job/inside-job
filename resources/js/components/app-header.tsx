@@ -32,7 +32,7 @@ export function AppHeader() {
 
     return (
         <header className="bg-background sticky top-0 z-50 border-b">
-            <div className="mx-auto flex items-center justify-between px-4 py-3">
+            <div className="container mx-auto flex items-center justify-between px-4 py-3">
                 <div className="flex items-center gap-8">
                     <Link href="/" className="flex items-center gap-2">
                         <AppLogoIcon className="text-primary h-8 w-8" />
