@@ -1,10 +1,12 @@
 import { CompaniesHero } from '@/components/companies/companies-hero';
 import { CompanyFilters } from '@/components/companies/company-filters';
 import { CompanyGrid } from '@/components/companies/company-grid';
+import { Head } from '@inertiajs/react';
 
 export default function CompaniesPage() {
     return (
-        <div>
+        <>
+            <Head title="Companies" />
             <CompaniesHero />
             <div className="container mx-auto w-full px-4 py-8">
                 <div className="flex flex-col gap-6 lg:flex-row lg:gap-8">
@@ -16,6 +18,6 @@ export default function CompaniesPage() {
                     </div>
                 </div>
             </div>
-        </div>
+        </>
     );
 }
