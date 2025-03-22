@@ -197,7 +197,7 @@ export function CompanyGrid() {
 
             <div className="grid gap-4 sm:grid-cols-1 lg:grid-cols-1 xl:grid-cols-2 2xl:grid-cols-2">
                 {sortedCompanies.map((company) => (
-                    <CompanyCard company={company} />
+                    <CompanyCard key={company.id} company={company} />
                 ))}
             </div>
 
