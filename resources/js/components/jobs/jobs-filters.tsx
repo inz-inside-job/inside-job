@@ -57,7 +57,7 @@ export function JobFilters() {
                 </Button>
             </div>
 
-            <Accordion type="multiple" defaultValue={['datePosted', 'jobType', 'salary', 'experience']}>
+            <Accordion type="multiple" defaultValue={['jobType']}>
                 <AccordionItem value="datePosted">
                     <AccordionTrigger>Date Posted</AccordionTrigger>
                     <AccordionContent>

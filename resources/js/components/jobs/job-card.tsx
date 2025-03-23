@@ -61,10 +61,6 @@ export default function JobCard({ job }: { job: Job }) {
                                     </div>
                                 </div>
                             </div>
-                            <Button variant="ghost" size="icon" className={`h-8 w-8 ${job.isSaved ? 'text-orange' : 'text-gray-dark/70'}`}>
-                                <Bookmark className={`h-5 w-5 ${job.isSaved ? 'fill-orange' : ''}`} />
-                                <span className="sr-only">Save job</span>
-                            </Button>
                         </div>
 
                         <div className="mt-4 flex flex-wrap items-center gap-4">
