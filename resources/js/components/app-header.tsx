@@ -56,7 +56,7 @@ export function AppHeader() {
                     )}
                 >
                     <nav className="mb-4 flex flex-col gap-4 lg:mb-0 lg:w-full lg:flex-row lg:items-center lg:gap-6">
-                        <Link href="#" className="text-sm font-medium transition-colors hover:text-emerald-600">
+                        <Link href={route('jobs')} className="text-sm font-medium transition-colors hover:text-emerald-600">
                             Jobs
                         </Link>
                         <Link href={route('companies')} className="text-sm font-medium transition-colors hover:text-emerald-600">
