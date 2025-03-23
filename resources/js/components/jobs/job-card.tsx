@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Link } from '@inertiajs/react';
-import { Badge, Bookmark, Briefcase, Building2, Clock, ExternalLink, MapPin, Star } from 'lucide-react';
+import { Badge, Briefcase, Building2, Clock, ExternalLink, MapPin, Star } from 'lucide-react';
 
 type Job = {
     id: string;
