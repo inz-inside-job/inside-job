@@ -1,4 +1,5 @@
 import { JobFilters } from '@/components/jobs/jobs-filters';
+import { JobList } from '@/components/jobs/jobs-grid';
 import { JobsHero } from '@/components/jobs/jobs-hero';
 import { Head } from '@inertiajs/react';
 
@@ -12,7 +13,9 @@ export default function CompaniesPage() {
                     <aside className="w-full shrink-0 lg:w-80 xl:w-96">
                         <JobFilters />
                     </aside>
-                    <div className="flex-1"></div>
+                    <div className="flex-1">
+                        <JobList />
+                    </div>
                 </div>
             </div>
         </>

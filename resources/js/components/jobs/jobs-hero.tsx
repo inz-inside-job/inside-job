@@ -7,7 +7,7 @@ export function JobsHero() {
         <div className="bg-gradient-to-r from-orange-500 to-orange-400 text-white">
             <div className="container mx-auto px-4 py-12">
                 <div className="mx-auto mb-8 max-w-3xl text-center">
-                    <h1 className="mb-4 text-3xl font-bold md:text-4xl">Find the perfect job for you</h1>
+                    <h1 className="mb-4 text-3xl font-bold md:text-4xl">Find The Perfect Job For You</h1>
                     <p className="text-lg opacity-90">Search millions of jobs and get the inside scoop on companies</p>
                 </div>
 
