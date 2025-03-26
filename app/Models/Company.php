@@ -126,7 +126,7 @@ class Company extends Model
     {
         // If scoped with rating
         if (isset($this->attributes['rating']) && $this->attributes['rating'] !== null) {
-            return $this->attributes['rating'] ?? 0;
+            return $this->attributes['rating'];
         }
 
         // If not scoped, calculate
@@ -147,7 +147,7 @@ class Company extends Model
     {
         // If scoped with rating
         if (isset($this->attributes['recommended']) && $this->attributes['recommended'] !== null) {
-            return $this->attributes['recommended'] ?? 0;
+            return $this->attributes['recommended'];
         }
 
         // If not scoped, calculate
@@ -178,7 +178,7 @@ class Company extends Model
     {
         // If scoped with rating
         if (isset($this->attributes['average_salary']) && $this->attributes['average_salary'] !== null) {
-            return $this->attributes['average_salary'] ?? 0;
+            return $this->attributes['average_salary'];
         }
 
         // If not scoped, calculate
