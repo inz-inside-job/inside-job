@@ -26,7 +26,7 @@ class CompanyFactory extends Factory
             'location' => $this->faker->city().', '.$this->faker->country(), // Generates a realistic location
             'website' => $this->faker->url(), // Generates a valid website URL
             'employee_count' => $this->faker->numberBetween(10, 10000), // Generates a realistic employee count
-            'founded_year' => Carbon::now()->subYears($this->faker->numberBetween(1, 100)), // Generates a random past year
+            'founded_year' => Carbon::now()->subYears($this->faker->numberBetween(1, 45)), // Generates a random past year
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ];
