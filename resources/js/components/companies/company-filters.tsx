@@ -3,55 +3,78 @@ import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Slider } from '@/components/ui/slider';
+import { useGetQueryParams, withQueryBuilderParams } from '@/lib/utils';
+import { router } from '@inertiajs/react';
 import { Star } from 'lucide-react';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
 const industries = ['Technology', 'Healthcare', 'Finance', 'Education', 'Retail', 'Manufacturing', 'Media', 'Consulting', 'Non-profit', 'Government'];
 
-const companySize = ['1-50 employees', '51-200 employees', '201-500 employees', '501-1,000 employees', '1,001-5,000 employees', '5,001+ employees'];
-
-const reviewCategories = [
-    'Work-Life Balance',
-    'Culture & Values',
-    'Diversity & Inclusion',
-    'Career Opportunities',
-    'Compensation & Benefits',
-    'Senior Management',
-    'CEO Approval',
+const companySize = [
+    { min: null, max: 50, label: '1-50 employees' },
+    { min: 51, max: 200, label: '51-200 employees' },
+    { min: 201, max: 500, label: '201-500 employees' },
+    { min: 501, max: 1000, label: '501-1,000 employees' },
+    { min: 1001, max: 5000, label: '1,001-5,000 employees' },
+    { min: 5001, max: null, label: '5,001+ employees' },
 ];
 
-export function CompanyFilters() {
-    const [ratingFilter, setRatingFilter] = useState([3.5]);
-    const [selectedReviewCategories, setSelectedReviewCategories] = useState<string[]>([]);
-    const [selectedIndustries, setSelectedIndustries] = useState<string[]>([]);
-    const [selectedCompanySizes, setSelectedCompanySizes] = useState<string[]>([]);
-    const [location, setLocation] = useState('');
-    const [isRemoteFriendly, setIsRemoteFriendly] = useState(false);
-    const [isHybrid, setIsHybrid] = useState(false);
+const defaultRatingFilter = [3.5];
 
-    const defaultRatingFilter = [3.5];
+export function CompanyFilters() {
+    const queryParams = useGetQueryParams<{
+        min_rating: number;
+        industry: string[];
+        company_sizes: [number, number][];
+        location: string;
+    }>();
+
+    const queryCompanySizes = (queryParams.filters.company_sizes ?? [])
+        .map(([min, max]) => {
+            return companySize.find((item) => item.min === min && item.max === max);
+        })
+        .filter((item) => item !== undefined);
+
+    const [ratingFilter, setRatingFilter] = useState<number[]>([queryParams.filters.min_rating ?? defaultRatingFilter[0]]);
+    const [selectedIndustries, setSelectedIndustries] = useState<string[]>([...(queryParams.filters.industry ?? [])]);
+    const [selectedCompanySizes, setSelectedCompanySizes] = useState<(typeof companySize)[0][]>(queryCompanySizes);
+    const [location, setLocation] = useState(queryParams.filters.location ?? '');
 
     const resetFilters = () => {
         setRatingFilter(defaultRatingFilter);
-        setSelectedReviewCategories([]);
         setSelectedIndustries([]);
         setSelectedCompanySizes([]);
         setLocation('');
-        setIsRemoteFriendly(false);
-        setIsHybrid(false);
-    };
-
-    const toggleReviewCategory = (category: string) => {
-        setSelectedReviewCategories((prev) => (prev.includes(category) ? prev.filter((item) => item !== category) : [...prev, category]));
     };
 
     const toggleIndustry = (industry: string) => {
         setSelectedIndustries((prev) => (prev.includes(industry) ? prev.filter((item) => item !== industry) : [...prev, industry]));
     };
 
-    const toggleCompanySize = (size: string) => {
-        setSelectedCompanySizes((prev) => (prev.includes(size) ? prev.filter((item) => item !== size) : [...prev, size]));
+    const toggleCompanySize = (size: (typeof companySize)[0]) => {
+        setSelectedCompanySizes((prev) => {
+            const isSelected = prev.some((item) => item.min === size.min && item.max === size.max);
+            return isSelected ? prev.filter((item) => !(item.min === size.min && item.max === size.max)) : [...prev, size];
+        });
     };
+
+    const onApply = useCallback(() => {
+        const minRating = ratingFilter[0] === defaultRatingFilter[0] ? undefined : ratingFilter[0];
+        const companySizes = selectedCompanySizes.map((size) => `${size.min ?? 'null'},${size.max ?? 'null'}`);
+        const locationParam = location.trim();
+
+        const query = withQueryBuilderParams({
+            filters: {
+                min_rating: minRating,
+                industry: selectedIndustries,
+                company_sizes: companySizes,
+                location: locationParam === '' ? undefined : locationParam,
+            },
+            sorts: queryParams.sorts,
+        });
+
+        router.get(route('companies', query), undefined, { replace: true, preserveState: true, preserveScroll: true });
+    }, [location, queryParams.sorts, ratingFilter, selectedCompanySizes, selectedIndustries]);
 
     return (
         <div className="bg-background sticky top-20 max-h-[calc(100vh-9rem)] overflow-y-auto rounded-lg border p-4">
@@ -79,29 +102,6 @@ export function CompanyFilters() {
                                 <span>0</span>
                                 <span>5</span>
                             </div>
-                        </div>
-                    </AccordionContent>
-                </AccordionItem>
-
-                <AccordionItem value="reviewCategories">
-                    <AccordionTrigger>Review Categories</AccordionTrigger>
-                    <AccordionContent>
-                        <div className="space-y-3">
-                            {reviewCategories.map((category) => (
-                                <div key={category} className="flex items-center space-x-2">
-                                    <Checkbox
-                                        id={`category-${category}`}
-                                        checked={selectedReviewCategories.includes(category)}
-                                        onCheckedChange={() => toggleReviewCategory(category)}
-                                    />
-                                    <label
-                                        htmlFor={`category-${category}`}
-                                        className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                    >
-                                        {category}
-                                    </label>
-                                </div>
-                            ))}
                         </div>
                     </AccordionContent>
                 </AccordionItem>
@@ -134,17 +134,17 @@ export function CompanyFilters() {
                     <AccordionContent>
                         <div className="space-y-3">
                             {companySize.map((size) => (
-                                <div key={size} className="flex items-center space-x-2">
+                                <div key={size.label} className="flex items-center space-x-2">
                                     <Checkbox
-                                        id={`size-${size}`}
-                                        checked={selectedCompanySizes.includes(size)}
+                                        id={`size-${size.label}`}
+                                        checked={selectedCompanySizes.some((item) => item.min === size.min && item.max === size.max)}
                                         onCheckedChange={() => toggleCompanySize(size)}
                                     />
                                     <label
-                                        htmlFor={`size-${size}`}
+                                        htmlFor={`size-${size.label}`}
                                         className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                                     >
-                                        {size}
+                                        {size.label}
                                     </label>
                                 </div>
                             ))}
@@ -161,32 +161,13 @@ export function CompanyFilters() {
                             value={location}
                             onChange={(e) => setLocation(e.target.value)}
                         />
-                        <div className="space-y-3">
-                            <div className="flex items-center space-x-2">
-                                <Checkbox
-                                    id="remote-friendly"
-                                    checked={isRemoteFriendly}
-                                    onCheckedChange={(checked) => setIsRemoteFriendly(checked === true)}
-                                />
-                                <label
-                                    htmlFor="remote-friendly"
-                                    className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                >
-                                    Remote-friendly
-                                </label>
-                            </div>
-                            <div className="flex items-center space-x-2">
-                                <Checkbox id="hybrid" checked={isHybrid} onCheckedChange={(checked) => setIsHybrid(checked === true)} />
-                                <label htmlFor="hybrid" className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                                    Hybrid
-                                </label>
-                            </div>
-                        </div>
                     </AccordionContent>
                 </AccordionItem>
             </Accordion>
 
-            <Button className="mt-6 w-full cursor-pointer bg-orange-500 hover:bg-orange-600">Apply Filters</Button>
+            <Button onClick={onApply} className="mt-6 w-full cursor-pointer bg-orange-500 hover:bg-orange-600">
+                Apply Filters
+            </Button>
         </div>
     );
 }

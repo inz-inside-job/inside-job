@@ -16,9 +16,12 @@
         "laravel/horizon": "^5.30",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.10.1",
+        "spatie/enum": "^3.13",
+        "spatie/laravel-data": "^4.14",
         "spatie/laravel-permission": "^6.16",
         "spatie/laravel-query-builder": "^6.3",
         "spatie/laravel-sluggable": "^3.7",
+        "spatie/laravel-typescript-transformer": "^2.5",
         "tightenco/ziggy": "^2.4"
     },
     "require-dev": {
