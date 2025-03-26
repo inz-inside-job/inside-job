@@ -19,7 +19,7 @@ class CompanySeeder extends Seeder
         // Remove all existing companies
         Company::query()->delete();
 
-        // Create 10 companies
+        // Create 20 companies
         $companies = Company::factory(20)->create();
 
         $logoPaths = glob(base_path('database/seeders/CompanyLogos').'/*.png');
