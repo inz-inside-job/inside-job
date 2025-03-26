@@ -17,32 +17,16 @@ class CompanyData extends Data
 
     public function __construct(
         public int $id,
-
-        #[Required, StringType]
         public string $name,
-
-        #[Required, StringType]
         public string $industry,
-
-        #[StringType]
         public ?string $location,
-
-        #[Required, IntegerType]
         public int $employee_count,
-
-        #[Required, Date]
         public string $founded_year,
-
         public float $rating,
-
         public float $average_salary,
-
         public float $recommend,
-
         public int $reviews_count,
-
         ?string $logo,
-
         public string $description,
     ) {
         $this->logo = $logo;
