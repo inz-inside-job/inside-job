@@ -9,17 +9,20 @@ export function CompanyGrid({ companies }: { companies: App.Data.CompanyData[] }
     const queryParameters = useGetQueryParams();
     const [sortOption, setSortOption] = useState('rating');
 
-    const onSortChange = useCallback((sortValue: string) => {
-        setSortOption(sortValue);
-        const sort = sortValue === 'rating' ? null : sortValue;
+    const onSortChange = useCallback(
+        (sortValue: string) => {
+            setSortOption(sortValue);
+            const sort = sortValue === 'rating' ? null : sortValue;
 
-        const query = withQueryBuilderParams({
-            filters: queryParameters.filters,
-            sorts: sort === null ? {} : { [sort]: 'desc' },
-        });
+            const query = withQueryBuilderParams({
+                filters: queryParameters.filters,
+                sorts: sort === null ? {} : { [sort]: 'desc' },
+            });
 
-        router.get(route('companies', query), undefined, { replace: true, preserveState: true, preserveScroll: true });
-    }, [queryParameters.filters]);
+            router.get(route('companies', query), undefined, { replace: true, preserveState: true, preserveScroll: true });
+        },
+        [queryParameters.filters],
+    );
 
     return (
         <div>
