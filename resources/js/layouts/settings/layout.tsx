@@ -31,6 +31,7 @@ export default function SettingsLayout({ children }: PropsWithChildren) {
                     <nav className="flex flex-col space-y-2">
                         {sidebarNavItems.map((item) => (
                             <Link
+                                key={item.url}
                                 href={item.url}
                                 prefetch
                                 className={cn('rounded-md px-4 py-3 font-medium', {
