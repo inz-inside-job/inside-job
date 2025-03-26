@@ -11,11 +11,6 @@ export interface BreadcrumbItem {
     href: string;
 }
 
-export interface NavGroup {
-    title: string;
-    items: NavItem[];
-}
-
 export interface NavItem {
     title: string;
     url: string;
@@ -45,4 +40,18 @@ export interface Page {
     default: {
         layout: (page: React.ReactNode) => React.ReactNode;
     };
+}
+
+export interface CursorPaginate<T> {
+    data: T[];
+    links: unknown[];
+    meta: Meta;
+}
+export interface Meta {
+    path: string;
+    per_page: number;
+    next_cursor: string;
+    next_page_url: string;
+    prev_cursor: string?;
+    prev_page_url: string?;
 }
