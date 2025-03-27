@@ -17,13 +17,12 @@ Route::get('/jobs', function () {
     return Inertia::render('jobs');
 })->name('jobs');
 
-Route::get('/companies/{company}', function (Company $company) {
-    $company->append(['rating', 'average_salary', 'recommended']);
-
-    return Inertia::render('company', ['company' => CompanyData::from($company)]);
+Route::get('/companies/{slug}', function (string $slug) {
+    $company = Company::whereSlug($slug)->withRating()->withAverageSalary()->withRecommended()->firstOrFail();
+    return Inertia::render('company', ["company" => CompanyData::from($company)]);
 })->name('company');
 
 Route::impersonate();
 
-require __DIR__.'/settings.php';
-require __DIR__.'/auth.php';
+require __DIR__ . '/settings.php';
+require __DIR__ . '/auth.php';

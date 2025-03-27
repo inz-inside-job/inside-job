@@ -7,9 +7,8 @@ declare module 'ziggy-js' {
     "jobs": [],
     "company": [
         {
-            "name": "company",
-            "required": true,
-            "binding": "slug"
+            "name": "slug",
+            "required": true
         }
     ],
     "profile.edit": [],
