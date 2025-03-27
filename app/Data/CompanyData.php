@@ -19,11 +19,12 @@ class CompanyData extends Data
         public int $employee_count,
         public string $founded_year,
         public float $rating,
-        public float $average_salary,
-        public float $recommend,
-        public int $reviews_count,
+        public ?float $average_salary,
+        public ?float $recommend,
+        public ?int $reviews_count,
         ?string $logo,
         public string $description,
+        public string $slug,
     ) {
         $this->logo = $logo;
     }

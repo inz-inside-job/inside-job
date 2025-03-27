@@ -12,7 +12,7 @@ export default function CompanyCard({ company }: { company: App.Data.CompanyData
     const getInitials = useInitials();
 
     return (
-        <Link href={`/companies/${company.id}`}>
+        <Link href={route('company', { company: company.slug })}>
             <Card className="border-gray-light hover:border-orange/20 h-full w-full cursor-pointer transition-all duration-300 hover:scale-[1.02] hover:shadow-xl">
                 <CardHeader className="p-6">
                     <div className="flex flex-col items-center gap-4 sm:flex-row sm:items-start sm:gap-6">
@@ -33,7 +33,7 @@ export default function CompanyCard({ company }: { company: App.Data.CompanyData
                             <div className="flex items-center gap-2">
                                 <StarRating rating={company.rating} readOnly />
                                 <span className="text-gray-dark/70 text-sm">
-                                    {company.rating.toFixed(1)} • {company.reviews_count.toLocaleString()} reviews
+                                    {company.rating.toFixed(1)} • {company.reviews_count!.toLocaleString()} reviews
                                 </span>
                             </div>
                         </div>

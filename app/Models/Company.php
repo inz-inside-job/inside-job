@@ -203,4 +203,9 @@ class Company extends Model
             ->withPivot('id')
             ->using(CompanyUser::class);
     }
+
+    public function getRouteKeyName(): string
+    {
+        return "slug";
+    }
 }
