@@ -2,14 +2,55 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\JobRequest;
+use App\Data\JobData;
 use App\Models\Job;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Inertia\Inertia;
+use Spatie\LaravelData\CursorPaginatedDataCollection;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\AllowedSort;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class JobController
 {
     public function index()
     {
-        return Job::all();
+        $jobs = QueryBuilder::for(
+            Job::with(['company' => function (BelongsTo $query) {
+                $query->withRating()->withCount('reviews');
+            }])
+        )
+            ->allowedSorts(
+                AllowedSort::field('posted_date'),
+                AllowedSort::callback('relevance', function ($query, $direction) {
+                    // xDD
+                    $query->orderBy('posted_date', $direction);
+                }),
+                AllowedSort::callback('salary', function ($query, $direction) {
+                    $query->orderBy('salary_min', $direction);
+                }),
+            )
+//            ->defaultSort('-relevance')
+            ->allowedFilters(
+                AllowedFilter::exact('employment_type'),
+                AllowedFilter::exact('employment_experience'),
+                AllowedFilter::partial('location'),
+                AllowedFilter::callback('salary', function ($query, $value) {
+                    $query->where('salary_min', '>=', $value);
+                }),
+                AllowedFilter::callback('posted_before', function ($query, $value) {
+                    $query->where('posted_date', '<=', $value);
+                }),
+                AllowedFilter::exact('company.industry')
+            )
+            ->cursorPaginate(10)
+            ->withQueryString();
+
+        $data = JobData::collect($jobs, CursorPaginatedDataCollection::class)->wrap('data');
+
+        return Inertia::render('jobs', [
+            'jobs' => Inertia::merge($data),
+        ]);
     }
 
     public function store(JobRequest $request)

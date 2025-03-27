@@ -1,11 +1,19 @@
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useGetQueryParams, withQueryBuilderParams } from '@/lib/utils';
-import { router } from '@inertiajs/react';
+import { CursorPaginate } from '@/types';
+import type { PageProps } from '@inertiajs/core';
+import { router, usePage } from '@inertiajs/react';
 import { useCallback, useState } from 'react';
 import CompanyCard from './company-card';
 
-export function CompanyGrid({ companies }: { companies: App.Data.CompanyData[] }) {
+interface CompanyPageProps extends PageProps {
+    companies: CursorPaginate<App.Data.CompanyData>;
+}
+
+export function CompanyGrid() {
+    const { companies } = usePage<CompanyPageProps>().props;
+
     const queryParameters = useGetQueryParams();
     const [sortOption, setSortOption] = useState('rating');
 
@@ -27,7 +35,7 @@ export function CompanyGrid({ companies }: { companies: App.Data.CompanyData[] }
     return (
         <div>
             <div className="mb-6 flex items-center justify-between">
-                <h2 className="text-xl font-bold">{companies.length} Companies</h2>
+                <h2 className="text-xl font-bold">{companies.data.length} Companies</h2>
                 <div className="flex items-center gap-2">
                     <span className="text-sm text-gray-500">Sort by:</span>
                     <Select defaultValue="rating" value={sortOption} onValueChange={onSortChange}>
@@ -44,7 +52,7 @@ export function CompanyGrid({ companies }: { companies: App.Data.CompanyData[] }
             </div>
 
             <div className="grid gap-4 sm:grid-cols-1 lg:grid-cols-1 xl:grid-cols-2 2xl:grid-cols-2">
-                {companies.map((company) => (
+                {companies.data.map((company) => (
                     <CompanyCard key={company.id} company={company} />
                 ))}
             </div>

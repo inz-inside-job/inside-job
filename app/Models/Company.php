@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Database\Factories\CompanyFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -24,6 +25,9 @@ use Spatie\Sluggable\SlugOptions;
  * @property string $slug
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\User> $followers
  * @property-read int|null $followers_count
+ * @property-read float|null $average_salaray
+ * @property-read float|null $rating
+ * @property-read float|null $recommended
  * @property-read \App\Models\InterviewExperience|null $interview_experiences
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\User> $interviewExperiences
  * @property-read int|null $interview_experiences_count
@@ -35,38 +39,30 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read int|null $users_count
  *
  * @method static \Database\Factories\CompanyFactory factory($count = null, $state = [])
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Company newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Company newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Company query()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Company whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Company whereDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Company whereEmployeeCount($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Company whereFoundedYear($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Company whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Company whereIndustry($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Company whereLocation($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Company whereLogo($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Company whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Company whereSlug($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Company whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Company whereWebsite($value)
- *
- * @property-read float|null $rating
- *
- * @method static Builder<static>|Company withRating()
- *
- * @property-read float|null $average_salaray
- *
+ * @method static Builder<static>|Company newModelQuery()
+ * @method static Builder<static>|Company newQuery()
+ * @method static Builder<static>|Company query()
+ * @method static Builder<static>|Company whereCreatedAt($value)
+ * @method static Builder<static>|Company whereDescription($value)
+ * @method static Builder<static>|Company whereEmployeeCount($value)
+ * @method static Builder<static>|Company whereFoundedYear($value)
+ * @method static Builder<static>|Company whereId($value)
+ * @method static Builder<static>|Company whereIndustry($value)
+ * @method static Builder<static>|Company whereLocation($value)
+ * @method static Builder<static>|Company whereLogo($value)
+ * @method static Builder<static>|Company whereName($value)
+ * @method static Builder<static>|Company whereSlug($value)
+ * @method static Builder<static>|Company whereUpdatedAt($value)
+ * @method static Builder<static>|Company whereWebsite($value)
  * @method static Builder<static>|Company withAverageSalary()
- *
- * @property-read float|null $recommended
- *
+ * @method static Builder<static>|Company withRating()
  * @method static Builder<static>|Company withRecommended()
  *
  * @mixin \Eloquent
  */
 class Company extends Model
 {
+    /** @use HasFactory<CompanyFactory> */
     use HasFactory, HasSlug;
 
     protected $fillable = [

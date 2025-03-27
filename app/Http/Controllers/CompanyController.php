@@ -30,7 +30,7 @@ class CompanyController
             ])
             ->allowedFilters([
                 AllowedFilter::exact('industry'),
-                'location',
+                AllowedFilter::partial('location'),
                 AllowedFilter::callback('company_sizes', function (Builder $query, $sizes) {
                     $query->where(function ($query) use ($sizes) {
                         foreach ($sizes as $size) {

@@ -2,6 +2,7 @@ declare namespace App.Data {
 export type CompanyData = {
 logo: string | null;
 id: number;
+slug: string;
 name: string;
 industry: string;
 location: string | null;
@@ -13,6 +14,27 @@ recommend: number;
 reviews_count: number;
 description: string;
 };
+export type JobCompanyData = {
+logo: string | null;
+name: string;
+slug: string;
+rating: number;
+reviews_count: number;
+};
+export type JobData = {
+company: App.Data.JobCompanyData;
+id: number;
+company_id: number;
+slug: string;
+title: string;
+location: string;
+employment_type: App.Enums.EmploymentType;
+employment_experience: App.Enums.EmploymentExperience;
+posted_date: number;
+salary_min: number;
+salary_max: number;
+description: string;
+};
 }
 declare namespace App.Enums {
 export type UserPermission = {
@@ -22,6 +44,7 @@ value: string;
 export type ApplicationStatus = 'Applied' | 'Invited' | 'Rejected';
 export type CompanyUserPermission = 'view company details' | 'edit company details' | 'delete company' | 'view employee' | 'edit employee' | 'add employee' | 'delete employee' | 'view job' | 'edit job' | 'create job' | 'delete job' | 'view job application' | 'accept job application' | 'decline job application';
 export type CompanyUserRole = 'owner' | 'hr' | 'employee';
+export type EmploymentExperience = 'Entry Level' | 'Mid Level' | 'Senior Level' | 'Manager' | 'Director' | 'Executive';
 export type EmploymentType = 'Full Time' | 'Part Time' | 'Contract' | 'Internship' | 'Temporary' | 'Remote';
 export type InterviewDifficulty = 'Easy' | 'Medium' | 'Hard';
 export type InterviewExperience = 'Positive' | 'Negative' | 'Neutral';
