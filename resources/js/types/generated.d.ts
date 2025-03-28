@@ -16,7 +16,7 @@ description: string;
 slug: string;
 ceo: string;
 mission: string | null;
-benefits: Array<any>;
+benefits: Array<string>;
 type: App.Enums.CompanyType;
 };
 export type CompanyPageData = {
@@ -36,7 +36,7 @@ description: string;
 slug: string;
 ceo: string;
 mission: string | null;
-benefits: Array<any>;
+benefits: Array<string>;
 type: App.Enums.CompanyType;
 jobs_count: number;
 };

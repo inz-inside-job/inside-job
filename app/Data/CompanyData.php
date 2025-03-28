@@ -16,7 +16,27 @@ class CompanyData extends Data
 
     #[WithTransformer(PublicStorageTransformer::class)]
     public ?string $header;
-
+    /**
+     * Summary of __construct
+     * @param int $id
+     * @param string $name
+     * @param string $industry
+     * @param mixed $location
+     * @param int $employee_count
+     * @param string $founded_year
+     * @param float $rating
+     * @param float $average_salary
+     * @param float $recommend
+     * @param int $reviews_count
+     * @param mixed $logo
+     * @param string $description
+     * @param string $slug
+     * @param mixed $header
+     * @param string $ceo
+     * @param mixed $mission
+     * @param array<string> $benefits
+     * @param \App\Enums\CompanyType $type
+     */
     public function __construct(
         public int $id,
         public string $name,
@@ -34,6 +54,7 @@ class CompanyData extends Data
         ?string $header,
         public string $ceo,
         public ?string $mission,
+        /** @var string[] */
         public array $benefits,
         public CompanyType $type,
     ) {
