@@ -22,7 +22,7 @@ import {
     Users,
 } from 'lucide-react';
 
-export default function CompanyPage({ company }: { company: App.Data.CompanyData }) {
+export default function CompanyPage({ company }: { company: App.Data.CompanyPageData }) {
     console.log(company);
     return (
         <>
@@ -30,7 +30,7 @@ export default function CompanyPage({ company }: { company: App.Data.CompanyData
             <div className="bg-background min-h-screen">
                 {/* Cover Image */}
                 <div className="bg-primary relative h-48 md:h-64">
-                    <img src={'/placeholder.svg?height=300&width=1200'} alt={`${company.name} cover`} className="h-full w-full object-cover" />
+                    <img src={company.header ?? ''} alt={`${company.name} cover`} className="h-full w-full object-cover" />
                 </div>
 
                 <div className="container mx-auto px-4 py-8">
@@ -100,7 +100,7 @@ export default function CompanyPage({ company }: { company: App.Data.CompanyData
                                             <Link href={`/companies/${company.id}#jobs`}>
                                                 <Button variant="outline">
                                                     <Briefcase className="mr-2 h-4 w-4" />
-                                                    See All Jobs (69)
+                                                    See All Jobs {company.jobs_count}
                                                 </Button>
                                             </Link>
                                             <Button variant="outline">
@@ -154,11 +154,13 @@ export default function CompanyPage({ company }: { company: App.Data.CompanyData
                                                             </div>
                                                             <div className="flex items-start">
                                                                 <span className="w-24 text-sm font-medium">Size:</span>
-                                                                <span className="bg-text text-sm">{company.employee_count}</span>
+                                                                <span className="bg-text text-sm">{company.employee_count} employees</span>
                                                             </div>
                                                             <div className="flex items-start">
                                                                 <span className="w-24 text-sm font-medium">Founded:</span>
-                                                                <span className="bg-text text-sm">founded</span>
+                                                                <span className="bg-text text-sm">
+                                                                    {new Date(parseInt(company.founded_year) * 1000).getFullYear()}
+                                                                </span>
                                                             </div>
                                                         </div>
                                                         <div className="space-y-2">

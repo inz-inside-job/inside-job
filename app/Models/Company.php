@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
@@ -82,6 +83,7 @@ class Company extends Model
     {
         return [
             'founded_year' => 'timestamp',
+            'benefits' => 'array',
         ];
     }
 
@@ -102,6 +104,11 @@ class Company extends Model
             ->withTimestamps()
             ->withPivot('id', 'followed_date')
             ->using(CompanyFollowed::class);
+    }
+
+    public function jobs(): HasMany
+    {
+        return $this->hasMany(Job::class);
     }
 
     public function interviewExperiences(): BelongsToMany

@@ -7,7 +7,7 @@ use App\Transformers\PublicStorageTransformer;
 use Spatie\LaravelData\Attributes\WithTransformer;
 use Spatie\LaravelData\Data;
 
-class CompanyData extends Data
+class CompanyPageData extends Data
 {
     #[WithTransformer(PublicStorageTransformer::class)]
     public ?string $logo;
@@ -36,6 +36,7 @@ class CompanyData extends Data
         public ?string $mission,
         public array $benefits,
         public CompanyType $type,
+        public int $jobs_count,
     ) {
         $this->logo = $logo;
         $this->founded_year = $founded_year;
