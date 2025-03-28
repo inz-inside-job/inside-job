@@ -9,6 +9,7 @@ import {
     Briefcase,
     Building2,
     Camera,
+    CheckCircle,
     DollarSign,
     ExternalLink,
     FileText,
@@ -103,11 +104,13 @@ export default function CompanyPage({ company }: { company: App.Data.CompanyPage
                                                     See All Jobs {company.jobs_count}
                                                 </Button>
                                             </Link>
-                                            <Button variant="outline">
-                                                <Globe className="mr-2 h-4 w-4" />
-                                                Visit Website
-                                                <ExternalLink className="ml-1 h-3 w-3" />
-                                            </Button>
+                                            <a href={company.website} target="_blank" rel="noopener noreferrer">
+                                                <Button variant="outline" className="cursor-pointer">
+                                                    <Globe className="mr-2 h-4 w-4" />
+                                                    Visit Website
+                                                    <ExternalLink className="ml-1 h-3 w-3" />
+                                                </Button>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
@@ -139,7 +142,7 @@ export default function CompanyPage({ company }: { company: App.Data.CompanyPage
 
                                                 <div>
                                                     <h3 className="mb-2 text-lg font-semibold">Mission</h3>
-                                                    <p className="bg-text">mission</p>
+                                                    <p className="bg-text">{company.mission}</p>
                                                 </div>
 
                                                 <Separator />
@@ -166,21 +169,21 @@ export default function CompanyPage({ company }: { company: App.Data.CompanyPage
                                                         <div className="space-y-2">
                                                             <div className="flex items-start">
                                                                 <span className="w-24 text-sm font-medium">Type:</span>
-                                                                <span className="bg-text text-sm">type</span>
+                                                                <span className="bg-text text-sm">{company.type} Company</span>
                                                             </div>
                                                             <div className="flex items-start">
                                                                 <span className="w-24 text-sm font-medium">CEO:</span>
-                                                                <span className="bg-text text-sm">ceo</span>
+                                                                <span className="bg-text text-sm">{company.ceo}</span>
                                                             </div>
                                                             <div className="flex items-start">
                                                                 <span className="w-24 text-sm font-medium">Website:</span>
                                                                 <a
-                                                                    href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+                                                                    href={company.website}
                                                                     target="_blank"
                                                                     rel="noopener noreferrer"
                                                                     className="text-sm text-orange-600 hover:underline"
                                                                 >
-                                                                    "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+                                                                    {company.website}
                                                                 </a>
                                                             </div>
                                                         </div>
@@ -192,13 +195,12 @@ export default function CompanyPage({ company }: { company: App.Data.CompanyPage
                                                 <div>
                                                     <h3 className="mb-3 text-lg font-semibold">Company Benefits</h3>
                                                     <div className="grid grid-cols-2 gap-2 md:grid-cols-3">
-                                                        Benefits
-                                                        {/* {company.benefits.map((benefit, index) => (
-                                                            <div key={index} className="flex items-center rounded-md bg-gray-50 p-2">
+                                                        {company.benefits.map((benefit, index) => (
+                                                            <div key={index} className="bg-muted flex items-center rounded-md p-2">
                                                                 <CheckCircle className="mr-2 h-4 w-4 text-green-500" />
                                                                 <span className="text-sm">{benefit}</span>
                                                             </div>
-                                                        ))} */}
+                                                        ))}
                                                     </div>
                                                 </div>
                                             </TabsContent>
@@ -207,7 +209,7 @@ export default function CompanyPage({ company }: { company: App.Data.CompanyPage
                                                 <div className="flex items-center justify-between">
                                                     <h2 className="text-xl font-semibold">Employee Reviews</h2>
                                                     <Link href={`/companies/${company.id}/reviews`}>
-                                                        <Button className="bg-orange-500 hover:bg-orange-600">
+                                                        <Button className="cursor-pointer bg-orange-500 hover:bg-orange-600">
                                                             <Star className="mr-2 h-4 w-4" />
                                                             Write a Review
                                                         </Button>
@@ -265,7 +267,7 @@ export default function CompanyPage({ company }: { company: App.Data.CompanyPage
                                             <TabsContent value="jobs" className="space-y-6">
                                                 <div className="flex items-center justify-between">
                                                     <h2 className="text-xl font-semibold">Open Jobs</h2>
-                                                    <span className="bg-text text-sm">10 jobs available</span>
+                                                    <span className="bg-text text-sm">{company.jobs_count} jobs available</span>
                                                 </div>
 
                                                 {/* <CompanyOpenJobs companyId={company.id} /> */}
@@ -361,11 +363,11 @@ export default function CompanyPage({ company }: { company: App.Data.CompanyPage
                                         <Separator className="my-4" />
 
                                         <div className="grid grid-cols-2 gap-4 text-center">
-                                            <div className="bg-background rounded-md p-3">
+                                            <div className="bg-background rounded-md p-3 shadow">
                                                 <div className="text-2xl font-bold text-orange-600">{company.recommend}%</div>
                                                 <div className="bg-text text-xs">Recommend to a Friend</div>
                                             </div>
-                                            <div className="bg-background rounded-md p-3">
+                                            <div className="bg-background rounded-md p-3 shadow">
                                                 <div className="text-2xl font-bold text-orange-600">60%</div>
                                                 <div className="bg-text text-xs">Approve of CEO</div>
                                             </div>

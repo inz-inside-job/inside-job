@@ -4,8 +4,10 @@ namespace App\Data;
 
 use App\Enums\CompanyType;
 use App\Transformers\PublicStorageTransformer;
+use Spatie\LaravelData\Attributes\LoadRelation;
 use Spatie\LaravelData\Attributes\WithTransformer;
 use Spatie\LaravelData\Data;
+use App\Data\JobData;
 
 class CompanyPageData extends Data
 {
@@ -16,6 +18,10 @@ class CompanyPageData extends Data
 
     #[WithTransformer(PublicStorageTransformer::class)]
     public ?string $header;
+
+    /** @var array<JobData> */
+    #[LoadRelation]
+    public array $jobs;
 
     /**
      * Summary of __construct
@@ -47,6 +53,7 @@ class CompanyPageData extends Data
         public array $benefits,
         public CompanyType $type,
         public int $jobs_count,
+        public string $website,
     ) {
         $this->logo = $logo;
         $this->founded_year = $founded_year;

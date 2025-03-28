@@ -23,6 +23,7 @@ export type CompanyPageData = {
 logo: string | null;
 founded_year: string;
 header: string | null;
+jobs: Array<App.Data.JobData>;
 id: number;
 name: string;
 industry: string;
@@ -39,6 +40,18 @@ mission: string | null;
 benefits: Array<string>;
 type: App.Enums.CompanyType;
 jobs_count: number;
+website: string;
+};
+export type JobData = {
+id: number;
+company_id: number;
+title: string;
+location: string;
+employment_type: App.Enums.EmploymentType;
+posted_date: string;
+salary_range: string | null;
+description: string;
+slug: string;
 };
 }
 declare namespace App.Enums {
