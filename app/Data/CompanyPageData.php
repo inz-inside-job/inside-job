@@ -7,7 +7,6 @@ use App\Transformers\PublicStorageTransformer;
 use Spatie\LaravelData\Attributes\LoadRelation;
 use Spatie\LaravelData\Attributes\WithTransformer;
 use Spatie\LaravelData\Data;
-use App\Data\JobData;
 
 class CompanyPageData extends Data
 {

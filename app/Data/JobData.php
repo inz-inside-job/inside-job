@@ -3,7 +3,6 @@
 namespace App\Data;
 
 use App\Enums\EmploymentType;
-use Illuminate\Support\Carbon;
 use Spatie\LaravelData\Data;
 
 class JobData extends Data
