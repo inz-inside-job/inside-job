@@ -65,11 +65,11 @@ export default function CompanyPage({ company }: { company: App.Data.CompanyPage
                                                 </div>
                                             </div>
                                             <div className="flex gap-2">
-                                                <Button variant="outline" size="sm">
+                                                <Button variant="outline" size="sm" className="cursor-pointer">
                                                     <Share2 className="mr-2 h-4 w-4" />
                                                     Share
                                                 </Button>
-                                                <Button variant="outline" size="sm">
+                                                <Button variant="outline" size="sm" className="cursor-pointer">
                                                     <Heart className="mr-2 h-4 w-4" />
                                                     Follow
                                                 </Button>
@@ -93,13 +93,13 @@ export default function CompanyPage({ company }: { company: App.Data.CompanyPage
 
                                         <div className="mt-6 flex flex-wrap gap-3">
                                             <Link href={`/companies/${company.id}/reviews`}>
-                                                <Button className="bg-orange-500 hover:bg-orange-600">
+                                                <Button className="cursor-pointer bg-orange-500 hover:bg-orange-600">
                                                     <Star className="mr-2 h-4 w-4" />
                                                     Write a Review
                                                 </Button>
                                             </Link>
                                             <Link href={`/companies/${company.id}#jobs`}>
-                                                <Button variant="outline">
+                                                <Button variant="outline" className="cursor-pointer">
                                                     <Briefcase className="mr-2 h-4 w-4" />
                                                     See All Jobs {company.jobs_count}
                                                 </Button>
@@ -124,12 +124,18 @@ export default function CompanyPage({ company }: { company: App.Data.CompanyPage
                                     <CardContent className="p-6">
                                         <Tabs defaultValue="overview">
                                             <TabsList className="mb-6 grid w-full grid-cols-4 gap-4">
-                                                <TabsTrigger value="overview">Overview</TabsTrigger>
-                                                <TabsTrigger value="reviews">Reviews</TabsTrigger>
-                                                <TabsTrigger value="jobs" id="jobs">
+                                                <TabsTrigger value="overview" className="cursor-pointer">
+                                                    Overview
+                                                </TabsTrigger>
+                                                <TabsTrigger value="reviews" className="cursor-pointer">
+                                                    Reviews
+                                                </TabsTrigger>
+                                                <TabsTrigger value="jobs" id="jobs" className="cursor-pointer">
                                                     Jobs
                                                 </TabsTrigger>
-                                                <TabsTrigger value="photos">Photos</TabsTrigger>
+                                                <TabsTrigger value="photos" className="cursor-pointer">
+                                                    Photos
+                                                </TabsTrigger>
                                             </TabsList>
 
                                             <TabsContent value="overview" className="space-y-6">
@@ -257,7 +263,7 @@ export default function CompanyPage({ company }: { company: App.Data.CompanyPage
                                                 </div>
 
                                                 <Link href={`/companies/${company.id}/reviews`}>
-                                                    <Button variant="outline" className="w-full">
+                                                    <Button variant="outline" className="w-full cursor-pointer">
                                                         <MessageSquare className="mr-2 h-4 w-4" />
                                                         Read All {company.reviews_count} Reviews
                                                     </Button>
@@ -276,7 +282,7 @@ export default function CompanyPage({ company }: { company: App.Data.CompanyPage
                                             <TabsContent value="photos" className="space-y-6">
                                                 <div className="flex items-center justify-between">
                                                     <h2 className="text-xl font-semibold">Company Photos</h2>
-                                                    <Button variant="outline" size="sm">
+                                                    <Button variant="outline" size="sm" className="cursor-pointer">
                                                         <Camera className="mr-2 h-4 w-4" />
                                                         Add Photos
                                                     </Button>
@@ -295,7 +301,7 @@ export default function CompanyPage({ company }: { company: App.Data.CompanyPage
                                                     photos
                                                 </div>
 
-                                                <Button variant="outline" className="w-full">
+                                                <Button variant="outline" className="w-full cursor-pointer">
                                                     View All Photos
                                                 </Button>
                                             </TabsContent>
@@ -380,31 +386,31 @@ export default function CompanyPage({ company }: { company: App.Data.CompanyPage
                                         <CardTitle>Company Actions</CardTitle>
                                     </CardHeader>
                                     <CardContent className="space-y-3 p-4">
-                                        <Link href={`/companies/${company.id}/reviews/write`}>
-                                            <Button variant="outline" className="w-full justify-start">
+                                        <Link href={`/companies/${company.slug}/reviews/write`}>
+                                            <Button variant="outline" className="w-full cursor-pointer justify-start">
                                                 <Star className="mr-2 h-4 w-4" />
                                                 Write a Review
                                             </Button>
                                         </Link>
-                                        <Link href={`/companies/${company.id}/photos/add`}>
-                                            <Button variant="outline" className="w-full justify-start">
+                                        <Link href={`/companies/${company.slug}/photos/add`}>
+                                            <Button variant="outline" className="w-full cursor-pointer justify-start">
                                                 <Camera className="mr-2 h-4 w-4" />
                                                 Add Photos
                                             </Button>
                                         </Link>
-                                        <Link href={`/companies/${company.id}/salaries`}>
-                                            <Button variant="outline" className="w-full justify-start">
+                                        <Link href={`/companies/${company.slug}/salaries`}>
+                                            <Button variant="outline" className="w-full cursor-pointer justify-start">
                                                 <DollarSign className="mr-2 h-4 w-4" />
                                                 Add Salary
                                             </Button>
                                         </Link>
-                                        <Link href={`/companies/${company.id}/interviews`}>
-                                            <Button variant="outline" className="w-full justify-start">
+                                        <Link href={`/companies/${company.slug}/interviews`}>
+                                            <Button variant="outline" className="w-full cursor-pointer justify-start">
                                                 <FileText className="mr-2 h-4 w-4" />
                                                 Add Interview
                                             </Button>
                                         </Link>
-                                        <Button variant="outline" className="w-full justify-start">
+                                        <Button variant="outline" className="w-full cursor-pointer justify-start">
                                             <Heart className="mr-2 h-4 w-4" />
                                             Follow
                                         </Button>
