@@ -1,4 +1,5 @@
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { CompanyReviewCard } from '@/components/homepage/company-review-card';
+import JobCard from '@/components/jobs/job-card';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
@@ -19,12 +20,89 @@ import {
     MessageSquare,
     Share2,
     Star,
-    ThumbsUp,
     Users,
 } from 'lucide-react';
 
+// placeholder data
+const companyReviews = [
+    {
+        id: 1,
+        company: 'TechCorp',
+        logo: '/placeholder.svg?height=60&width=60',
+        rating: 4.2,
+        reviewCount: 1243,
+        review: 'Great work-life balance and competitive pay. Management is supportive and there are plenty of growth opportunities.',
+        position: 'Software Engineer',
+        reviewer: {
+            name: 'Alex M.',
+            avatar: '/placeholder.svg?height=40&width=40',
+        },
+        pros: 'Good benefits, flexible hours',
+        cons: 'Some projects can be stressful',
+    },
+    {
+        id: 2,
+        company: 'InnovateCo',
+        logo: '/placeholder.svg?height=60&width=60',
+        rating: 4.5,
+        reviewCount: 876,
+        review: 'Innovative company with a strong focus on employee development. The culture is collaborative and inclusive.',
+        position: 'Product Manager',
+        reviewer: {
+            name: 'Jamie L.',
+            avatar: '/placeholder.svg?height=40&width=40',
+        },
+        pros: 'Great culture, good compensation',
+        cons: 'Work can be demanding at times',
+    },
+    {
+        id: 3,
+        company: 'DesignHub',
+        logo: '/placeholder.svg?height=60&width=60',
+        rating: 4.0,
+        reviewCount: 542,
+        review: 'Creative environment with talented designers. Projects are interesting but deadlines can be tight.',
+        position: 'UX Designer',
+        reviewer: {
+            name: 'Taylor R.',
+            avatar: '/placeholder.svg?height=40&width=40',
+        },
+        pros: 'Creative freedom, modern office',
+        cons: 'Tight deadlines, occasional overtime',
+    },
+    {
+        id: 4,
+        company: 'GrowthLabs',
+        logo: '/placeholder.svg?height=60&width=60',
+        rating: 3.8,
+        reviewCount: 421,
+        review: 'Fast-paced environment with good learning opportunities. Diverse clients and interesting projects.',
+        position: 'Marketing Specialist',
+        reviewer: {
+            name: 'Jordan K.',
+            avatar: '/placeholder.svg?height=40&width=40',
+        },
+        pros: 'Diverse projects, good team culture',
+        cons: 'Work-life balance could be better',
+    },
+    {
+        id: 5,
+        company: 'FinTech Solutions',
+        logo: '/placeholder.svg?height=60&width=60',
+        rating: 4.3,
+        reviewCount: 687,
+        review: 'Excellent compensation with strong work ethic. Challenging work with smart colleagues.',
+        position: 'Financial Analyst',
+        reviewer: {
+            name: 'Morgan P.',
+            avatar: '/placeholder.svg?height=40&width=40',
+        },
+        pros: 'Great pay, challenging work',
+        cons: 'High pressure environment',
+    },
+];
+
 export default function CompanyPage({ company }: { company: App.Data.CompanyPageData }) {
-    console.log(company);
     return (
         <>
             <Head title={company.name} />
@@ -222,46 +300,9 @@ export default function CompanyPage({ company }: { company: App.Data.CompanyPage
                                                     </Link>
                                                 </div>
 
-                                                <div className="bg-background rounded-lg border p-4">
-                                                    <div className="mb-4 flex items-start justify-between">
-                                                        <h3 className="font-medium">zr bosai ir debilai</h3>
-                                                        <div className="flex">
-                                                            {[...Array(5)].map((_, i) => (
-                                                                <Star
-                                                                    key={i}
-                                                                    className={`h-4 w-4 ${i < Math.floor(company.rating) ? 'fill-yellow-400 text-yellow-400' : 'bg-text'}`}
-                                                                />
-                                                            ))}
-                                                        </div>
-                                                    </div>
-
-                                                    <div className="bg-text mb-3 text-xs">Gintaras Gaucys - vakar</div>
-
-                                                    <div className="mb-3">
-                                                        <div className="mb-1 text-xs font-medium">Pros:</div>
-                                                        <p className="bg-text text-sm">krc bosai yra</p>
-                                                    </div>
-
-                                                    <div className="mb-3">
-                                                        <div className="mb-1 text-xs font-medium">Cons:</div>
-                                                        <p className="text-smbg-text">krc debilai yra</p>
-                                                    </div>
-
-                                                    <div className="bg-text flex items-center justify-between text-xs">
-                                                        <div className="flex items-center">
-                                                            <Avatar className="mr-1 h-5 w-5">
-                                                                <AvatarImage />
-                                                                <AvatarFallback>GG</AvatarFallback>
-                                                            </Avatar>
-                                                            <span>Current Employee</span>
-                                                        </div>
-                                                        <div className="flex items-center">
-                                                            <ThumbsUp className="mr-1 h-3 w-3" />
-                                                            <span>69 found helpful</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
+                                                {companyReviews.map((review) => (
+                                                    <CompanyReviewCard review={review} />
+                                                ))}
                                                 <Link href={`/companies/${company.id}/reviews`}>
                                                     <Button variant="outline" className="w-full cursor-pointer">
                                                         <MessageSquare className="mr-2 h-4 w-4" />
@@ -276,7 +317,10 @@ export default function CompanyPage({ company }: { company: App.Data.CompanyPage
                                                     <span className="bg-text text-sm">{company.jobs_count} jobs available</span>
                                                 </div>
 
-                                                {/* <CompanyOpenJobs companyId={company.id} /> */}
+                                                {company.jobs.map((job) => (
+                                                    //Need proper job model and data
+                                                    <JobCard job={job} />
+                                                ))}
                                             </TabsContent>
 
                                             <TabsContent value="photos" className="space-y-6">
