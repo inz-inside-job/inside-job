@@ -1,6 +1,8 @@
 <?php
 
+use App\Data\CompanyPageData;
 use App\Http\Controllers\CompanyController;
+use App\Models\Company;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -14,6 +16,12 @@ Route::get('/companies', [CompanyController::class, 'index'])
 Route::get('/jobs', function () {
     return Inertia::render('jobs');
 })->name('jobs');
+
+Route::get('/companies/{slug}', function (string $slug) {
+    $company = Company::whereSlug($slug)->withRating()->withAverageSalary()->withRecommended()->withCount('reviews')->withCount('jobs')->firstOrFail();
+
+    return Inertia::render('company', ['company' => CompanyPageData::from($company)]);
+})->name('company');
 
 Route::impersonate();
 

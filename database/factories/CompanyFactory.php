@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\CompanyType;
 use App\Models\Company;
 use Faker\Provider\en_US\Company as FakerCompany;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -29,6 +30,11 @@ class CompanyFactory extends Factory
             'founded_year' => Carbon::now()->subYears($this->faker->numberBetween(1, 45)), // Generates a random past year
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
+            'ceo' => $this->faker->name(), // Generates a realistic CEO name
+            'benefits' => $this->faker->words(5), // Generates a list of 5 random words
+            'mission' => $company->bs(), // Generates a random sentence
+            'type' => $this->faker->randomElement(array_column(CompanyType::cases(), 'value')),
+            'header' => $this->faker->imageUrl(200, 200, 'business', true, 'logo'),
         ];
     }
 }

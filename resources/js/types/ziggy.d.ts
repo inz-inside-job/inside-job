@@ -5,6 +5,12 @@ declare module 'ziggy-js' {
     "home": [],
     "companies": [],
     "jobs": [],
+    "company": [
+        {
+            "name": "slug",
+            "required": true
+        }
+    ],
     "profile.edit": [],
     "profile.update": [],
     "profile.destroy": [],
