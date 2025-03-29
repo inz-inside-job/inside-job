@@ -22,86 +22,7 @@ import {
     Users,
 } from 'lucide-react';
 
-// placeholder data
-const companyReviews = [
-    {
-        id: 1,
-        company: 'TechCorp',
-        logo: '/placeholder.svg?height=60&width=60',
-        rating: 4.2,
-        reviewCount: 1243,
-        review: 'Great work-life balance and competitive pay. Management is supportive and there are plenty of growth opportunities.',
-        position: 'Software Engineer',
-        reviewer: {
-            name: 'Alex M.',
-            avatar: '/placeholder.svg?height=40&width=40',
-        },
-        pros: 'Good benefits, flexible hours',
-        cons: 'Some projects can be stressful',
-    },
-    {
-        id: 2,
-        company: 'InnovateCo',
-        logo: '/placeholder.svg?height=60&width=60',
-        rating: 4.5,
-        reviewCount: 876,
-        review: 'Innovative company with a strong focus on employee development. The culture is collaborative and inclusive.',
-        position: 'Product Manager',
-        reviewer: {
-            name: 'Jamie L.',
-            avatar: '/placeholder.svg?height=40&width=40',
-        },
-        pros: 'Great culture, good compensation',
-        cons: 'Work can be demanding at times',
-    },
-    {
-        id: 3,
-        company: 'DesignHub',
-        logo: '/placeholder.svg?height=60&width=60',
-        rating: 4.0,
-        reviewCount: 542,
-        review: 'Creative environment with talented designers. Projects are interesting but deadlines can be tight.',
-        position: 'UX Designer',
-        reviewer: {
-            name: 'Taylor R.',
-            avatar: '/placeholder.svg?height=40&width=40',
-        },
-        pros: 'Creative freedom, modern office',
-        cons: 'Tight deadlines, occasional overtime',
-    },
-    {
-        id: 4,
-        company: 'GrowthLabs',
-        logo: '/placeholder.svg?height=60&width=60',
-        rating: 3.8,
-        reviewCount: 421,
-        review: 'Fast-paced environment with good learning opportunities. Diverse clients and interesting projects.',
-        position: 'Marketing Specialist',
-        reviewer: {
-            name: 'Jordan K.',
-            avatar: '/placeholder.svg?height=40&width=40',
-        },
-        pros: 'Diverse projects, good team culture',
-        cons: 'Work-life balance could be better',
-    },
-    {
-        id: 5,
-        company: 'FinTech Solutions',
-        logo: '/placeholder.svg?height=60&width=60',
-        rating: 4.3,
-        reviewCount: 687,
-        review: 'Excellent compensation with strong work ethic. Challenging work with smart colleagues.',
-        position: 'Financial Analyst',
-        reviewer: {
-            name: 'Morgan P.',
-            avatar: '/placeholder.svg?height=40&width=40',
-        },
-        pros: 'Great pay, challenging work',
-        cons: 'High pressure environment',
-    },
-];
-
-export default function CompanyPage({ company }: { company: App.Data.CompanyPageData }) {
+export default function CompanyPage({ company, reviews }: { company: App.Data.CompanyPageData; reviews: App.Data.ReviewData[] }) {
     return (
         <>
             <Head title={company.name} />
@@ -200,7 +121,7 @@ export default function CompanyPage({ company }: { company: App.Data.CompanyPage
                                 <Card className="shadow-md">
                                     <CardContent className="p-6">
                                         <Tabs defaultValue="overview">
-                                            <TabsList className="mb-6 grid w-full grid-cols-4 gap-4">
+                                            <TabsList className="mb-6 grid w-full grid-cols-3 gap-4">
                                                 <TabsTrigger value="overview" className="cursor-pointer">
                                                     Overview
                                                 </TabsTrigger>
@@ -209,9 +130,6 @@ export default function CompanyPage({ company }: { company: App.Data.CompanyPage
                                                 </TabsTrigger>
                                                 <TabsTrigger value="jobs" id="jobs" className="cursor-pointer">
                                                     Jobs
-                                                </TabsTrigger>
-                                                <TabsTrigger value="photos" className="cursor-pointer">
-                                                    Photos
                                                 </TabsTrigger>
                                             </TabsList>
 
@@ -299,7 +217,7 @@ export default function CompanyPage({ company }: { company: App.Data.CompanyPage
                                                     </Link>
                                                 </div>
 
-                                                {companyReviews.map((review) => (
+                                                {reviews.map((review) => (
                                                     <CompanyReviewCard review={review} />
                                                 ))}
                                                 <Link href={`/companies/${company.id}/reviews`}>
@@ -321,33 +239,6 @@ export default function CompanyPage({ company }: { company: App.Data.CompanyPage
                                                     //<JobCard job={job} />
                                                     <></>
                                                 )) */}
-                                            </TabsContent>
-
-                                            <TabsContent value="photos" className="space-y-6">
-                                                <div className="flex items-center justify-between">
-                                                    <h2 className="text-xl font-semibold">Company Photos</h2>
-                                                    <Button variant="outline" size="sm" className="cursor-pointer">
-                                                        <Camera className="mr-2 h-4 w-4" />
-                                                        Add Photos
-                                                    </Button>
-                                                </div>
-
-                                                <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-                                                    {/* {company.photos.map((photo, index) => (
-                                                        <div key={index} className="aspect-video overflow-hidden rounded-md border">
-                                                            <img
-                                                                src={photo || '/placeholder.svg'}
-                                                                alt={`${company.name} workplace ${index + 1}`}
-                                                                className="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
-                                                            />
-                                                        </div>
-                                                    ))} */}
-                                                    photos
-                                                </div>
-
-                                                <Button variant="outline" className="w-full cursor-pointer">
-                                                    View All Photos
-                                                </Button>
                                             </TabsContent>
                                         </Tabs>
                                     </CardContent>
@@ -378,35 +269,54 @@ export default function CompanyPage({ company }: { company: App.Data.CompanyPage
                                                     <span>Work-Life Balance</span>
                                                     <span className="font-medium">bing</span>
                                                 </div>
-                                                <Progress value={20} className="h-2" />
+                                                <Progress
+                                                    value={(reviews.reduce((sum, review) => sum + review.work_life_balance, 0) / reviews.length) * 20}
+                                                    className="h-2"
+                                                />
                                             </div>
                                             <div>
                                                 <div className="mb-1 flex justify-between text-sm">
                                                     <span>Culture & Values</span>
                                                     <span className="font-medium">bong</span>
                                                 </div>
-                                                <Progress value={50} className="h-2" />
+                                                <Progress
+                                                    value={(reviews.reduce((sum, review) => sum + review.culture_values, 0) / reviews.length) * 20}
+                                                    className="h-2"
+                                                />
                                             </div>
                                             <div>
                                                 <div className="mb-1 flex justify-between text-sm">
                                                     <span>Career Opportunities</span>
                                                     <span className="font-medium">bang</span>
                                                 </div>
-                                                <Progress value={60} className="h-2" />
+                                                <Progress
+                                                    value={
+                                                        (reviews.reduce((sum, review) => sum + review.career_opportunities, 0) / reviews.length) * 20
+                                                    }
+                                                    className="h-2"
+                                                />
                                             </div>
                                             <div>
                                                 <div className="mb-1 flex justify-between text-sm">
                                                     <span>Compensation & Benefits</span>
                                                     <span className="font-medium">bop</span>
                                                 </div>
-                                                <Progress value={70} className="h-2" />
+                                                <Progress
+                                                    value={
+                                                        (reviews.reduce((sum, review) => sum + review.compensation_benefits, 0) / reviews.length) * 20
+                                                    }
+                                                    className="h-2"
+                                                />
                                             </div>
                                             <div>
                                                 <div className="mb-1 flex justify-between text-sm">
                                                     <span>Senior Management</span>
                                                     <span className="font-medium">bap</span>
                                                 </div>
-                                                <Progress value={90} className="h-2" />
+                                                <Progress
+                                                    value={(reviews.reduce((sum, review) => sum + review.senior_management, 0) / reviews.length) * 20}
+                                                    className="h-2"
+                                                />
                                             </div>
                                         </div>
 

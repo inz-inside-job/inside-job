@@ -53,9 +53,13 @@ salary_range: string | null;
 description: string;
 slug: string;
 };
+export type ReviewCompanyData = {
+id: number;
+name: string;
+};
 export type ReviewData = {
 user: App.Data.UserData;
-company: App.Data.CompanyData;
+company: App.Data.ReviewCompanyData;
 id: number;
 company_id: number;
 user_id: number;
@@ -75,6 +79,7 @@ approve_of_ceo: boolean;
 export type UserData = {
 id: number;
 name: string;
+image: string;
 };
 }
 declare namespace App.Enums {

@@ -6,86 +6,7 @@ import Autoplay from 'embla-carousel-autoplay';
 import { useCallback, useEffect, useState } from 'react';
 import { CompanyReviewCard } from './company-review-card';
 
-// placeholder data
-const companyReviews = [
-    {
-        id: 1,
-        company: 'TechCorp',
-        logo: '/placeholder.svg?height=60&width=60',
-        rating: 4.2,
-        reviewCount: 1243,
-        review: 'Great work-life balance and competitive pay. Management is supportive and there are plenty of growth opportunities.',
-        position: 'Software Engineer',
-        reviewer: {
-            name: 'Alex M.',
-            avatar: '/placeholder.svg?height=40&width=40',
-        },
-        pros: 'Good benefits, flexible hours',
-        cons: 'Some projects can be stressful',
-    },
-    {
-        id: 2,
-        company: 'InnovateCo',
-        logo: '/placeholder.svg?height=60&width=60',
-        rating: 4.5,
-        reviewCount: 876,
-        review: 'Innovative company with a strong focus on employee development. The culture is collaborative and inclusive.',
-        position: 'Product Manager',
-        reviewer: {
-            name: 'Jamie L.',
-            avatar: '/placeholder.svg?height=40&width=40',
-        },
-        pros: 'Great culture, good compensation',
-        cons: 'Work can be demanding at times',
-    },
-    {
-        id: 3,
-        company: 'DesignHub',
-        logo: '/placeholder.svg?height=60&width=60',
-        rating: 4.0,
-        reviewCount: 542,
-        review: 'Creative environment with talented designers. Projects are interesting but deadlines can be tight.',
-        position: 'UX Designer',
-        reviewer: {
-            name: 'Taylor R.',
-            avatar: '/placeholder.svg?height=40&width=40',
-        },
-        pros: 'Creative freedom, modern office',
-        cons: 'Tight deadlines, occasional overtime',
-    },
-    {
-        id: 4,
-        company: 'GrowthLabs',
-        logo: '/placeholder.svg?height=60&width=60',
-        rating: 3.8,
-        reviewCount: 421,
-        review: 'Fast-paced environment with good learning opportunities. Diverse clients and interesting projects.',
-        position: 'Marketing Specialist',
-        reviewer: {
-            name: 'Jordan K.',
-            avatar: '/placeholder.svg?height=40&width=40',
-        },
-        pros: 'Diverse projects, good team culture',
-        cons: 'Work-life balance could be better',
-    },
-    {
-        id: 5,
-        company: 'FinTech Solutions',
-        logo: '/placeholder.svg?height=60&width=60',
-        rating: 4.3,
-        reviewCount: 687,
-        review: 'Excellent compensation with strong work ethic. Challenging work with smart colleagues.',
-        position: 'Financial Analyst',
-        reviewer: {
-            name: 'Morgan P.',
-            avatar: '/placeholder.svg?height=40&width=40',
-        },
-        pros: 'Great pay, challenging work',
-        cons: 'High pressure environment',
-    },
-];
-
-export function CompanyReviews() {
+export function CompanyReviews({ reviews }: { reviews: App.Data.ReviewData[] }) {
     const [api, setApi] = useState<CarouselApi>();
     const [count, setCount] = useState(0);
     const [visibleSlides, setVisibleSlides] = useState<number[]>([]);
@@ -155,7 +76,7 @@ export function CompanyReviews() {
                         className="w-full"
                     >
                         <CarouselContent>
-                            {companyReviews.map((review) => (
+                            {reviews.map((review) => (
                                 <CarouselItem key={review.id} className="md:basis-1/2 xl:basis-1/3">
                                     <CompanyReviewCard review={review} />
                                 </CarouselItem>

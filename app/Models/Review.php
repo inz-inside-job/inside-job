@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
@@ -31,6 +32,8 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
  */
 class Review extends Pivot
 {
+    use HasFactory;
+
     public $incrementing = true;
 
     public $table = 'reviews';
@@ -47,6 +50,8 @@ class Review extends Pivot
 
     protected $casts = [
         'submitted_date' => 'timestamp',
+        'pros' => 'array',
+        'cons' => 'array',
     ];
 
     public function user(): BelongsTo

@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Data\CompanyData;
+use App\Data\CompanyPageData;
+use App\Data\ReviewData;
 use App\Http\Requests\CompanyRequest;
 use App\Models\Company;
+use App\Models\Review;
 use Illuminate\Database\Eloquent\Builder;
 use Inertia\Inertia;
 use Spatie\LaravelData\CursorPaginatedDataCollection;
@@ -68,9 +71,15 @@ class CompanyController
         return Company::create($request->validated());
     }
 
-    public function show(Company $company)
+    public function show(string $slug)
     {
-        return $company;
+        $company = Company::whereSlug($slug)->withRating()->withAverageSalary()->withRecommended()->withCount('reviews')->withCount('jobs')->firstOrFail();
+        $reviews = Review::where('company_id', $company->id)->get();
+
+        return Inertia::render('company', [
+            'company' => CompanyPageData::from($company),
+            'reviews' => ReviewData::collect($reviews),
+        ]);
     }
 
     public function update(CompanyRequest $request, Company $company)

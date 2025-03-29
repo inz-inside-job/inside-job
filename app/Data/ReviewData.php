@@ -11,7 +11,7 @@ class ReviewData extends Data
     public UserData $user;
 
     #[LoadRelation]
-    public CompanyData $company;
+    public ReviewCompanyData $company;
 
     public function __construct(public int $id,
         public int $company_id,

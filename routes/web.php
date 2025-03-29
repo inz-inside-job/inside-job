@@ -1,14 +1,11 @@
 <?php
 
-use App\Data\CompanyPageData;
 use App\Http\Controllers\CompanyController;
-use App\Models\Company;
+use App\Http\Controllers\HomepageController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::get('/', function () {
-    return Inertia::render('homepage');
-})->name('home');
+Route::get('/', [HomepageController::class, 'view'])->name('home');
 
 Route::get('/companies', [CompanyController::class, 'index'])
     ->name('companies');
@@ -17,12 +14,7 @@ Route::get('/jobs', function () {
     return Inertia::render('jobs');
 })->name('jobs');
 
-Route::get('/companies/{slug}', function (string $slug) {
-    $company = Company::whereSlug($slug)->withRating()->withAverageSalary()->withRecommended()->withCount('reviews')->withCount('jobs')->firstOrFail();
-
-    return Inertia::render('company', ['company' => CompanyPageData::from($company)]);
-})->name('company');
-
+Route::get('/companies/{slug}', [CompanyController::class, 'show'])->name('company');
 Route::impersonate();
 
 require __DIR__.'/settings.php';

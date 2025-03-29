@@ -2,34 +2,18 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Card, CardContent } from '@/components/ui/card';
 import { Star } from 'lucide-react';
 
-type Review = {
-    id: number;
-    company: string;
-    logo: string;
-    rating: number;
-    reviewCount: number;
-    review: string;
-    position: string;
-    reviewer: {
-        name: string;
-        avatar: string;
-    };
-    pros: string;
-    cons: string;
-};
-
-export function CompanyReviewCard({ review }: { review: Review }) {
+export function CompanyReviewCard({ review }: { review: App.Data.ReviewData }) {
     return (
         <Card className="h-full overflow-hidden transition-shadow hover:shadow-lg">
             <CardContent className="p-6">
                 <div className="mb-4 flex items-center justify-between">
                     <div className="flex items-center gap-3">
                         <Avatar className="h-12 w-12">
-                            <AvatarImage src={review.logo} alt={''} />
-                            <AvatarFallback>{review.company.charAt(0)}</AvatarFallback>
+                            <AvatarImage src={''} alt={''} />
+                            <AvatarFallback>{review.company.name.charAt(0)}</AvatarFallback>
                         </Avatar>
                         <div>
-                            <h3 className="font-semibold">{review.company}</h3>
+                            <h3 className="font-semibold">{review.company.name}</h3>
                             <div className="flex items-center">
                                 <div className="flex">
                                     {[...Array(5)].map((_, i) => (
@@ -45,7 +29,6 @@ export function CompanyReviewCard({ review }: { review: Review }) {
                             </div>
                         </div>
                     </div>
-                    <div className="p-2 text-xs text-gray-500">{review.reviewCount} reviews</div>
                 </div>
 
                 <div className="mb-4">
@@ -57,21 +40,33 @@ export function CompanyReviewCard({ review }: { review: Review }) {
                     <div className="grid grid-cols-2 gap-4">
                         <div>
                             <div className="mb-1 text-xs font-semibold text-gray-500">Pros</div>
-                            <p className="text-xs">{review.pros}</p>
+                            <ul className="list-inside list-disc">
+                                {review.pros.map((pro, i) => (
+                                    <li key={i} className="text-xs">
+                                        {pro}
+                                    </li>
+                                ))}
+                            </ul>
                         </div>
                         <div>
                             <div className="mb-1 text-xs font-semibold text-gray-500">Cons</div>
-                            <p className="text-xs">{review.cons}</p>
+                            <ul className="list-inside list-disc">
+                                {review.cons.map((con, i) => (
+                                    <li key={i} className="text-xs">
+                                        {con}
+                                    </li>
+                                ))}
+                            </ul>
                         </div>
                     </div>
                 </div>
 
                 <div className="flex items-center">
                     <Avatar className="mr-2 h-6 w-6">
-                        <AvatarImage src={review.reviewer.avatar} alt={review.reviewer.name} />
-                        <AvatarFallback>{review.reviewer.name.charAt(0)}</AvatarFallback>
+                        <AvatarImage src={''} alt={review.user.name} />
+                        <AvatarFallback>{review.user.name.charAt(0)}</AvatarFallback>
                     </Avatar>
-                    <span className="text-xs">{review.reviewer.name}</span>
+                    <span className="text-xs">{review.user.name}</span>
                 </div>
             </CardContent>
         </Card>
