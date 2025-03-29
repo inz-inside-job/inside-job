@@ -53,4 +53,9 @@ class Review extends Pivot
     {
         return $this->belongsTo(User::class);
     }
+
+    public function company(): BelongsTo
+    {
+        return $this->belongsTo(Company::class);
+    }
 }

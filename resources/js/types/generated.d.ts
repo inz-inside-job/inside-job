@@ -55,6 +55,7 @@ slug: string;
 };
 export type ReviewData = {
 user: App.Data.UserData;
+company: App.Data.CompanyData;
 id: number;
 company_id: number;
 user_id: number;
