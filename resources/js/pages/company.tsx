@@ -1,5 +1,4 @@
 import { CompanyReviewCard } from '@/components/homepage/company-review-card';
-import JobCard from '@/components/jobs/job-card';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
@@ -317,10 +316,11 @@ export default function CompanyPage({ company }: { company: App.Data.CompanyPage
                                                     <span className="bg-text text-sm">{company.jobs_count} jobs available</span>
                                                 </div>
 
-                                                {company.jobs.map((job) => (
+                                                {/* company.jobs.map((job) => (
                                                     //Need proper job model and data
-                                                    <JobCard job={job} />
-                                                ))}
+                                                    //<JobCard job={job} />
+                                                    <></>
+                                                )) */}
                                             </TabsContent>
 
                                             <TabsContent value="photos" className="space-y-6">
