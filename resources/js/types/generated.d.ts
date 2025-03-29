@@ -53,6 +53,28 @@ salary_range: string | null;
 description: string;
 slug: string;
 };
+export type ReviewData = {
+user: App.Data.UserData;
+id: number;
+company_id: number;
+user_id: number;
+rating: number;
+review: string;
+pros: Array<string>;
+cons: Array<string>;
+position: string;
+work_life_balance: number;
+culture_values: number;
+career_opportunities: number;
+compensation_benefits: number;
+senior_management: number;
+recommend: boolean;
+approve_of_ceo: boolean;
+};
+export type UserData = {
+id: number;
+name: string;
+};
 }
 declare namespace App.Enums {
 export type UserPermission = {
