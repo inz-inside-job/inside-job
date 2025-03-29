@@ -2,7 +2,6 @@
 
 namespace App\Data;
 
-use App\Models\User;
 use Spatie\LaravelData\Attributes\LoadRelation;
 use Spatie\LaravelData\Data;
 
@@ -10,6 +9,7 @@ class ReviewData extends Data
 {
     #[LoadRelation]
     public UserData $user;
+
     public function __construct(public int $id,
         public int $company_id,
         public int $user_id,
