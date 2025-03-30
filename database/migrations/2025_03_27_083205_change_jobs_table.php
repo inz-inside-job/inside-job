@@ -18,7 +18,8 @@ return new class extends Migration
             $table->dropColumn('salary_range');
             $table->unsignedBigInteger('salary_min');
             $table->unsignedBigInteger('salary_max');
-            $table->enum('employment_experience', array_column(EmploymentExperience::cases(), 'value'))->after('employment_type');
+            $table->enum('employment_experience', array_column(EmploymentExperience::cases(), 'value'));
+            $table->json('requirements')->default('[]');
         });
     }
 
@@ -34,6 +35,7 @@ return new class extends Migration
             $table->dropColumn('employment_experience');
             $table->dropUnique(['slug', 'company_id']);
             $table->unique(['slug']);
+            $table->dropColumn('requirements');
         });
     }
 };

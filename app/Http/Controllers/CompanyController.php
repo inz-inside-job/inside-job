@@ -16,6 +16,8 @@ class CompanyController
 {
     public function index()
     {
+        debug(request()->all());
+
         $companies = QueryBuilder::for(
             Company::withRating()
                 ->withAverageSalary()
@@ -53,12 +55,18 @@ class CompanyController
                     $query->having('rating', '>=', $value);
                 })->default(3.5),
             ])
+            // Second sort
+            ->orderByDesc('id')
             ->cursorPaginate(10)
             ->withQueryString();
 
-        $data = CompanyData::collect($companies, CursorPaginatedDataCollection::class)->wrap('data');
+        $paginatedResponse = $companies->toArray();
+        debug($paginatedResponse);
+
+        $data = CompanyData::collect($paginatedResponse['data']);
 
         return Inertia::render('companies', [
+            'next_cursor' => $paginatedResponse['next_cursor'],
             'companies' => Inertia::merge($data),
         ]);
     }

@@ -168,9 +168,9 @@ importers:
       typescript-eslint:
         specifier: ^8.26.1
         version: 8.26.1(eslint@9.22.0(jiti@2.4.2))(typescript@5.8.2)
-      vite-plugin-ziggy:
-        specifier: ^0.3.0
-        version: 0.3.0
+      vite-plugin-run:
+        specifier: ^0.6.1
+        version: 0.6.1
     optionalDependencies:
       '@rollup/rollup-linux-x64-gnu':
         specifier: 4.9.5
@@ -2702,9 +2702,6 @@ packages:
 
   vite-plugin-run@0.6.1:
     resolution: {integrity: sha512-mXEEQHWhk/OD8XuK7V517eDPnXS5OrzjGsihHihSbWNFXqEBy6WNkdLNIfPY1o86JLLRDVq3VeVus3YOTiJeGg==}
-
-  vite-plugin-ziggy@0.3.0:
-    resolution: {integrity: sha512-0EYOMka6uLIeWGpJ/3VxwGeMY76LyHxQHOTLfoCG6G+QUz+zwnzWbNj53MGQjhm6vPaCnpeHLwyYwdoyP3f+bg==}
 
   vite@6.2.1:
     resolution: {integrity: sha512-n2GnqDb6XPhlt9B8olZPrgMD/es/Nd1RdChF6CBD/fHW6pUyUTt2sQW2fPRX5GiD9XEa6+8A6A4f2vT6pSsE7Q==}
@@ -5495,12 +5492,6 @@ snapshots:
       execa: 5.1.1
       minimatch: 9.0.5
       picocolors: 1.1.1
-    transitivePeerDependencies:
-      - supports-color
-
-  vite-plugin-ziggy@0.3.0:
-    dependencies:
-      vite-plugin-run: 0.6.1
     transitivePeerDependencies:
       - supports-color
 

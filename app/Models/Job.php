@@ -102,6 +102,7 @@ class Job extends Model
             'employment_experience' => EmploymentExperience::class,
             'salary_min' => 'int',
             'salary_max' => 'int',
+            'requirements' => 'array',
         ];
     }
 }

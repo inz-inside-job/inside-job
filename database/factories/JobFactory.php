@@ -28,6 +28,8 @@ class JobFactory extends Factory
             'salary_min' => $salaryMin,
             'salary_max' => $salaryMax,
             'description' => $this->faker->paragraphs(3, true),
+            'requirements' => $this->faker->words(5, true),
+            
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
 

@@ -42,16 +42,16 @@ export interface Page {
     };
 }
 
-export interface CursorPaginate<T> {
-    data: T[];
-    links: unknown[];
-    meta: Meta;
-}
-export interface Meta {
-    path: string;
-    per_page: number;
-    next_cursor: string;
-    next_page_url: string;
-    prev_cursor: string?;
-    prev_page_url: string?;
-}
+// export interface CursorPaginate<T> {
+//     data: T[];
+//     links: unknown[];
+//     meta: Meta;
+// }
+// export interface Meta {
+//     path: string;
+//     per_page: number;
+//     next_cursor: string;
+//     next_page_url: string;
+//     prev_cursor: string?;
+//     prev_page_url: string?;
+// }
