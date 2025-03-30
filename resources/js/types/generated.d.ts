@@ -14,6 +14,8 @@ recommend: number;
 reviews_count: number;
 description: string;
 };
+}
+declare namespace App.Data.Jobs {
 export type JobCompanyData = {
 logo: string | null;
 name: string;
@@ -22,7 +24,7 @@ rating: number;
 reviews_count: number;
 };
 export type JobData = {
-company: App.Data.JobCompanyData;
+company: App.Data.Jobs.JobCompanyData;
 id: number;
 company_id: number;
 slug: string;
@@ -30,7 +32,7 @@ title: string;
 location: string;
 employment_type: App.Enums.EmploymentType;
 employment_experience: App.Enums.EmploymentExperience;
-posted_date: number;
+posted_date: string;
 salary_min: number;
 salary_max: number;
 description: string;

@@ -13,23 +13,25 @@ use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
 /**
+ * 
+ *
  * @property int $id
  * @property int $company_id
  * @property string $title
  * @property string $location
  * @property EmploymentType $employment_type
- * @property EmploymentExperience $employment_experience
- * @property int $posted_date
+ * @property \Illuminate\Support\Carbon $posted_date
  * @property string $description
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property string $slug
  * @property int $salary_min
  * @property int $salary_max
+ * @property EmploymentExperience $employment_experience
+ * @property array<array-key, mixed> $requirements
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\User> $applications
  * @property-read int|null $applications_count
  * @property-read \App\Models\Company $company
- *
  * @method static \Database\Factories\JobFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Job newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Job newQuery()
@@ -42,12 +44,12 @@ use Spatie\Sluggable\SlugOptions;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Job whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Job whereLocation($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Job wherePostedDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Job whereRequirements($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Job whereSalaryMax($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Job whereSalaryMin($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Job whereSlug($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Job whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Job whereUpdatedAt($value)
- *
  * @mixin \Eloquent
  */
 class Job extends Model
@@ -97,7 +99,7 @@ class Job extends Model
     protected function casts(): array
     {
         return [
-            'posted_date' => 'timestamp',
+            'posted_date' => 'datetime',
             'employment_type' => EmploymentType::class,
             'employment_experience' => EmploymentExperience::class,
             'salary_min' => 'int',

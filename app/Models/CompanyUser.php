@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
 use Spatie\Permission\Traits\HasRoles;
 
 /**
+ * 
+ *
  * @property int $id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -15,7 +17,6 @@ use Spatie\Permission\Traits\HasRoles;
  * @property-read int|null $permissions_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Permission\Models\Role> $roles
  * @property-read int|null $roles_count
- *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|CompanyUser newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|CompanyUser newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|CompanyUser permission($permissions, $without = false)
@@ -28,7 +29,6 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|CompanyUser whereUserId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|CompanyUser withoutPermission($permissions)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|CompanyUser withoutRole($roles, $guard = null)
- *
  * @mixin \Eloquent
  */
 class CompanyUser extends Pivot

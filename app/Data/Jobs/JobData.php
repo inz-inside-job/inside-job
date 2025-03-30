@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Data;
+namespace App\Data\Jobs;
 
 use App\Enums\EmploymentExperience;
 use App\Enums\EmploymentType;
@@ -20,10 +20,9 @@ class JobData extends Data
         public string $location,
         public EmploymentType $employment_type,
         public EmploymentExperience $employment_experience,
-        public int $posted_date,
+        public string $posted_date,
         public int $salary_min,
         public int $salary_max,
         public string $description,
-    ) {
-    }
+    ) {}
 }

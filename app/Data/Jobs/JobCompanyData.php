@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Data;
+namespace App\Data\Jobs;
 
 use App\Transformers\PublicStorageTransformer;
 use Spatie\LaravelData\Attributes\WithTransformer;

@@ -34,7 +34,7 @@ class DataSeeder extends Seeder
         }
 
         foreach ($companies as $company) {
-            Job::factory(rand(1, 5))->for($company)->create();
+            Job::factory(rand(2, 10))->for($company)->create();
         }
     }
 }

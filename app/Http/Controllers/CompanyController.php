@@ -3,11 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Data\CompanyData;
-use App\Http\Requests\CompanyRequest;
 use App\Models\Company;
 use Illuminate\Database\Eloquent\Builder;
 use Inertia\Inertia;
-use Spatie\LaravelData\CursorPaginatedDataCollection;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedSort;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -16,8 +14,6 @@ class CompanyController
 {
     public function index()
     {
-        debug(request()->all());
-
         $companies = QueryBuilder::for(
             Company::withRating()
                 ->withAverageSalary()
@@ -61,7 +57,6 @@ class CompanyController
             ->withQueryString();
 
         $paginatedResponse = $companies->toArray();
-        debug($paginatedResponse);
 
         $data = CompanyData::collect($paginatedResponse['data']);
 
@@ -71,27 +66,8 @@ class CompanyController
         ]);
     }
 
-    public function store(CompanyRequest $request)
-    {
-        return Company::create($request->validated());
-    }
-
     public function show(Company $company)
     {
         return $company;
-    }
-
-    public function update(CompanyRequest $request, Company $company)
-    {
-        $company->update($request->validated());
-
-        return $company;
-    }
-
-    public function destroy(Company $company)
-    {
-        $company->delete();
-
-        return response()->json();
     }
 }

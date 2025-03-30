@@ -15,9 +15,9 @@ class JobFactory extends Factory
 
     public function definition(): array
     {
-        // Define realistic salary ranges
-        $salaryMin = $this->faker->numberBetween(500, 5000);
-        $salaryMax = $salaryMin + $this->faker->numberBetween(500, 5000);
+        // Define realistic salary ranges (per year)
+        $salaryMin = $this->faker->numberBetween(50000, 100000);
+        $salaryMax = $salaryMin + $this->faker->numberBetween(5000, 20000);
 
         return [
             'title' => $this->faker->jobTitle(),
@@ -28,8 +28,8 @@ class JobFactory extends Factory
             'salary_min' => $salaryMin,
             'salary_max' => $salaryMax,
             'description' => $this->faker->paragraphs(3, true),
-            'requirements' => $this->faker->words(5, true),
-            
+            'requirements' => $this->faker->words(5),
+
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
 
