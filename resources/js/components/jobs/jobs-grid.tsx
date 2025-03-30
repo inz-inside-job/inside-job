@@ -34,9 +34,6 @@ interface JobPageProps extends PageProps {
 export function JobList() {
     const { jobs, next_cursor } = usePage<JobPageProps>().props;
 
-    console.log('jobs', jobs);
-    console.log('next_cursor', next_cursor);
-
     const [sortOption, setSortOption] = useState('datePosted');
 
     const onSortChange = useCallback((sortValue: string) => {
