@@ -9,7 +9,8 @@
         "format:check": "prettier --check resources/",
         "lint": "eslint . --fix",
         "lint:check": "eslint .",
-        "types": "tsc --noEmit"
+        "types": "tsc --noEmit",
+        "prepare": "husky"
     },
     "devDependencies": {
         "@eslint/js": "^9.22.0",
@@ -20,11 +21,13 @@
         "eslint-plugin-react": "^7.37.4",
         "eslint-plugin-react-compiler": "19.0.0-beta-e1e972c-20250221",
         "eslint-plugin-react-hooks": "^5.2.0",
+        "husky": "^9.1.7",
+        "lint-staged": "^15.5.0",
         "prettier": "^3.5.3",
         "prettier-plugin-organize-imports": "^4.1.0",
         "prettier-plugin-tailwindcss": "^0.6.11",
         "typescript-eslint": "^8.26.1",
-        "vite-plugin-ziggy": "^0.3.0"
+        "vite-plugin-run": "^0.6.1"
     },
     "dependencies": {
         "@headlessui/react": "^2.2.0",
@@ -78,6 +81,15 @@
     "pnpm": {
         "onlyBuiltDependencies": [
             "esbuild"
+        ]
+    },
+    "lint-staged": {
+        "*.php": [
+            "vendor/bin/pint --dirty"
+        ],
+        "*.{js,jsx,ts,tsx}": [
+            "prettier --write",
+            "eslint --fix"
         ]
     }
 }

@@ -1,28 +1,36 @@
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { useGetQueryParams, withQueryBuilderParams } from '@/lib/utils';
-import { router } from '@inertiajs/react';
+import type { PageProps } from '@inertiajs/core';
+import { router, usePage } from '@inertiajs/react';
 import { useCallback, useState } from 'react';
+import WhenVisible from '../when-visible';
 import CompanyCard from './company-card';
 
-export function CompanyGrid({ companies }: { companies: App.Data.CompanyData[] }) {
-    const queryParameters = useGetQueryParams();
+interface CompanyPageProps extends PageProps {
+    companies: App.Data.CompanyData[];
+    next_cursor: string | null;
+}
+
+export function CompanyGrid() {
+    const { companies, next_cursor } = usePage<CompanyPageProps>().props;
     const [sortOption, setSortOption] = useState('rating');
 
-    const onSortChange = useCallback(
-        (sortValue: string) => {
-            setSortOption(sortValue);
-            const sort = sortValue === 'rating' ? null : sortValue;
+    const onSortChange = useCallback((sortValue: string) => {
+        setSortOption(sortValue);
+        const sort = sortValue === 'rating' ? null : `-${sortValue}`;
 
-            const query = withQueryBuilderParams({
-                filters: queryParameters.filters,
-                sorts: sort === null ? {} : { [sort]: 'desc' },
-            });
+        router.reload({
+            only: ['companies', 'next_cursor'],
+            replace: true,
+            reset: ['companies'],
+            // Force cursor to be null as this is a new sort
+            data: { sort, cursor: null },
+        });
+    }, []);
 
-            router.get(route('companies', query), undefined, { replace: true, preserveState: true, preserveScroll: true });
-        },
-        [queryParameters.filters],
-    );
+    const onLoadMore = useCallback(() => {
+        router.reload({ data: { cursor: next_cursor! }, replace: true, only: ['companies', 'next_cursor'] });
+    }, [next_cursor]);
 
     return (
         <div>
@@ -48,11 +56,22 @@ export function CompanyGrid({ companies }: { companies: App.Data.CompanyData[] }
                     <CompanyCard key={company.id} company={company} />
                 ))}
             </div>
-
             <div className="mt-8 text-center">
-                <Button variant="outline" className="mx-auto">
-                    Load More Companies
-                </Button>
+                <WhenVisible
+                    params={{
+                        only: ['companies', 'next_cursor'],
+                        replace: true,
+                        data: { cursor: next_cursor },
+                    }}
+                    fallback={<p>Loading</p>}
+                    always={!!next_cursor}
+                    disabled={!next_cursor}
+                    buffer={500}
+                >
+                    <Button variant="outline" className="mx-auto" onClick={onLoadMore} disabled={!next_cursor}>
+                        Load More Companies
+                    </Button>
+                </WhenVisible>
             </div>
         </div>
     );

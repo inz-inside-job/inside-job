@@ -3,11 +3,12 @@
 namespace Database\Seeders;
 
 use App\Models\Company;
+use App\Models\Job;
 use Illuminate\Database\Seeder;
 use Illuminate\Http\File;
 use Illuminate\Support\Facades\Storage;
 
-class CompanySeeder extends Seeder
+class DataSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -30,6 +31,10 @@ class CompanySeeder extends Seeder
             $logoUrl = Storage::disk('public')->putFileAs('logos', $logo, "$company->slug.png");
             $company->logo = $logoUrl ?? null;
             $company->save();
+        }
+
+        foreach ($companies as $company) {
+            Job::factory(rand(2, 10))->for($company)->create();
         }
     }
 }

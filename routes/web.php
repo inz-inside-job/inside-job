@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\JobController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -11,9 +12,11 @@ Route::get('/', function () {
 Route::get('/companies', [CompanyController::class, 'index'])
     ->name('companies');
 
-Route::get('/jobs', function () {
-    return Inertia::render('jobs');
-})->name('jobs');
+Route::get('/companies/{company}', [CompanyController::class, 'show'])
+    ->name('companies.show');
+
+Route::get('/jobs', [JobController::class, 'index'])
+    ->name('jobs');
 
 Route::impersonate();
 

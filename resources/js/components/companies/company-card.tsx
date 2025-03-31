@@ -12,7 +12,8 @@ export default function CompanyCard({ company }: { company: App.Data.CompanyData
     const getInitials = useInitials();
 
     return (
-        <Link href={`/companies/${company.id}`}>
+        // TODO: Add a route link to the company page
+        <Link href={`/companies/${company.slug}`}>
             <Card className="border-gray-light hover:border-orange/20 h-full w-full cursor-pointer transition-all duration-300 hover:scale-[1.02] hover:shadow-xl">
                 <CardHeader className="p-6">
                     <div className="flex flex-col items-center gap-4 sm:flex-row sm:items-start sm:gap-6">

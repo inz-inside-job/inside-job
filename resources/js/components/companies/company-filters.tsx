@@ -73,7 +73,18 @@ export function CompanyFilters() {
             sorts: queryParams.sorts,
         });
 
-        router.get(route('companies', query), undefined, { replace: true, preserveState: true, preserveScroll: true });
+        router.reload({
+            only: ['companies', 'next_cursor'],
+            reset: ['companies'],
+            data: {
+                min_rating: undefined,
+                industry: undefined,
+                company_sizes: undefined,
+                location: undefined,
+                ...query,
+                cursor: undefined,
+            },
+        });
     }, [location, queryParams.sorts, ratingFilter, selectedCompanySizes, selectedIndustries]);
 
     return (

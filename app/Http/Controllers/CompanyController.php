@@ -3,11 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Data\CompanyData;
-use App\Http\Requests\CompanyRequest;
 use App\Models\Company;
 use Illuminate\Database\Eloquent\Builder;
 use Inertia\Inertia;
-use Spatie\LaravelData\CursorPaginatedDataCollection;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedSort;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -30,7 +28,7 @@ class CompanyController
             ])
             ->allowedFilters([
                 AllowedFilter::exact('industry'),
-                'location',
+                AllowedFilter::partial('location'),
                 AllowedFilter::callback('company_sizes', function (Builder $query, $sizes) {
                     $query->where(function ($query) use ($sizes) {
                         foreach ($sizes as $size) {
@@ -53,37 +51,23 @@ class CompanyController
                     $query->having('rating', '>=', $value);
                 })->default(3.5),
             ])
+            // Second sort
+            ->orderByDesc('id')
             ->cursorPaginate(10)
             ->withQueryString();
 
-        $data = CompanyData::collect($companies, CursorPaginatedDataCollection::class)->wrap('data');
+        $paginatedResponse = $companies->toArray();
+
+        $data = CompanyData::collect($paginatedResponse['data']);
 
         return Inertia::render('companies', [
+            'next_cursor' => $paginatedResponse['next_cursor'],
             'companies' => Inertia::merge($data),
         ]);
-    }
-
-    public function store(CompanyRequest $request)
-    {
-        return Company::create($request->validated());
     }
 
     public function show(Company $company)
     {
         return $company;
-    }
-
-    public function update(CompanyRequest $request, Company $company)
-    {
-        $company->update($request->validated());
-
-        return $company;
-    }
-
-    public function destroy(Company $company)
-    {
-        $company->delete();
-
-        return response()->json();
     }
 }

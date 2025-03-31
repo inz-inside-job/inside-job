@@ -1,10 +1,9 @@
 import { CompaniesHero } from '@/components/companies/companies-hero';
 import { CompanyFilters } from '@/components/companies/company-filters';
 import { CompanyGrid } from '@/components/companies/company-grid';
-import { CursorPaginate } from '@/types';
 import { Head } from '@inertiajs/react';
 
-export default function CompaniesPage({ companies }: { companies: CursorPaginate<App.Data.CompanyData> }) {
+export default function CompaniesPage() {
     return (
         <>
             <Head title="Companies" />
@@ -15,7 +14,7 @@ export default function CompaniesPage({ companies }: { companies: CursorPaginate
                         <CompanyFilters />
                     </aside>
                     <div className="flex-1">
-                        <CompanyGrid companies={companies.data} />
+                        <CompanyGrid />
                     </div>
                 </div>
             </div>
