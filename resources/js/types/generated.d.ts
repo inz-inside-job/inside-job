@@ -8,7 +8,6 @@ image: string;
 declare namespace App.Data.Companies {
 export type CompanyData = {
 logo: string | null;
-founded_year: string;
 header: string | null;
 id: number;
 slug: string;
@@ -16,6 +15,7 @@ name: string;
 industry: string;
 location: string | null;
 employee_count: number;
+founded_year: string;
 rating: number;
 average_salary: number;
 recommend: number;
