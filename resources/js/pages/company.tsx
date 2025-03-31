@@ -1,31 +1,23 @@
 import { CompanyReviewCard } from '@/components/homepage/company-review-card';
 import JobCard from '@/components/jobs/job-card';
+import { SharePopup } from '@/components/share-popup';
+import StarRating from '@/components/star-rating';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Separator } from '@/components/ui/separator';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Head, Link } from '@inertiajs/react';
-import {
-    Briefcase,
-    Building2,
-    Camera,
-    CheckCircle,
-    DollarSign,
-    ExternalLink,
-    FileText,
-    Globe,
-    Heart,
-    MapPin,
-    MessageSquare,
-    Share2,
-    Star,
-    Users,
-} from 'lucide-react';
+import { Briefcase, Building2, CheckCircle, ExternalLink, Globe, Heart, MapPin, MessageSquare, Share2, Star, Users } from 'lucide-react';
+import { useState } from 'react';
 
 export default function CompanyPage({ company }: { company: App.Data.Company.CompanyData }) {
+    const [tab, setTab] = useState('overview');
+    const [showSharePopup, setShowSharePopup] = useState(false);
+
     return (
         <>
+            <SharePopup url={route('companies.show', { slug: company.slug })} open={showSharePopup} onClose={() => setShowSharePopup(false)} />
             <Head title={company.name} />
             <div className="bg-background min-h-screen">
                 {/* Cover Image */}
@@ -52,19 +44,19 @@ export default function CompanyPage({ company }: { company: App.Data.Company.Com
                                                 <h1 className="text-2xl font-bold md:text-3xl">{company.name}</h1>
                                                 <div className="mt-1 flex items-center">
                                                     <div className="flex">
-                                                        {[...Array(5)].map((_, i) => (
-                                                            <Star
-                                                                key={i}
-                                                                className={`h-5 w-5 ${i < Math.floor(company.rating) ? 'fill-yellow-400 text-yellow-400' : 'bg-text'}`}
-                                                            />
-                                                        ))}
+                                                        <StarRating rating={company.rating} readOnly />
                                                     </div>
                                                     <span className="ml-1 text-lg font-bold">{company.rating}</span>
                                                     <span className="ml-1 text-sm text-gray-500">({company.reviews_count} reviews)</span>
                                                 </div>
                                             </div>
                                             <div className="flex gap-2">
-                                                <Button variant="outline" size="sm" className="cursor-pointer">
+                                                <Button
+                                                    variant="outline"
+                                                    size="sm"
+                                                    className="cursor-pointer"
+                                                    onClick={() => setShowSharePopup(true)}
+                                                >
                                                     <Share2 className="mr-2 h-4 w-4" />
                                                     Share
                                                 </Button>
@@ -91,18 +83,16 @@ export default function CompanyPage({ company }: { company: App.Data.Company.Com
                                         </div>
 
                                         <div className="mt-6 flex flex-wrap gap-3">
-                                            <Link href={`/companies/${company.id}/reviews`}>
+                                            <Link href={`/companies/${company.id}/review`}>
                                                 <Button className="cursor-pointer bg-orange-500 hover:bg-orange-600">
                                                     <Star className="mr-2 h-4 w-4" />
                                                     Write a Review
                                                 </Button>
                                             </Link>
-                                            <Link href={`/companies/${company.id}#jobs`}>
-                                                <Button variant="outline" className="cursor-pointer">
-                                                    <Briefcase className="mr-2 h-4 w-4" />
-                                                    See All Jobs {company.jobs_count}
-                                                </Button>
-                                            </Link>
+                                            <Button onClick={() => setTab('jobs')} variant="outline" className="cursor-pointer">
+                                                <Briefcase className="mr-2 h-4 w-4" />
+                                                See All Jobs {company.jobs_count}
+                                            </Button>
                                             <a href={company.website} target="_blank" rel="noopener noreferrer">
                                                 <Button variant="outline" className="cursor-pointer">
                                                     <Globe className="mr-2 h-4 w-4" />
@@ -121,7 +111,7 @@ export default function CompanyPage({ company }: { company: App.Data.Company.Com
                             <div className="space-y-6 md:col-span-2">
                                 <Card className="shadow-md">
                                     <CardContent className="p-6">
-                                        <Tabs defaultValue="overview">
+                                        <Tabs value={tab} onValueChange={setTab}>
                                             <TabsList className="mb-6 grid w-full grid-cols-3 gap-4">
                                                 <TabsTrigger value="overview" className="cursor-pointer">
                                                     Overview
@@ -236,7 +226,7 @@ export default function CompanyPage({ company }: { company: App.Data.Company.Com
                                                 </div>
 
                                                 {company.jobs.map((job) => (
-                                                    <JobCard job={job} company={company} />
+                                                    <JobCard key={job.id} job={job} company={company} />
                                                 ))}
                                             </TabsContent>
                                         </Tabs>
@@ -253,12 +243,7 @@ export default function CompanyPage({ company }: { company: App.Data.Company.Com
                                         <div className="mb-4 flex items-center justify-between">
                                             <div className="text-3xl font-bold">{company.rating}</div>
                                             <div className="flex">
-                                                {[...Array(5)].map((_, i) => (
-                                                    <Star
-                                                        key={i}
-                                                        className={`h-5 w-5 ${i < Math.floor(company.rating) ? 'fill-yellow-400 text-yellow-400' : 'bg-text'}`}
-                                                    />
-                                                ))}
+                                                <StarRating rating={company.rating} readOnly />
                                             </div>
                                         </div>
 
@@ -355,28 +340,10 @@ export default function CompanyPage({ company }: { company: App.Data.Company.Com
                                         <CardTitle>Company Actions</CardTitle>
                                     </CardHeader>
                                     <CardContent className="space-y-3 p-4">
-                                        <Link href={`/companies/${company.slug}/reviews/write`}>
+                                        <Link href={`/companies/${company.slug}/review`}>
                                             <Button variant="outline" className="w-full cursor-pointer justify-start">
                                                 <Star className="mr-2 h-4 w-4" />
                                                 Write a Review
-                                            </Button>
-                                        </Link>
-                                        <Link href={`/companies/${company.slug}/photos/add`}>
-                                            <Button variant="outline" className="w-full cursor-pointer justify-start">
-                                                <Camera className="mr-2 h-4 w-4" />
-                                                Add Photos
-                                            </Button>
-                                        </Link>
-                                        <Link href={`/companies/${company.slug}/salaries`}>
-                                            <Button variant="outline" className="w-full cursor-pointer justify-start">
-                                                <DollarSign className="mr-2 h-4 w-4" />
-                                                Add Salary
-                                            </Button>
-                                        </Link>
-                                        <Link href={`/companies/${company.slug}/interviews`}>
-                                            <Button variant="outline" className="w-full cursor-pointer justify-start">
-                                                <FileText className="mr-2 h-4 w-4" />
-                                                Add Interview
                                             </Button>
                                         </Link>
                                         <Button variant="outline" className="w-full cursor-pointer justify-start">

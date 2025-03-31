@@ -35,8 +35,7 @@ export default function JobCard({
                                     </Link>
                                 </h2>
                                 <div className="mt-2 flex items-center gap-2">
-                                    {/* TODO: Use route link */}
-                                    <Link href={`/companies/${company.slug}`} className="text-gray-dark/70 hover:underline">
+                                    <Link href={route('companies.show', { slug: company.slug })} className="text-gray-dark/70 hover:underline">
                                         {company.name}
                                     </Link>
                                     <div className="flex items-center gap-1">
@@ -92,8 +91,7 @@ export default function JobCard({
 
                         <div className="text-gray-dark/70 flex items-center text-sm">
                             <Building2 className="mr-1 h-4 w-4" />
-                            {/* TODO: Use route link */}
-                            <Link href={`/companies/${company.slug}`} className="hover:underline">
+                            <Link href={route('companies.show', { slug: company.slug })} className="hover:underline">
                                 View company profile
                             </Link>
                         </div>
