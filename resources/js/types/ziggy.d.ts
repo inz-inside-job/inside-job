@@ -35,6 +35,7 @@ declare module 'ziggy-js' {
     "verification.send": [],
     "password.confirm": [],
     "logout": [],
+    "admin.dashboard": [],
     "storage.local": [
         {
             "name": "path",
