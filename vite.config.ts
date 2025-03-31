@@ -23,7 +23,7 @@ export default defineConfig({
             input: [
                 {
                     name: 'typescript transform',
-                    run: ['php', 'artisan', 'typescript:transform', '--format'],
+                    run: ['php', 'artisan', 'typescript:transform'],
                     pattern: ['app/Data/**/*.php', 'app/Enums/**/*.php'],
                 },
                 {
