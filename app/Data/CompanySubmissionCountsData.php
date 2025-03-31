@@ -11,7 +11,5 @@ class CompanySubmissionCountsData extends Data
         public int $approved,
         public int $rejected,
         public int $total
-    )
-    {
-    }
+    ) {}
 }

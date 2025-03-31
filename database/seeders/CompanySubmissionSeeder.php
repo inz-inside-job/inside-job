@@ -2,11 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\Company;
 use App\Models\CompanySubmission;
 use Illuminate\Database\Seeder;
-use Illuminate\Http\File;
-use Illuminate\Support\Facades\Storage;
 
 class CompanySubmissionSeeder extends Seeder
 {
