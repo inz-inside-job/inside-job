@@ -3,7 +3,8 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { useInitials } from '@/hooks/use-initials';
 import { moneyToHuman } from '@/lib/utils';
 import { Link } from '@inertiajs/react';
-import { Badge, Briefcase, Building2, Clock, MapPin, Star } from 'lucide-react';
+import { Badge, Briefcase, Building2, Clock, MapPin } from 'lucide-react';
+import StarRating from '../star-rating';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 
 export default function JobCard({
@@ -39,16 +40,7 @@ export default function JobCard({
                                         {company.name}
                                     </Link>
                                     <div className="flex items-center gap-1">
-                                        {Array.from({ length: 5 }).map((_, index) => (
-                                            <Star
-                                                key={index}
-                                                className={`h-4 w-4 ${
-                                                    index < Math.floor(company.rating)
-                                                        ? 'fill-orange text-orange'
-                                                        : 'fill-gray-light stroke-gray-dark/50'
-                                                }`}
-                                            />
-                                        ))}
+                                        <StarRating rating={company.rating} readOnly />
                                         <span className="text-gray-dark/70 text-sm">
                                             {company.rating.toFixed(1)} • {company.reviews_count.toLocaleString()} reviews
                                         </span>
