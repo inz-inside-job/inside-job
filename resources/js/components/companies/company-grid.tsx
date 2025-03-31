@@ -7,7 +7,7 @@ import WhenVisible from '../when-visible';
 import CompanyCard from './company-card';
 
 interface CompanyPageProps extends PageProps {
-    companies: App.Data.CompanyData[];
+    companies: App.Data.Companies.CompanyData[];
     next_cursor: string | null;
 }
 

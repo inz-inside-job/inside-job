@@ -22,6 +22,6 @@ class CompanyFollowed extends Pivot
     ];
 
     protected $casts = [
-        'followed_date' => 'timestamp',
+        'followed_date' => 'datetime',
     ];
 }

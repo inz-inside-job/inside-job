@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
@@ -30,6 +31,7 @@ class Company extends Model
     protected function casts(): array
     {
         return [
+            'benefits' => 'array',
             'founded_year' => 'datetime',
         ];
     }
@@ -53,6 +55,11 @@ class Company extends Model
             ->using(CompanyFollowed::class);
     }
 
+    public function jobs(): HasMany
+    {
+        return $this->hasMany(Job::class);
+    }
+
     public function interviewExperiences(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'interview_experiences', 'company_id', 'user_id')
@@ -62,7 +69,12 @@ class Company extends Model
             ->using(InterviewExperience::class);
     }
 
-    public function reviews(): BelongsToMany
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(Review::class);
+    }
+
+    public function reviewUsers(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'reviews', 'company_id', 'user_id')
             ->as('reviews')
@@ -151,5 +163,10 @@ class Company extends Model
             ->withTimestamps()
             ->withPivot('id')
             ->using(CompanyUser::class);
+    }
+
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
     }
 }
