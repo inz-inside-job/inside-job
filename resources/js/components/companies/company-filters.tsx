@@ -74,7 +74,7 @@ export function CompanyFilters() {
         });
 
         router.reload({
-            only: ['companes', 'next_cursor'],
+            only: ['companies', 'next_cursor'],
             reset: ['companies'],
             data: {
                 min_rating: undefined,

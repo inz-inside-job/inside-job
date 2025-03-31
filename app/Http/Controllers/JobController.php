@@ -43,7 +43,7 @@ class JobController
                     AllowedFilter::partial('location'),
                     AllowedFilter::callback('salary', function ($query, $value) {
                         $query->where('salary_min', '>=', $value);
-                    }),
+                    })->default(50000),
                     AllowedFilter::callback('posted_in', function (Builder $query, $value) {
                         try {
                             $date = Carbon::parse($value);

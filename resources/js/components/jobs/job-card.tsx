@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { useInitials } from '@/hooks/use-initials';
+import { moneyToHuman } from '@/lib/utils';
 import { Link } from '@inertiajs/react';
 import { Badge, Briefcase, Building2, Clock, MapPin, Star } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
@@ -63,7 +64,7 @@ export default function JobCard({ job }: { job: App.Data.Jobs.JobData }) {
                             </div>
                             <div className="text-gray-dark/70 flex items-center">
                                 <Clock className="mr-1 h-4 w-4" />
-                                {job.posted_date}
+                                {new Date(job.posted_date).toLocaleDateString()}
                             </div>
                         </div>
                     </div>
@@ -74,14 +75,14 @@ export default function JobCard({ job }: { job: App.Data.Jobs.JobData }) {
                 <div className="grid gap-4">
                     <p className="text-gray-dark/70 line-clamp-2 text-sm leading-relaxed">{job.description}</p>
                     <div className="space-y-4">
-                        {/* <div>
+                        <div>
                             <h4 className="text-gray-dark mb-2 text-sm font-semibold">Requirements:</h4>
                             <ul className="text-gray-dark/70 list-disc space-y-1 pl-5 text-sm">
                                 {job.requirements.map((req, index) => (
                                     <li key={index}>{req}</li>
                                 ))}
                             </ul>
-                        </div> */}
+                        </div>
 
                         <div className="text-gray-dark/70 flex items-center text-sm">
                             <Building2 className="mr-1 h-4 w-4" />
@@ -94,7 +95,7 @@ export default function JobCard({ job }: { job: App.Data.Jobs.JobData }) {
 
                     <div className="mt-4 flex items-center justify-between">
                         <div className="text-gray-dark font-medium">
-                            {job.salary_min} - {job.salary_max}
+                            {moneyToHuman(job.salary_min)} - {moneyToHuman(job.salary_max)}
                         </div>
                     </div>
                 </div>
@@ -102,17 +103,9 @@ export default function JobCard({ job }: { job: App.Data.Jobs.JobData }) {
                 <div className="border-gray-light flex items-center justify-between border-t pt-4">
                     <div className="text-gray-dark/70 text-sm">Be an early applicant</div>
                     <div className="flex gap-3">
-                        {/* {true ? ( */}
                         <Link href={`/jobs/${job.id}/apply`}>
                             <Button className="cursor-pointer bg-orange-500 hover:bg-orange-600">Easy Apply</Button>
                         </Link>
-                        {/* ) : (
-                             <Link href={`/jobs/${job.id}/apply`}>
-                                 <Button className="cursor-pointer bg-orange-500 hover:bg-orange-600">
-                                     Apply Now <ExternalLink className="ml-1 h-3 w-3" />
-                                 </Button>
-                             </Link>
-                         )} */}
                     </div>
                 </div>
             </CardContent>

@@ -22,7 +22,7 @@ export function JobFilters() {
         location: string;
     }>();
 
-    const [minSalary, setMinSalary] = useState(queryParams.filters.salary ? [queryParams.filters.salary] : [50]);
+    const [minSalary, setMinSalary] = useState(queryParams.filters.salary ? [queryParams.filters.salary / 1000] : [50]);
     const [datePosted, setDatePosted] = useState(queryParams.filters.posted_in ?? 'any');
     const [selectedJobTypes, setSelectedJobTypes] = useState(queryParams.filters.employment_type ?? []);
     const [selectedExperienceLevels, setSelectedExperienceLevels] = useState(queryParams.filters.employment_experience ?? []);
@@ -51,10 +51,11 @@ export function JobFilters() {
 
     const onApply = useCallback(() => {
         const posted_in = datePosted === 'any' ? null : datePosted;
+        const salary = minSalary[0] === 50 ? null : minSalary[0] * 1000;
 
         const query = withQueryBuilderParams({
             filters: {
-                salary: minSalary[0],
+                salary,
                 posted_in,
                 employment_type: selectedJobTypes,
                 employment_experience: selectedExperienceLevels,
@@ -157,13 +158,13 @@ export function JobFilters() {
                     <AccordionContent>
                         <div className="space-y-4">
                             <div className="flex items-center justify-between">
-                                <span className="text-sm font-medium">${minSalary[0]}K+</span>
+                                <span className="text-sm font-medium">{minSalary[0]}K+€</span>
                                 <span className="text-xs text-gray-500">per year</span>
                             </div>
-                            <Slider defaultValue={[50]} max={200} min={0} step={10} value={minSalary} onValueChange={setMinSalary} />
+                            <Slider defaultValue={[50]} max={300} min={0} step={10} value={minSalary} onValueChange={setMinSalary} />
                             <div className="flex justify-between text-xs text-gray-500">
-                                <span>$0</span>
-                                <span>$200K+</span>
+                                <span>0€</span>
+                                <span>300K€</span>
                             </div>
                         </div>
                     </AccordionContent>

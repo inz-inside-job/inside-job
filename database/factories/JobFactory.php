@@ -21,14 +21,14 @@ class JobFactory extends Factory
 
         return [
             'title' => $this->faker->jobTitle(),
-            'location' => $this->faker->city().', '.$this->faker->country(),
+            'location' => $this->faker->city() . ', ' . $this->faker->country(),
             'employment_type' => $this->faker->randomElement(array_column(EmploymentType::cases(), 'value')),
             'employment_experience' => $this->faker->randomElement(array_column(EmploymentExperience::cases(), 'value')),
             'posted_date' => $this->faker->dateTimeBetween('-1 month', 'now'),
             'salary_min' => $salaryMin,
             'salary_max' => $salaryMax,
             'description' => $this->faker->paragraphs(3, true),
-            'requirements' => $this->faker->words(5),
+            'requirements' => $this->faker->paragraphs(5),
 
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),

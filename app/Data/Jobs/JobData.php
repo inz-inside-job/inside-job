@@ -24,5 +24,8 @@ class JobData extends Data
         public int $salary_min,
         public int $salary_max,
         public string $description,
-    ) {}
+        /** @var string[] */
+        public array $requirements,
+    ) {
+    }
 }

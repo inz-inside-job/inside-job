@@ -131,3 +131,17 @@ export const useGetQueryParams = <
         sorts: sorts as NonNullable<typeof sorts>,
     };
 };
+
+export const moneyToHuman = (value: number): string => {
+    const absValue = Math.abs(value);
+    const suffixes = ['', 'K', 'M', 'B', 'T'];
+    const suffixIndex = Math.floor(Math.log10(absValue) / 3);
+    const suffix = suffixes[suffixIndex];
+    const baseValue = absValue / Math.pow(1000, suffixIndex);
+    const formattedValue = baseValue.toLocaleString(undefined, {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 1,
+    });
+
+    return `${formattedValue}${suffix}€`;
+};

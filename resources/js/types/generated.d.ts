@@ -36,6 +36,7 @@ posted_date: string;
 salary_min: number;
 salary_max: number;
 description: string;
+requirements: Array<string>;
 };
 }
 declare namespace App.Enums {
