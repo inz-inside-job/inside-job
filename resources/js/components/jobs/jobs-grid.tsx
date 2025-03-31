@@ -6,27 +6,6 @@ import { useCallback, useState } from 'react';
 import WhenVisible from '../when-visible';
 import JobCard from './job-card';
 
-// type Job = {
-//     id: string;
-//     title: string;
-//     description: string;
-//     location: string;
-//     isRemote: boolean;
-//     type: string;
-//     posted: string;
-//     salary: string;
-//     requirements: string[];
-//     isSaved: boolean;
-//     isEasyApply: boolean;
-//     company: {
-//         id: string;
-//         name: string;
-//         logo?: React.ReactNode;
-//         rating: number;
-//         reviews: number;
-//     };
-// };
-
 interface JobPageProps extends PageProps {
     jobs: App.Data.Jobs.JobData[];
     next_cursor: string | null;
