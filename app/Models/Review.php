@@ -5,28 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
 /**
- * @property int $id
- * @property int $user_id
- * @property int $company_id
- * @property int $rating
- * @property string $review
- * @property int $submitted_date
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- *
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Review newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Review newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Review query()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Review whereCompanyId($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Review whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Review whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Review whereRating($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Review whereReview($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Review whereSubmittedDate($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Review whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Review whereUserId($value)
- *
- * @mixin \Eloquent
+ * @mixin IdeHelperReview
  */
 class Review extends Pivot
 {
