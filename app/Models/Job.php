@@ -13,8 +13,6 @@ use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
 /**
- * 
- *
  * @property int $id
  * @property int $company_id
  * @property string $title
@@ -32,6 +30,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\User> $applications
  * @property-read int|null $applications_count
  * @property-read \App\Models\Company $company
+ *
  * @method static \Database\Factories\JobFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Job newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Job newQuery()
@@ -50,6 +49,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Job whereSlug($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Job whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Job whereUpdatedAt($value)
+ *
  * @mixin \Eloquent
  */
 class Job extends Model

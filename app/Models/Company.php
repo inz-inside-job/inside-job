@@ -11,8 +11,6 @@ use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
 /**
- * 
- *
  * @property int $id
  * @property string $name
  * @property string|null $description
@@ -39,6 +37,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read int|null $salaries_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\User> $users
  * @property-read int|null $users_count
+ *
  * @method static \Database\Factories\CompanyFactory factory($count = null, $state = [])
  * @method static Builder<static>|Company newModelQuery()
  * @method static Builder<static>|Company newQuery()
@@ -58,6 +57,7 @@ use Spatie\Sluggable\SlugOptions;
  * @method static Builder<static>|Company withAverageSalary()
  * @method static Builder<static>|Company withRating()
  * @method static Builder<static>|Company withRecommended()
+ *
  * @mixin \Eloquent
  */
 class Company extends Model

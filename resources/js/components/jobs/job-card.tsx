@@ -5,7 +5,7 @@ import { Link } from '@inertiajs/react';
 import { Badge, Briefcase, Building2, Clock, MapPin, Star } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 
-export default function JobCard({ job }: { job: App.Data.JobData }) {
+export default function JobCard({ job }: { job: App.Data.Jobs.JobData }) {
     const getInitials = useInitials();
 
     return (

@@ -5,8 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
 /**
- * 
- *
  * @property int $id
  * @property int $user_id
  * @property int $company_id
@@ -16,6 +14,7 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
  * @property int $submitted_date
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Salary newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Salary newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Salary query()
@@ -28,6 +27,7 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Salary whereSubmittedDate($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Salary whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Salary whereUserId($value)
+ *
  * @mixin \Eloquent
  */
 class Salary extends Pivot
