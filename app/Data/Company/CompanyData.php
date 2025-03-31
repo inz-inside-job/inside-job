@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Data;
+namespace App\Data\Company;
 
 use App\Enums\CompanyType;
 use App\Transformers\PublicStorageTransformer;
@@ -8,19 +8,21 @@ use Spatie\LaravelData\Attributes\LoadRelation;
 use Spatie\LaravelData\Attributes\WithTransformer;
 use Spatie\LaravelData\Data;
 
-class CompanyPageData extends Data
+class CompanyData extends Data
 {
     #[WithTransformer(PublicStorageTransformer::class)]
     public ?string $logo;
 
-    public string $founded_year;
-
     #[WithTransformer(PublicStorageTransformer::class)]
     public ?string $header;
 
-    /** @var array<JobData> */
+    /** @var array<CompanyJobData> */
     #[LoadRelation]
     public array $jobs;
+
+    /** @var array<CompanyReviewData> */
+    #[LoadRelation]
+    public array $reviews;
 
     /**
      * Summary of __construct
@@ -37,7 +39,7 @@ class CompanyPageData extends Data
         public string $industry,
         public ?string $location,
         public int $employee_count,
-        string $founded_year,
+        public string $founded_year,
         public float $rating,
         public float $average_salary,
         public float $recommend,
@@ -55,7 +57,6 @@ class CompanyPageData extends Data
         public string $website,
     ) {
         $this->logo = $logo;
-        $this->founded_year = $founded_year;
         $this->header = $header;
     }
 }

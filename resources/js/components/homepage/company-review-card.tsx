@@ -2,18 +2,24 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Card, CardContent } from '@/components/ui/card';
 import { Star } from 'lucide-react';
 
-export function CompanyReviewCard({ review }: { review: App.Data.ReviewData }) {
+export function CompanyReviewCard({
+    company,
+    review,
+}: {
+    company: App.Data.Company.CompanyData | App.Data.Home.ReviewCompanyData;
+    review: App.Data.Company.CompanyReviewData;
+}) {
     return (
         <Card className="h-full overflow-hidden transition-shadow hover:shadow-lg">
             <CardContent className="p-6">
                 <div className="mb-4 flex items-center justify-between">
                     <div className="flex items-center gap-3">
                         <Avatar className="h-12 w-12">
-                            <AvatarImage src={''} alt={''} />
-                            <AvatarFallback>{review.company.name.charAt(0)}</AvatarFallback>
+                            <AvatarImage src={company.logo ?? ''} alt={company.name} />
+                            <AvatarFallback>{company.name.charAt(0)}</AvatarFallback>
                         </Avatar>
                         <div>
-                            <h3 className="font-semibold">{review.company.name}</h3>
+                            <h3 className="font-semibold">{company.name}</h3>
                             <div className="flex items-center">
                                 <div className="flex">
                                     {[...Array(5)].map((_, i) => (

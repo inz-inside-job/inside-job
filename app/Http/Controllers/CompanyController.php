@@ -2,18 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Data\CompanyData;
-use App\Data\CompanyPageData;
-use App\Data\ReviewData;
+use App\Data\Companies\CompanyData;
+use App\Data\Company\CompanyData as CompanyPageData;
 use App\Models\Company;
-use App\Models\Review;
 use Illuminate\Database\Eloquent\Builder;
 use Inertia\Inertia;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedSort;
 use Spatie\QueryBuilder\QueryBuilder;
 
-class CompanyController
+class CompanyController extends Controller
 {
     public function index()
     {
@@ -71,12 +69,21 @@ class CompanyController
 
     public function show(string $slug)
     {
-        $company = Company::whereSlug($slug)->withRating()->withAverageSalary()->withRecommended()->withCount('reviews')->withCount('jobs')->firstOrFail();
-        $reviews = Review::where('company_id', $company->id)->get();
+        $company = Company::whereSlug($slug)
+            ->withRating()
+            ->withAverageSalary()
+            ->withRecommended()
+            ->withCount('reviews')
+            ->withCount('jobs')
+            ->with([
+                'reviews' => function ($query) {
+                    $query->with('user');
+                },
+            ])
+            ->firstOrFail();
 
         return Inertia::render('company', [
             'company' => CompanyPageData::from($company),
-            'reviews' => ReviewData::collect($reviews),
         ]);
     }
 }

@@ -6,7 +6,13 @@ import { Link } from '@inertiajs/react';
 import { Badge, Briefcase, Building2, Clock, MapPin, Star } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 
-export default function JobCard({ job }: { job: App.Data.Jobs.JobData }) {
+export default function JobCard({
+    job,
+    company,
+}: {
+    job: App.Data.Jobs.JobData | App.Data.Company.CompanyJobData;
+    company: App.Data.Jobs.JobCompanyData | App.Data.Company.CompanyData;
+}) {
     const getInitials = useInitials();
 
     return (
@@ -15,8 +21,8 @@ export default function JobCard({ job }: { job: App.Data.Jobs.JobData }) {
                 <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-start sm:gap-6">
                     <div className="bg-gray-light group-hover:bg-orange/10 flex h-16 w-16 items-center justify-center rounded-lg transition-colors sm:h-24 sm:w-24">
                         <Avatar className="h-15 w-15">
-                            <AvatarImage src={job.company.logo ?? ''} alt={''} />
-                            <AvatarFallback>{getInitials(job.company.name)}</AvatarFallback>
+                            <AvatarImage src={company.logo ?? ''} alt={''} />
+                            <AvatarFallback>{getInitials(company.name)}</AvatarFallback>
                         </Avatar>
                     </div>
                     <div className="flex-1 space-y-1.5">
@@ -30,22 +36,22 @@ export default function JobCard({ job }: { job: App.Data.Jobs.JobData }) {
                                 </h2>
                                 <div className="mt-2 flex items-center gap-2">
                                     {/* TODO: Use route link */}
-                                    <Link href={`/companies/${job.company.slug}`} className="text-gray-dark/70 hover:underline">
-                                        {job.company.name}
+                                    <Link href={`/companies/${company.slug}`} className="text-gray-dark/70 hover:underline">
+                                        {company.name}
                                     </Link>
                                     <div className="flex items-center gap-1">
                                         {Array.from({ length: 5 }).map((_, index) => (
                                             <Star
                                                 key={index}
                                                 className={`h-4 w-4 ${
-                                                    index < Math.floor(job.company.rating)
+                                                    index < Math.floor(company.rating)
                                                         ? 'fill-orange text-orange'
                                                         : 'fill-gray-light stroke-gray-dark/50'
                                                 }`}
                                             />
                                         ))}
                                         <span className="text-gray-dark/70 text-sm">
-                                            {job.company.rating.toFixed(1)} • {job.company.reviews_count.toLocaleString()} reviews
+                                            {company.rating.toFixed(1)} • {company.reviews_count.toLocaleString()} reviews
                                         </span>
                                     </div>
                                 </div>
@@ -87,7 +93,7 @@ export default function JobCard({ job }: { job: App.Data.Jobs.JobData }) {
                         <div className="text-gray-dark/70 flex items-center text-sm">
                             <Building2 className="mr-1 h-4 w-4" />
                             {/* TODO: Use route link */}
-                            <Link href={`/companies/${job.company.slug}`} className="hover:underline">
+                            <Link href={`/companies/${company.slug}`} className="hover:underline">
                                 View company profile
                             </Link>
                         </div>

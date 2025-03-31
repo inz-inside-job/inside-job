@@ -1,4 +1,11 @@
 declare namespace App.Data {
+export type UserData = {
+id: number;
+name: string;
+image: string;
+};
+}
+declare namespace App.Data.Companies {
 export type CompanyData = {
 logo: string | null;
 founded_year: string;
@@ -19,16 +26,19 @@ mission: string | null;
 benefits: Array<string>;
 type: App.Enums.CompanyType;
 };
-export type CompanyPageData = {
+}
+declare namespace App.Data.Company {
+export type CompanyData = {
 logo: string | null;
-founded_year: string;
 header: string | null;
-jobs: Array<App.Data.JobData>;
+jobs: Array<App.Data.Company.CompanyJobData>;
+reviews: Array<App.Data.Company.CompanyReviewData>;
 id: number;
 name: string;
 industry: string;
 location: string | null;
 employee_count: number;
+founded_year: string;
 rating: number;
 average_salary: number;
 recommend: number;
@@ -42,7 +52,7 @@ type: App.Enums.CompanyType;
 jobs_count: number;
 website: string;
 };
-export type JobData = {
+export type CompanyJobData = {
 id: number;
 company_id: number;
 title: string;
@@ -52,14 +62,12 @@ posted_date: string;
 salary_range: string | null;
 description: string;
 slug: string;
+requirements: Array<string>;
+salary_min: number;
+salary_max: number;
 };
-export type ReviewCompanyData = {
-id: number;
-name: string;
-};
-export type ReviewData = {
+export type CompanyReviewData = {
 user: App.Data.UserData;
-company: App.Data.ReviewCompanyData;
 id: number;
 company_id: number;
 user_id: number;
@@ -76,10 +84,31 @@ senior_management: number;
 recommend: boolean;
 approve_of_ceo: boolean;
 };
-export type UserData = {
+}
+declare namespace App.Data.Home {
+export type ReviewCompanyData = {
+logo: string;
 id: number;
 name: string;
-image: string;
+};
+export type ReviewData = {
+user: App.Data.UserData;
+company: App.Data.Home.ReviewCompanyData;
+id: number;
+company_id: number;
+user_id: number;
+rating: number;
+review: string;
+pros: Array<string>;
+cons: Array<string>;
+position: string;
+work_life_balance: number;
+culture_values: number;
+career_opportunities: number;
+compensation_benefits: number;
+senior_management: number;
+recommend: boolean;
+approve_of_ceo: boolean;
 };
 }
 declare namespace App.Data.Jobs {

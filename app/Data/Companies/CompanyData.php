@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Data;
+namespace App\Data\Companies;
 
 use App\Enums\CompanyType;
 use App\Transformers\PublicStorageTransformer;

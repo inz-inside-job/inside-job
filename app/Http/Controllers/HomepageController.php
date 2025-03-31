@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Data\ReviewData;
+use App\Data\Home\ReviewData;
 use App\Models\Review;
 use Inertia\Inertia;
 
@@ -11,31 +11,14 @@ class HomepageController extends Controller
     public function view()
     {
         $reviews = Review::inRandomOrder()
+            ->with('company')
+            ->with('user')
             ->limit(5)
             ->get();
 
-        $data = ReviewData::collect($reviews);
-
         return Inertia::render('homepage', [
-            'reviews' => $data,
+            'reviews' => ReviewData::collect($reviews),
         ]);
 
-    }
-
-    public function index()
-    {
-        return Review::all();
-    }
-
-    public function show(Review $review)
-    {
-        return $review;
-    }
-
-    public function destroy(Review $review)
-    {
-        $review->delete();
-
-        return response()->json();
     }
 }

@@ -1,4 +1,5 @@
 import { CompanyReviewCard } from '@/components/homepage/company-review-card';
+import JobCard from '@/components/jobs/job-card';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
@@ -22,7 +23,7 @@ import {
     Users,
 } from 'lucide-react';
 
-export default function CompanyPage({ company, reviews }: { company: App.Data.CompanyPageData; reviews: App.Data.ReviewData[] }) {
+export default function CompanyPage({ company }: { company: App.Data.Company.CompanyData }) {
     return (
         <>
             <Head title={company.name} />
@@ -184,7 +185,7 @@ export default function CompanyPage({ company, reviews }: { company: App.Data.Co
                                                                     rel="noopener noreferrer"
                                                                     className="text-sm text-orange-600 hover:underline"
                                                                 >
-                                                                    {company.website}
+                                                                    Link
                                                                 </a>
                                                             </div>
                                                         </div>
@@ -217,8 +218,8 @@ export default function CompanyPage({ company, reviews }: { company: App.Data.Co
                                                     </Link>
                                                 </div>
 
-                                                {reviews.map((review) => (
-                                                    <CompanyReviewCard review={review} />
+                                                {company.reviews.map((review) => (
+                                                    <CompanyReviewCard key={review.id} company={company} review={review} />
                                                 ))}
                                                 <Link href={`/companies/${company.id}/reviews`}>
                                                     <Button variant="outline" className="w-full cursor-pointer">
@@ -234,11 +235,9 @@ export default function CompanyPage({ company, reviews }: { company: App.Data.Co
                                                     <span className="bg-text text-sm">{company.jobs_count} jobs available</span>
                                                 </div>
 
-                                                {/* company.jobs.map((job) => (
-                                                    //Need proper job model and data
-                                                    //<JobCard job={job} />
-                                                    <></>
-                                                )) */}
+                                                {company.jobs.map((job) => (
+                                                    <JobCard job={job} company={company} />
+                                                ))}
                                             </TabsContent>
                                         </Tabs>
                                     </CardContent>
@@ -270,7 +269,11 @@ export default function CompanyPage({ company, reviews }: { company: App.Data.Co
                                                     <span className="font-medium">bing</span>
                                                 </div>
                                                 <Progress
-                                                    value={(reviews.reduce((sum, review) => sum + review.work_life_balance, 0) / reviews.length) * 20}
+                                                    value={
+                                                        (company.reviews.reduce((sum, review) => sum + review.work_life_balance, 0) /
+                                                            company.reviews.length) *
+                                                        20
+                                                    }
                                                     className="h-2"
                                                 />
                                             </div>
@@ -280,7 +283,11 @@ export default function CompanyPage({ company, reviews }: { company: App.Data.Co
                                                     <span className="font-medium">bong</span>
                                                 </div>
                                                 <Progress
-                                                    value={(reviews.reduce((sum, review) => sum + review.culture_values, 0) / reviews.length) * 20}
+                                                    value={
+                                                        (company.reviews.reduce((sum, review) => sum + review.culture_values, 0) /
+                                                            company.reviews.length) *
+                                                        20
+                                                    }
                                                     className="h-2"
                                                 />
                                             </div>
@@ -291,7 +298,9 @@ export default function CompanyPage({ company, reviews }: { company: App.Data.Co
                                                 </div>
                                                 <Progress
                                                     value={
-                                                        (reviews.reduce((sum, review) => sum + review.career_opportunities, 0) / reviews.length) * 20
+                                                        (company.reviews.reduce((sum, review) => sum + review.career_opportunities, 0) /
+                                                            company.reviews.length) *
+                                                        20
                                                     }
                                                     className="h-2"
                                                 />
@@ -303,7 +312,9 @@ export default function CompanyPage({ company, reviews }: { company: App.Data.Co
                                                 </div>
                                                 <Progress
                                                     value={
-                                                        (reviews.reduce((sum, review) => sum + review.compensation_benefits, 0) / reviews.length) * 20
+                                                        (company.reviews.reduce((sum, review) => sum + review.compensation_benefits, 0) /
+                                                            company.reviews.length) *
+                                                        20
                                                     }
                                                     className="h-2"
                                                 />
@@ -314,7 +325,11 @@ export default function CompanyPage({ company, reviews }: { company: App.Data.Co
                                                     <span className="font-medium">bap</span>
                                                 </div>
                                                 <Progress
-                                                    value={(reviews.reduce((sum, review) => sum + review.senior_management, 0) / reviews.length) * 20}
+                                                    value={
+                                                        (company.reviews.reduce((sum, review) => sum + review.senior_management, 0) /
+                                                            company.reviews.length) *
+                                                        20
+                                                    }
                                                     className="h-2"
                                                 />
                                             </div>

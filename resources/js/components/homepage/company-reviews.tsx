@@ -1,12 +1,20 @@
 import { Button } from '@/components/ui/button';
 import { Carousel, CarouselApi, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import { useMediaQuery } from '@/hooks/use-media-query';
+import type { PageProps } from '@inertiajs/core';
+import { usePage } from '@inertiajs/react';
 import clsx from 'clsx';
 import Autoplay from 'embla-carousel-autoplay';
 import { useCallback, useEffect, useState } from 'react';
 import { CompanyReviewCard } from './company-review-card';
 
-export function CompanyReviews({ reviews }: { reviews: App.Data.ReviewData[] }) {
+interface ComapnyProps extends PageProps {
+    reviews: App.Data.Home.ReviewData[];
+}
+
+export function CompanyReviews() {
+    const { reviews } = usePage<ComapnyProps>().props;
+
     const [api, setApi] = useState<CarouselApi>();
     const [count, setCount] = useState(0);
     const [visibleSlides, setVisibleSlides] = useState<number[]>([]);
@@ -78,7 +86,7 @@ export function CompanyReviews({ reviews }: { reviews: App.Data.ReviewData[] }) 
                         <CarouselContent>
                             {reviews.map((review) => (
                                 <CarouselItem key={review.id} className="md:basis-1/2 xl:basis-1/3">
-                                    <CompanyReviewCard review={review} />
+                                    <CompanyReviewCard review={review} company={review.company} />
                                 </CarouselItem>
                             ))}
                         </CarouselContent>

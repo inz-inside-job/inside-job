@@ -8,11 +8,11 @@ import StarRating from '../star-rating';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { Progress } from '../ui/progress';
 
-export default function CompanyCard({ company }: { company: App.Data.CompanyData }) {
+export default function CompanyCard({ company }: { company: App.Data.Companies.CompanyData | App.Data.Company.CompanyData }) {
     const getInitials = useInitials();
 
     return (
-        <Link href={route('company', { slug: company.slug })}>
+        <Link href={route('companies.show', { slug: company.slug })}>
             <Card className="border-gray-light hover:border-orange/20 h-full w-full cursor-pointer transition-all duration-300 hover:scale-[1.02] hover:shadow-xl">
                 <CardHeader className="p-6">
                     <div className="flex flex-col items-center gap-4 sm:flex-row sm:items-start sm:gap-6">

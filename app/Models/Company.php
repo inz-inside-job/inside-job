@@ -69,7 +69,12 @@ class Company extends Model
             ->using(InterviewExperience::class);
     }
 
-    public function reviews(): BelongsToMany
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(Review::class);
+    }
+
+    public function reviewUsers(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'reviews', 'company_id', 'user_id')
             ->as('reviews')

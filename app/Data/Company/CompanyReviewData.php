@@ -1,19 +1,18 @@
 <?php
 
-namespace App\Data;
+namespace App\Data\Company;
 
+use App\Data\UserData;
 use Spatie\LaravelData\Attributes\LoadRelation;
 use Spatie\LaravelData\Data;
 
-class ReviewData extends Data
+class CompanyReviewData extends Data
 {
     #[LoadRelation]
     public UserData $user;
 
-    #[LoadRelation]
-    public ReviewCompanyData $company;
-
-    public function __construct(public int $id,
+    public function __construct(
+        public int $id,
         public int $company_id,
         public int $user_id,
         public int $rating,
