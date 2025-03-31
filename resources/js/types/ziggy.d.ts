@@ -6,9 +6,8 @@ declare module 'ziggy-js' {
     "companies": [],
     "companies.show": [
         {
-            "name": "company",
-            "required": true,
-            "binding": "id"
+            "name": "slug",
+            "required": true
         }
     ],
     "jobs": [],

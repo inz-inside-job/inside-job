@@ -28,7 +28,7 @@ class InterviewExperience extends Pivot
     ];
 
     protected $casts = [
-        'submitted_date' => 'timestamp',
+        'submitted_date' => 'datetime',
         'difficulty_level' => InterviewDifficulty::class,
         'overall_experience' => InterviewExperienceEnum::class,
     ];
