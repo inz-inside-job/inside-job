@@ -11,54 +11,7 @@ use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
 /**
- * @property int $id
- * @property string $name
- * @property string|null $description
- * @property string|null $logo
- * @property string $industry
- * @property string|null $location
- * @property string|null $website
- * @property int $employee_count
- * @property \Illuminate\Support\Carbon $founded_year
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property string $slug
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\User> $followers
- * @property-read int|null $followers_count
- * @property-read float|null $average_salaray
- * @property-read float|null $rating
- * @property-read float|null $recommended
- * @property-read \App\Models\InterviewExperience|null $interview_experiences
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\User> $interviewExperiences
- * @property-read int|null $interview_experiences_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\User> $reviews
- * @property-read int|null $reviews_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\User> $salaries
- * @property-read int|null $salaries_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\User> $users
- * @property-read int|null $users_count
- *
- * @method static \Database\Factories\CompanyFactory factory($count = null, $state = [])
- * @method static Builder<static>|Company newModelQuery()
- * @method static Builder<static>|Company newQuery()
- * @method static Builder<static>|Company query()
- * @method static Builder<static>|Company whereCreatedAt($value)
- * @method static Builder<static>|Company whereDescription($value)
- * @method static Builder<static>|Company whereEmployeeCount($value)
- * @method static Builder<static>|Company whereFoundedYear($value)
- * @method static Builder<static>|Company whereId($value)
- * @method static Builder<static>|Company whereIndustry($value)
- * @method static Builder<static>|Company whereLocation($value)
- * @method static Builder<static>|Company whereLogo($value)
- * @method static Builder<static>|Company whereName($value)
- * @method static Builder<static>|Company whereSlug($value)
- * @method static Builder<static>|Company whereUpdatedAt($value)
- * @method static Builder<static>|Company whereWebsite($value)
- * @method static Builder<static>|Company withAverageSalary()
- * @method static Builder<static>|Company withRating()
- * @method static Builder<static>|Company withRecommended()
- *
- * @mixin \Eloquent
+ * @mixin IdeHelperCompany
  */
 class Company extends Model
 {

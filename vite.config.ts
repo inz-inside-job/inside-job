@@ -31,6 +31,13 @@ export default defineConfig({
                     run: ['php', 'artisan', 'ziggy:generate', '--types-only', 'resources/js/types/ziggy.d.ts'],
                     pattern: ['routes/*.php'],
                 },
+                {
+                    name: 'ide helper',
+                    run: ['php', 'artisan', 'ide-helper:all'],
+                    pattern: ['app/Models/**/*.php'],
+                    build: false,
+                    throttle: 10000,
+                },
             ],
         }),
     ],
