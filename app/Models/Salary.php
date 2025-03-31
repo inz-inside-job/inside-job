@@ -25,6 +25,6 @@ class Salary extends Pivot
     ];
 
     protected $casts = [
-        'submitted_date' => 'timestamp',
+        'submitted_date' => 'datetime',
     ];
 }

@@ -164,7 +164,7 @@ export default function CompanyPage({ company }: { company: App.Data.Company.Com
                                                             <div className="flex items-start">
                                                                 <span className="w-24 text-sm font-medium">Founded:</span>
                                                                 <span className="bg-text text-sm">
-                                                                    {new Date(parseInt(company.founded_year) * 1000).getFullYear()}
+                                                                    {new Date(company.founded_year).getFullYear()}
                                                                 </span>
                                                             </div>
                                                         </div>

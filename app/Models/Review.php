@@ -28,7 +28,7 @@ class Review extends Pivot
     ];
 
     protected $casts = [
-        'submitted_date' => 'timestamp',
+        'submitted_date' => 'datetime',
         'pros' => 'array',
         'cons' => 'array',
     ];

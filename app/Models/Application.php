@@ -24,7 +24,7 @@ class Application extends Pivot
     ];
 
     protected $casts = [
-        'applied_date' => 'timestamp',
+        'applied_date' => 'datetime',
         'status' => ApplicationStatus::class,
     ];
 }
