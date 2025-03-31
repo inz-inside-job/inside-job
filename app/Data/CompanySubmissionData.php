@@ -2,7 +2,6 @@
 
 namespace App\Data;
 
-use Spatie\LaravelData\Attributes\LoadRelation;
 use Spatie\LaravelData\Data;
 
 class CompanySubmissionData extends Data
@@ -16,8 +15,6 @@ class CompanySubmissionData extends Data
         public string $status,
         public string $created_at,
         public int $id,
-        public array $user,
-    )
-    {
-    }
+        public CompanySubmissionUserData $user,
+    ) {}
 }

@@ -21,7 +21,6 @@ rejected: number;
 total: number;
 };
 export type CompanySubmissionData = {
-user: any;
 name: string;
 industry: string;
 description: string;
@@ -30,6 +29,10 @@ founded_year: string;
 status: string;
 created_at: string;
 id: number;
+user: App.Data.CompanySubmissionUserData;
+};
+export type CompanySubmissionUserData = {
+name: string;
 };
 }
 declare namespace App.Data.Jobs {

@@ -2,11 +2,11 @@
 
 namespace App\Data;
 
-class CompanySubmissionUserData
+use Spatie\LaravelData\Data;
+
+class CompanySubmissionUserData extends Data
 {
     public function __construct(
         public string $name,
-    )
-    {
-    }
+    ) {}
 }

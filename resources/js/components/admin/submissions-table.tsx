@@ -5,9 +5,9 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { Input } from '@/components/ui/input';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { PageProps } from '@inertiajs/core';
-import { Link, router, usePage, WhenVisible } from '@inertiajs/react';
+import { Link, router, usePage } from '@inertiajs/react';
 import { ArrowUpDown, MoreHorizontal, Search } from 'lucide-react';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 type SubmissionStatus = 'pending' | 'approved' | 'rejected';
 
@@ -22,21 +22,28 @@ interface Props extends PageProps {
 
 export function SubmissionsTable({ status }: SubmissionsTableProps) {
     const [searchQuery, setSearchQuery] = useState('');
-    const [sortOption, setSortOption] = useState('name');
+    const [prevSort, setPrevSort] = useState<string>('name');
     const { submissions, next_cursor } = usePage<Props>().props;
 
-    const onSortChange = useCallback((sortValue: string) => {
-        setSortOption(sortValue);
-        const sort = sortValue === 'rating' ? null : `-${sortValue}`;
+    const onSortChange = useCallback(
+        (sortValue: string) => {
+            const sort = sortValue === prevSort ? `-${sortValue}` : sortValue;
 
-        router.reload({
-            only: ['submissions', 'next_cursor'],
-            replace: true,
-            reset: ['submissions'],
-            // Force cursor to be null as this is a new sort
-            data: { sort, cursor: null },
-        });
-    }, []);
+            router.reload({
+                only: ['submissions', 'next_cursor'],
+                replace: true,
+                reset: ['submissions'],
+                // Force cursor to be null as this is a new sort
+                data: { sort, cursor: null },
+            });
+        },
+        [prevSort],
+    );
+
+    useEffect(() => {
+        const sort = prevSort.startsWith('-') ? prevSort.slice(1) : prevSort;
+        onSortChange(sort);
+    }, [prevSort, onSortChange]);
 
     const onLoadMore = useCallback(() => {
         router.reload({ data: { cursor: next_cursor! }, replace: true, only: ['submissions', 'next_cursor'] });
@@ -69,13 +76,21 @@ export function SubmissionsTable({ status }: SubmissionsTableProps) {
                     <TableHeader>
                         <TableRow>
                             <TableHead className="w-[300px]">
-                                <Button variant="ghost" className="flex items-center gap-1 p-0 font-medium" onClick={() => onSortChange('name')}>
+                                <Button
+                                    variant="ghost"
+                                    className="flex items-center gap-1 p-0 font-medium"
+                                    onClick={() => setPrevSort((prev) => (prev === 'name' ? '-name' : 'name'))}
+                                >
                                     Company Name
                                     <ArrowUpDown className="h-3 w-3" />
                                 </Button>
                             </TableHead>
                             <TableHead>
-                                <Button variant="ghost" className="flex items-center gap-1 p-0 font-medium" onClick={() => onSortChange('industry')}>
+                                <Button
+                                    variant="ghost"
+                                    className="flex items-center gap-1 p-0 font-medium"
+                                    onClick={() => setPrevSort((prev) => (prev === 'industry' ? '-industry' : 'industry'))}
+                                >
                                     Industry
                                     <ArrowUpDown className="h-3 w-3" />
                                 </Button>
@@ -85,7 +100,7 @@ export function SubmissionsTable({ status }: SubmissionsTableProps) {
                                 <Button
                                     variant="ghost"
                                     className="flex items-center gap-1 p-0 font-medium"
-                                    onClick={() => onSortChange('created_at')}
+                                    onClick={() => setPrevSort((prev) => (prev === 'created_at' ? '-created_at' : 'created_at'))}
                                 >
                                     Date
                                     <ArrowUpDown className="h-3 w-3" />
@@ -135,20 +150,9 @@ export function SubmissionsTable({ status }: SubmissionsTableProps) {
                     </TableBody>
                 </Table>
             </div>
-            <WhenVisible
-                params={{
-                    only: ['submissions', 'next_cursor'],
-                    replace: true,
-                    data: { cursor: next_cursor },
-                }}
-                fallback={<p>Loading</p>}
-                always={!!next_cursor}
-                buffer={500}
-            >
-                <Button variant="outline" className="mx-auto" onClick={onLoadMore} disabled={!next_cursor}>
-                    Load More Submissions
-                </Button>
-            </WhenVisible>
+            <Button variant="outline" className="mx-auto" onClick={onLoadMore} disabled={!next_cursor}>
+                Load More Submissions
+            </Button>
         </div>
     );
 }

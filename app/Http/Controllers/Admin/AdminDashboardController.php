@@ -13,16 +13,16 @@ class AdminDashboardController
     public function index()
     {
         $submissions = QueryBuilder::for(
-            CompanySubmission::with('user')
+            CompanySubmission::query()->with('user')
         )
-        ->defaultSort('-name')
-        ->allowedSorts([
-            AllowedSort::field('name'),
-            AllowedSort::field('industry'),
-            AllowedSort::field('created_at'),
-        ])
-        ->cursorPaginate(20)
-        ->withQueryString();
+            ->defaultSort('-name')
+            ->allowedSorts([
+                AllowedSort::field('name'),
+                AllowedSort::field('industry'),
+                AllowedSort::field('created_at'),
+            ])
+            ->cursorPaginate(20)
+            ->withQueryString();
 
         $aggregates = CompanySubmission::query()
             ->selectRaw("
@@ -30,7 +30,9 @@ class AdminDashboardController
                 SUM(CASE WHEN status = 'approved' THEN 1 ELSE 0 END) AS approved,
                 SUM(CASE WHEN status = 'rejected' THEN 1 ELSE 0 END) AS rejected,
                 COUNT(*) AS total
-            ");
+            ")
+            ->first()
+            ->toArray();
 
         $paginated = $submissions->toArray();
 
@@ -40,7 +42,7 @@ class AdminDashboardController
             [
                 'submissions' => Inertia::merge($data),
                 'next_cursor' => $paginated['next_cursor'],
-                'aggregates' => $aggregates
+                'aggregates' => $aggregates,
             ]
         );
     }
