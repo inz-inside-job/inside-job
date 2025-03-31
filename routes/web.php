@@ -2,19 +2,20 @@
 
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\HomepageController;
+use App\Http\Controllers\JobController;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 Route::get('/', [HomepageController::class, 'view'])->name('home');
 
 Route::get('/companies', [CompanyController::class, 'index'])
     ->name('companies');
 
-Route::get('/jobs', function () {
-    return Inertia::render('jobs');
-})->name('jobs');
+Route::get('/companies/{slug}', [CompanyController::class, 'show'])
+    ->name('companies.show');
 
-Route::get('/companies/{slug}', [CompanyController::class, 'show'])->name('company');
+Route::get('/jobs', [JobController::class, 'index'])
+    ->name('jobs');
+
 Route::impersonate();
 
 require __DIR__.'/settings.php';

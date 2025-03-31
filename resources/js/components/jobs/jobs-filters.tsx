@@ -3,50 +3,83 @@ import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Slider } from '@/components/ui/slider';
-import { useState } from 'react';
+import { useGetQueryParams, withQueryBuilderParams } from '@/lib/utils';
+import { router } from '@inertiajs/react';
+import { useCallback, useState } from 'react';
 
-const jobTypes = ['Full-time', 'Part-time', 'Contract', 'Temporary', 'Internship', 'Remote'];
-
-const experienceLevels = ['Entry Level', 'Mid Level', 'Senior Level', 'Manager', 'Director', 'Executive'];
-
+const jobTypes: App.Enums.EmploymentType[] = ['Full Time', 'Part Time', 'Contract', 'Temporary', 'Internship', 'Remote'];
+const experienceLevels: App.Enums.EmploymentExperience[] = ['Entry Level', 'Mid Level', 'Senior Level', 'Manager', 'Director', 'Executive'];
 const industries = ['Technology', 'Healthcare', 'Finance', 'Education', 'Retail', 'Manufacturing', 'Media', 'Consulting', 'Non-profit', 'Government'];
 
 export function JobFilters() {
-    const [salaryRange, setSalaryRange] = useState([50]);
-    const [datePosted, setDatePosted] = useState('any');
-    const [selectedJobTypes, setSelectedJobTypes] = useState<string[]>([]);
-    const [selectedExperienceLevels, setSelectedExperienceLevels] = useState<string[]>([]);
-    const [selectedIndustries, setSelectedIndustries] = useState<string[]>([]);
-    const [location, setLocation] = useState('');
-    const [isRemoteOnly, setIsRemoteOnly] = useState(false);
-    const [isHybrid, setIsHybrid] = useState(false);
-    const [isOnSite, setIsOnSite] = useState(false);
+    const queryParams = useGetQueryParams<{
+        salary: number;
+        posted_in: string;
+        employment_type: App.Enums.EmploymentType[];
+        employment_experience: App.Enums.EmploymentExperience[];
+        'company.industry': string[];
+        posted_before: string;
+        location: string;
+    }>();
 
-    const defaultSalaryRange = [50];
-    const defaultDatePosted = 'any';
+    const [minSalary, setMinSalary] = useState(queryParams.filters.salary ? [queryParams.filters.salary / 1000] : [50]);
+    const [datePosted, setDatePosted] = useState(queryParams.filters.posted_in ?? 'any');
+    const [selectedJobTypes, setSelectedJobTypes] = useState(queryParams.filters.employment_type ?? []);
+    const [selectedExperienceLevels, setSelectedExperienceLevels] = useState(queryParams.filters.employment_experience ?? []);
+    const [selectedIndustries, setSelectedIndustries] = useState(queryParams.filters['company.industry'] ?? []);
+    const [location, setLocation] = useState(queryParams.filters.location ?? '');
 
     const resetFilters = () => {
-        setSalaryRange(defaultSalaryRange);
-        setDatePosted(defaultDatePosted);
+        setMinSalary([50]);
+        setDatePosted('any');
         setSelectedJobTypes([]);
         setSelectedExperienceLevels([]);
         setSelectedIndustries([]);
         setLocation('');
-        setIsRemoteOnly(false);
-        setIsHybrid(false);
-        setIsOnSite(false);
     };
 
-    const toggleJobType = (type: string) => {
+    const toggleJobType = (type: App.Enums.EmploymentType) => {
         setSelectedJobTypes((prev) => (prev.includes(type) ? prev.filter((item) => item !== type) : [...prev, type]));
     };
-    const toggleExperienceLevel = (level: string) => {
+    const toggleExperienceLevel = (level: App.Enums.EmploymentExperience) => {
         setSelectedExperienceLevels((prev) => (prev.includes(level) ? prev.filter((item) => item !== level) : [...prev, level]));
     };
 
     const toggleIndustry = (industry: string) => {
         setSelectedIndustries((prev) => (prev.includes(industry) ? prev.filter((item) => item !== industry) : [...prev, industry]));
     };
+
+    const onApply = useCallback(() => {
+        const posted_in = datePosted === 'any' ? null : datePosted;
+        const salary = minSalary[0] === 50 ? null : minSalary[0] * 1000;
+
+        const query = withQueryBuilderParams({
+            filters: {
+                salary,
+                posted_in,
+                employment_type: selectedJobTypes,
+                employment_experience: selectedExperienceLevels,
+                'company.industry': selectedIndustries,
+                location,
+            },
+            sorts: queryParams.sorts,
+        });
+
+        router.reload({
+            only: ['jobs', 'next_cursor'],
+            reset: ['jobs'],
+            data: {
+                salary: undefined,
+                posted_in: undefined,
+                employment_type: undefined,
+                employment_experience: undefined,
+                'company.industry': undefined,
+                location: undefined,
+                ...query,
+                cursor: undefined,
+            },
+        });
+    }, [datePosted, location, minSalary, queryParams.sorts, selectedExperienceLevels, selectedIndustries, selectedJobTypes]);
 
     return (
         <div className="bg-background sticky top-20 max-h-[calc(100vh-9rem)] overflow-y-auto rounded-lg border p-4">
@@ -69,19 +102,23 @@ export function JobFilters() {
                                 </label>
                             </div>
                             <div className="flex items-center space-x-2">
-                                <Checkbox id="date-day" checked={datePosted === 'day'} onCheckedChange={() => setDatePosted('day')} />
+                                <Checkbox id="date-day" checked={datePosted === '1 day ago'} onCheckedChange={() => setDatePosted('1 day ago')} />
                                 <label htmlFor="date-day" className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
                                     Past 24 hours
                                 </label>
                             </div>
                             <div className="flex items-center space-x-2">
-                                <Checkbox id="date-week" checked={datePosted === 'week'} onCheckedChange={() => setDatePosted('week')} />
+                                <Checkbox id="date-week" checked={datePosted === '1 week ago'} onCheckedChange={() => setDatePosted('1 week ago')} />
                                 <label htmlFor="date-week" className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
                                     Past week
                                 </label>
                             </div>
                             <div className="flex items-center space-x-2">
-                                <Checkbox id="date-month" checked={datePosted === 'month'} onCheckedChange={() => setDatePosted('month')} />
+                                <Checkbox
+                                    id="date-month"
+                                    checked={datePosted === '1 month ago'}
+                                    onCheckedChange={() => setDatePosted('1 month ago')}
+                                />
                                 <label
                                     htmlFor="date-month"
                                     className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -121,13 +158,13 @@ export function JobFilters() {
                     <AccordionContent>
                         <div className="space-y-4">
                             <div className="flex items-center justify-between">
-                                <span className="text-sm font-medium">${salaryRange[0]}K+</span>
+                                <span className="text-sm font-medium">{minSalary[0]}K+€</span>
                                 <span className="text-xs text-gray-500">per year</span>
                             </div>
-                            <Slider defaultValue={[50]} max={200} min={0} step={10} value={salaryRange} onValueChange={setSalaryRange} />
+                            <Slider defaultValue={[50]} max={300} min={0} step={10} value={minSalary} onValueChange={setMinSalary} />
                             <div className="flex justify-between text-xs text-gray-500">
-                                <span>$0</span>
-                                <span>$200K+</span>
+                                <span>0€</span>
+                                <span>300K€</span>
                             </div>
                         </div>
                     </AccordionContent>
@@ -188,34 +225,13 @@ export function JobFilters() {
                             value={location}
                             onChange={(e) => setLocation(e.target.value)}
                         />
-                        <div className="space-y-2">
-                            <div className="flex items-center space-x-2">
-                                <Checkbox id="remote-only" checked={isRemoteOnly} onCheckedChange={(checked) => setIsRemoteOnly(checked === true)} />
-                                <label
-                                    htmlFor="remote-only"
-                                    className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                >
-                                    Remote only
-                                </label>
-                            </div>
-                            <div className="flex items-center space-x-2">
-                                <Checkbox id="hybrid" checked={isHybrid} onCheckedChange={(checked) => setIsHybrid(checked === true)} />
-                                <label htmlFor="hybrid" className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                                    Hybrid
-                                </label>
-                            </div>
-                            <div className="flex items-center space-x-2">
-                                <Checkbox id="on-site" checked={isOnSite} onCheckedChange={(checked) => setIsOnSite(checked === true)} />
-                                <label htmlFor="on-site" className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                                    On-site
-                                </label>
-                            </div>
-                        </div>
                     </AccordionContent>
                 </AccordionItem>
             </Accordion>
 
-            <Button className="mt-6 w-full cursor-pointer bg-orange-500 hover:bg-orange-600">Apply Filters</Button>
+            <Button onClick={onApply} className="mt-6 w-full cursor-pointer bg-orange-500 hover:bg-orange-600">
+                Apply Filters
+            </Button>
         </div>
     );
 }

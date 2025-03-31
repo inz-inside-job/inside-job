@@ -28,6 +28,7 @@ class CompanyData extends Data
      */
     public function __construct(
         public int $id,
+        public string $slug,
         public string $name,
         public string $industry,
         public ?string $location,
@@ -39,7 +40,6 @@ class CompanyData extends Data
         public int $reviews_count,
         ?string $logo,
         public string $description,
-        public string $slug,
         ?string $header,
         public string $ceo,
         public ?string $mission,

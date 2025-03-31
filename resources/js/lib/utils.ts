@@ -16,7 +16,7 @@ export interface QueryBuilderParams<
     FilterMap extends Record<string, QueryBuilderFilterValue> = Record<string, QueryBuilderFilterValue>,
     SortKeys extends string = string,
 > {
-    page?: number;
+    cursor?: string;
     filters?: {
         [K in keyof FilterMap]?: FilterMap[K] | Readonly<FilterMap[K] extends ReadonlyArray<unknown> ? FilterMap[K] : never>;
     };
@@ -30,7 +30,7 @@ export interface QueryBuilderParams<
  * for the Laravel Query Builder package automatically. This will apply sorts and
  * filters deterministically based on the provided values.
  */
-export const withQueryBuilderParams = (data?: QueryBuilderParams): Record<string, unknown> => {
+export const withQueryBuilderParams = (data?: QueryBuilderParams): Record<string, string> => {
     if (!data) return {};
 
     const filters = Object.keys(data.filters || {}).reduce(
@@ -51,11 +51,17 @@ export const withQueryBuilderParams = (data?: QueryBuilderParams): Record<string
         return [...arr, (value === -1 || value === 'desc' ? '-' : '') + key];
     }, [] as string[]);
 
-    return {
-        ...filters,
-        sort: !sorts.length ? undefined : sorts.join(','),
-        page: data.page,
-    };
+    const query = { ...filters } as Record<string, string>;
+
+    if (data.cursor) {
+        query.cursor = data.cursor;
+    }
+
+    if (sorts.length) {
+        query.sort = sorts.join(',');
+    }
+
+    return query;
 };
 
 type RequireKeys<T, K extends keyof T> = Required<Pick<T, K>> & Omit<T, K>;
@@ -83,7 +89,7 @@ export const useGetQueryParams = <
 
     const filters: QueryBuilderParams<FilterMap, SortKeys>['filters'] = {};
     const sorts: QueryBuilderParams<FilterMap, SortKeys>['sorts'] = {};
-    let page: number | undefined;
+    let cursor: string | undefined;
 
     params.forEach((value, key) => {
         if (key.startsWith('filter[') && key.endsWith(']')) {
@@ -114,14 +120,28 @@ export const useGetQueryParams = <
                 const key = sortKey.startsWith('-') ? (sortKey.slice(1) as SortKeys) : (sortKey as SortKeys);
                 sorts[key] = direction;
             });
-        } else if (key === 'page') {
-            page = parseInt(value, 10);
+        } else if (key === 'cursor') {
+            cursor = value;
         }
     });
 
     return {
-        page,
+        cursor,
         filters: filters as NonNullable<typeof filters>,
         sorts: sorts as NonNullable<typeof sorts>,
     };
+};
+
+export const moneyToHuman = (value: number): string => {
+    const absValue = Math.abs(value);
+    const suffixes = ['', 'K', 'M', 'B', 'T'];
+    const suffixIndex = Math.floor(Math.log10(absValue) / 3);
+    const suffix = suffixes[suffixIndex];
+    const baseValue = absValue / Math.pow(1000, suffixIndex);
+    const formattedValue = baseValue.toLocaleString(undefined, {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 1,
+    });
+
+    return `${formattedValue}${suffix}€`;
 };

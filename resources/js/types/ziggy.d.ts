@@ -4,13 +4,13 @@ declare module 'ziggy-js' {
     "sanctum.csrf-cookie": [],
     "home": [],
     "companies": [],
-    "jobs": [],
-    "company": [
+    "companies.show": [
         {
             "name": "slug",
             "required": true
         }
     ],
+    "jobs": [],
     "profile.edit": [],
     "profile.update": [],
     "profile.destroy": [],

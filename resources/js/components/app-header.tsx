@@ -34,7 +34,7 @@ export function AppHeader() {
         <header className="bg-background sticky top-0 z-50 border-b">
             <div className="container mx-auto flex items-center justify-between px-4 py-3">
                 <div className="flex items-center gap-8">
-                    <Link href="/" className="flex items-center gap-2">
+                    <Link onClick={() => setIsMenuOpen(false)} href={route('home')} className="flex items-center gap-2">
                         <AppLogoIcon className="text-primary h-8 w-8" />
                         <span className="text-xl font-bold">InsideJob</span>
                     </Link>
@@ -56,17 +56,23 @@ export function AppHeader() {
                     )}
                 >
                     <nav className="mb-4 flex flex-col gap-4 lg:mb-0 lg:w-full lg:flex-row lg:items-center lg:gap-6">
-                        <Link href={route('jobs')} className="text-sm font-medium transition-colors hover:text-emerald-600">
-                            Jobs
+                        <Link
+                            onClick={() => setIsMenuOpen(false)}
+                            href={route('jobs')}
+                            className="text-sm font-medium transition-colors hover:text-emerald-600"
+                        >
+                            <Button className="w-full cursor-pointer" variant="ghost">
+                                Jobs
+                            </Button>
                         </Link>
-                        <Link href={route('companies')} className="text-sm font-medium transition-colors hover:text-emerald-600">
-                            Companies
-                        </Link>
-                        <Link href="#" className="text-sm font-medium transition-colors hover:text-emerald-600">
-                            Salaries
-                        </Link>
-                        <Link href="#" className="text-sm font-medium transition-colors hover:text-emerald-600">
-                            Interviews
+                        <Link
+                            onClick={() => setIsMenuOpen(false)}
+                            href={route('companies')}
+                            className="text-sm font-medium transition-colors hover:text-emerald-600"
+                        >
+                            <Button className="w-full cursor-pointer" variant="ghost">
+                                Companies
+                            </Button>
                         </Link>
                     </nav>
 

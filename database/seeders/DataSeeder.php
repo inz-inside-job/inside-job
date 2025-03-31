@@ -3,12 +3,13 @@
 namespace Database\Seeders;
 
 use App\Models\Company;
+use App\Models\Job;
 use App\Models\Review;
 use Illuminate\Database\Seeder;
 use Illuminate\Http\File;
 use Illuminate\Support\Facades\Storage;
 
-class CompanySeeder extends Seeder
+class DataSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -27,7 +28,9 @@ class CompanySeeder extends Seeder
         $headerPaths = glob(base_path('database/seeders/CompanyHeaders').'/*.jpg');
 
         foreach ($companies as $company) {
-            $reviews = Review::factory(5)->for($company)->create();
+            Review::factory(5)->for($company)->create();
+            Job::factory(5)->for($company)->create();
+
             $logoPath = $logoPaths[array_rand($logoPaths)];
             $logo = new File($logoPath);
             $logoUrl = Storage::disk('public')->putFileAs('logos', $logo, "$company->slug.png");
