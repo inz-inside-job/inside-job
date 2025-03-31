@@ -26,6 +26,5 @@ class JobData extends Data
         public string $description,
         /** @var string[] */
         public array $requirements,
-    ) {
-    }
+    ) {}
 }

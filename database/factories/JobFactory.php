@@ -21,7 +21,7 @@ class JobFactory extends Factory
 
         return [
             'title' => $this->faker->jobTitle(),
-            'location' => $this->faker->city() . ', ' . $this->faker->country(),
+            'location' => $this->faker->city().', '.$this->faker->country(),
             'employment_type' => $this->faker->randomElement(array_column(EmploymentType::cases(), 'value')),
             'employment_experience' => $this->faker->randomElement(array_column(EmploymentExperience::cases(), 'value')),
             'posted_date' => $this->faker->dateTimeBetween('-1 month', 'now'),
