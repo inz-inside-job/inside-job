@@ -24,15 +24,6 @@ class CompanyData extends Data
     #[LoadRelation]
     public array $reviews;
 
-    /**
-     * Summary of __construct
-     *
-     * @param  mixed  $location
-     * @param  mixed  $logo
-     * @param  mixed  $header
-     * @param  mixed  $mission
-     * @param  array<string>  $benefits
-     */
     public function __construct(
         public int $id,
         public string $name,
