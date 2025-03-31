@@ -15,6 +15,21 @@ export default function CompanyPage({ company }: { company: App.Data.Company.Com
     const [tab, setTab] = useState('overview');
     const [showSharePopup, setShowSharePopup] = useState(false);
 
+    const workLifeBalanceRating =
+        company.reviews.length > 0 ? company.reviews.reduce((sum, review) => sum + review.work_life_balance, 0) / company.reviews.length : 0;
+
+    const cultureValuesRating =
+        company.reviews.length > 0 ? company.reviews.reduce((sum, review) => sum + review.culture_values, 0) / company.reviews.length : 0;
+
+    const careerOpportunitiesRating =
+        company.reviews.length > 0 ? company.reviews.reduce((sum, review) => sum + review.career_opportunities, 0) / company.reviews.length : 0;
+
+    const compensationBenefitsRating =
+        company.reviews.length > 0 ? company.reviews.reduce((sum, review) => sum + review.compensation_benefits, 0) / company.reviews.length : 0;
+
+    const seniorManagementRating =
+        company.reviews.length > 0 ? company.reviews.reduce((sum, review) => sum + review.senior_management, 0) / company.reviews.length : 0;
+
     return (
         <>
             <SharePopup url={route('companies.show', { slug: company.slug })} open={showSharePopup} onClose={() => setShowSharePopup(false)} />
@@ -251,72 +266,37 @@ export default function CompanyPage({ company }: { company: App.Data.Company.Com
                                             <div>
                                                 <div className="mb-1 flex justify-between text-sm">
                                                     <span>Work-Life Balance</span>
-                                                    <span className="font-medium">bing</span>
+                                                    <span className="font-medium">{workLifeBalanceRating}</span>
                                                 </div>
-                                                <Progress
-                                                    value={
-                                                        (company.reviews.reduce((sum, review) => sum + review.work_life_balance, 0) /
-                                                            company.reviews.length) *
-                                                        20
-                                                    }
-                                                    className="h-2"
-                                                />
+                                                <Progress value={workLifeBalanceRating * 20} className="h-2" />
                                             </div>
                                             <div>
                                                 <div className="mb-1 flex justify-between text-sm">
                                                     <span>Culture & Values</span>
-                                                    <span className="font-medium">bong</span>
+                                                    <span className="font-medium">{cultureValuesRating}</span>
                                                 </div>
-                                                <Progress
-                                                    value={
-                                                        (company.reviews.reduce((sum, review) => sum + review.culture_values, 0) /
-                                                            company.reviews.length) *
-                                                        20
-                                                    }
-                                                    className="h-2"
-                                                />
+                                                <Progress value={cultureValuesRating * 20} className="h-2" />
                                             </div>
                                             <div>
                                                 <div className="mb-1 flex justify-between text-sm">
                                                     <span>Career Opportunities</span>
-                                                    <span className="font-medium">bang</span>
+                                                    <span className="font-medium">{careerOpportunitiesRating}</span>
                                                 </div>
-                                                <Progress
-                                                    value={
-                                                        (company.reviews.reduce((sum, review) => sum + review.career_opportunities, 0) /
-                                                            company.reviews.length) *
-                                                        20
-                                                    }
-                                                    className="h-2"
-                                                />
+                                                <Progress value={careerOpportunitiesRating * 20} className="h-2" />
                                             </div>
                                             <div>
                                                 <div className="mb-1 flex justify-between text-sm">
                                                     <span>Compensation & Benefits</span>
-                                                    <span className="font-medium">bop</span>
+                                                    <span className="font-medium">{compensationBenefitsRating}</span>
                                                 </div>
-                                                <Progress
-                                                    value={
-                                                        (company.reviews.reduce((sum, review) => sum + review.compensation_benefits, 0) /
-                                                            company.reviews.length) *
-                                                        20
-                                                    }
-                                                    className="h-2"
-                                                />
+                                                <Progress value={compensationBenefitsRating * 20} className="h-2" />
                                             </div>
                                             <div>
                                                 <div className="mb-1 flex justify-between text-sm">
                                                     <span>Senior Management</span>
-                                                    <span className="font-medium">bap</span>
+                                                    <span className="font-medium">{seniorManagementRating}</span>
                                                 </div>
-                                                <Progress
-                                                    value={
-                                                        (company.reviews.reduce((sum, review) => sum + review.senior_management, 0) /
-                                                            company.reviews.length) *
-                                                        20
-                                                    }
-                                                    className="h-2"
-                                                />
+                                                <Progress value={seniorManagementRating * 20} className="h-2" />
                                             </div>
                                         </div>
 
