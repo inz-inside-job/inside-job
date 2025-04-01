@@ -15,6 +15,7 @@
         "laravel/framework": "^12.0",
         "laravel/horizon": "^5.30",
         "laravel/sanctum": "^4.0",
+        "laravel/scout": "^10.14",
         "laravel/tinker": "^2.10.1",
         "spatie/enum": "^3.13",
         "spatie/laravel-data": "^4.14",
@@ -22,7 +23,8 @@
         "spatie/laravel-query-builder": "^6.3",
         "spatie/laravel-sluggable": "^3.7",
         "spatie/laravel-typescript-transformer": "^2.5",
-        "tightenco/ziggy": "^2.4"
+        "tightenco/ziggy": "^2.4",
+        "typesense/typesense-php": "^5.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.14",
@@ -59,8 +61,7 @@
         ],
         "post-update-cmd": [
             "@php artisan vendor:publish --tag=laravel-assets --ansi --force",
-            "@php artisan ide-helper:generate",
-            "@php artisan ide-helper:meta"
+            "@php artisan ide-helper:all"
         ],
         "post-root-package-install": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
