@@ -2,6 +2,7 @@
 
 namespace App\Data;
 
+use App\Enums\CompanyType;
 use Spatie\LaravelData\Data;
 
 class CompanySubmissionData extends Data
@@ -16,5 +17,7 @@ class CompanySubmissionData extends Data
         public string $created_at,
         public int $id,
         public CompanySubmissionUserData $user,
+        public string $ceo,
+        public CompanyType $type
     ) {}
 }

@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Enums\CompanySubmissionStatus;
+use App\Enums\CompanyType;
 use App\Models\CompanySubmission;
 use App\Models\User;
 use Faker\Provider\en_US\Company as FakerCompany;
@@ -30,6 +31,8 @@ class CompanySubmissionFactory extends Factory
             'user_id' => User::factory(),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
+            'ceo' => $this->faker->name(),
+            'type' => $this->faker->randomElement(array_column(CompanyType::cases(), 'value')),
         ];
     }
 }

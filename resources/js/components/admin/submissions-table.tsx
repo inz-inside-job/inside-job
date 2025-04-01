@@ -135,12 +135,6 @@ export function SubmissionsTable({ status }: SubmissionsTableProps) {
                                                 <DropdownMenuItem asChild>
                                                     <Link href={`/admin/submissions/${submission.id}`}>View Details</Link>
                                                 </DropdownMenuItem>
-                                                {status === 'pending' ? (
-                                                    <>
-                                                        <DropdownMenuItem>Approve</DropdownMenuItem>
-                                                        <DropdownMenuItem>Reject</DropdownMenuItem>
-                                                    </>
-                                                ) : null}
                                             </DropdownMenuContent>
                                         </DropdownMenu>
                                     </TableCell>

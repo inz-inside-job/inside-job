@@ -42,6 +42,20 @@ declare module 'ziggy-js' {
     "password.confirm": [],
     "logout": [],
     "admin.dashboard": [],
+    "admin.submission": [
+        {
+            "name": "submission",
+            "required": true,
+            "binding": "id"
+        }
+    ],
+    "admin.submission.update": [
+        {
+            "name": "submission",
+            "required": true,
+            "binding": "id"
+        }
+    ],
     "storage.local": [
         {
             "name": "path",

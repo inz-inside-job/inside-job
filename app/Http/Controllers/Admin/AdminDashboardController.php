@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Data\CompanySubmissionData;
+use App\Models\Company;
 use App\Models\CompanySubmission;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Spatie\QueryBuilder\AllowedSort;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -45,5 +47,39 @@ class AdminDashboardController
                 'aggregates' => $aggregates,
             ]
         );
+    }
+
+    public function view(CompanySubmission $submission)
+    {
+        $submission->load('user');
+
+        $data = CompanySubmissionData::from($submission);
+
+        return Inertia::render('admin/submission', [
+            'submission' => $data,
+        ]);
+    }
+
+    public function update(Request $request, CompanySubmission $submission)
+    {
+        $action = $request->post('action');
+
+        if ($action === 'approve') {
+            $submission->update(['status' => 'approved']);
+            Company::create([
+                'name' => $submission->name,
+                'industry' => $submission->industry,
+                'description' => $submission->description,
+                'employee_count' => $submission->employee_count,
+                'founded_year' => $submission->founded_year,
+                'ceo' => $submission->ceo,
+                'type' => $submission->type,
+            ]);
+
+        } elseif ($action === 'reject') {
+            $submission->update(['status' => 'rejected']);
+        }
+
+        return redirect()->route('admin.submission', $submission);
     }
 }

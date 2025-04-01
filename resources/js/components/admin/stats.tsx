@@ -18,7 +18,7 @@ export function Stats() {
                     <Building2 className="text-muted-foreground h-4 w-4" />
                 </CardHeader>
                 <CardContent>
-                    <div className="text-2xl font-bold">{aggregates.total}</div>
+                    <div className="text-2xl font-bold text-orange-500">{aggregates.total}</div>
                     <p className="text-muted-foreground text-xs">All company submissions</p>
                 </CardContent>
             </Card>
@@ -28,7 +28,7 @@ export function Stats() {
                     <Clock className="text-muted-foreground h-4 w-4" />
                 </CardHeader>
                 <CardContent>
-                    <div className="text-2xl font-bold">{aggregates.pending}</div>
+                    <div className="text-2xl font-bold text-orange-500">{aggregates.pending}</div>
                     <p className="text-muted-foreground text-xs">Awaiting admin review</p>
                 </CardContent>
             </Card>
@@ -38,7 +38,7 @@ export function Stats() {
                     <CheckCircle className="text-muted-foreground h-4 w-4" />
                 </CardHeader>
                 <CardContent>
-                    <div className="text-2xl font-bold">{aggregates.approved}</div>
+                    <div className="text-2xl font-bold text-orange-500">{aggregates.approved}</div>
                     <p className="text-muted-foreground text-xs">Published on platform</p>
                 </CardContent>
             </Card>
@@ -48,7 +48,7 @@ export function Stats() {
                     <XCircle className="text-muted-foreground h-4 w-4" />
                 </CardHeader>
                 <CardContent>
-                    <div className="text-2xl font-bold">{aggregates.rejected}</div>
+                    <div className="text-2xl font-bold text-orange-500">{aggregates.rejected}</div>
                     <p className="text-muted-foreground text-xs">Not approved for platform</p>
                 </CardContent>
             </Card>

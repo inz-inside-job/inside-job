@@ -26,6 +26,9 @@ class Company extends Model
         'website',
         'employee_count',
         'founded_year',
+        'description',
+        'ceo',
+        'type',
     ];
 
     protected function casts(): array
