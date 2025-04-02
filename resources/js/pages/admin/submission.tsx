@@ -1,5 +1,3 @@
-'use client';
-
 import {
     AlertDialog,
     AlertDialogAction,
@@ -15,9 +13,8 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
-import AdminLayout from '@/layouts/admin/layout';
 import { PageProps } from '@inertiajs/core';
-import { Link, usePage } from '@inertiajs/react';
+import { Head, Link, usePage } from '@inertiajs/react';
 import { useForm } from 'laravel-precognition-react-inertia';
 import { ArrowLeft, Building2, Clock, User, Users } from 'lucide-react';
 
@@ -55,7 +52,8 @@ export default function SubmissionDetail() {
     };
 
     return (
-        <AdminLayout>
+        <div className="container mx-auto px-4 py-8">
+            <Head title="Submission" />
             <div className="space-y-6">
                 <Link href={route('admin.dashboard')}>
                     <Button variant="ghost" className="flex items-center gap-2">
@@ -63,7 +61,7 @@ export default function SubmissionDetail() {
                     </Button>
                 </Link>
 
-                <div className="flex w-3xl flex-col gap-6 place-self-center md:flex-row">
+                <div className="flex w-fit gap-6 place-self-center md:w-3xl">
                     <Card className="flex-1">
                         <CardHeader>
                             <div className="flex items-center justify-between">
@@ -110,11 +108,11 @@ export default function SubmissionDetail() {
                             <div>
                                 <h3 className="mb-2 font-medium">Submitter Information</h3>
                                 <div className="grid gap-2">
-                                    <div className="flex justify-between">
+                                    <div className="flex gap-1">
                                         <span className="text-muted-foreground">Name:</span>
                                         <span>{submission.user.name}</span>
                                     </div>
-                                    <div className="flex justify-between">
+                                    <div className="flex gap-1">
                                         <span className="text-muted-foreground">Submitted:</span>
                                         <span>{new Date(submission.created_at).toDateString()}</span>
                                     </div>
@@ -174,6 +172,6 @@ export default function SubmissionDetail() {
                     </Card>
                 </div>
             </div>
-        </AdminLayout>
+        </div>
     );
 }
