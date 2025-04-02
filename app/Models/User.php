@@ -7,6 +7,7 @@ use Database\Factories\UserFactory;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Lab404\Impersonate\Models\Impersonate;
@@ -58,6 +59,11 @@ class User extends Authenticatable implements MustVerifyEmail
     public function canImpersonate(): bool
     {
         return $this->hasRole(UserRole::ADMIN);
+    }
+
+    public function companySubmittions(): HasMany
+    {
+        return $this->hasMany(CompanySubmission::class);
     }
 
     public function companiesFollowed(): BelongsToMany

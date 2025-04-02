@@ -18,7 +18,6 @@ return new class extends Migration
             $table->text('mission')->nullable()->default(null);
             $table->json('benefits')->nullable()->default('[]');
             $table->enum('type', array_column(CompanyType::cases(), 'value'));
-
         });
     }
 
