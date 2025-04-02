@@ -39,10 +39,6 @@ export default function SubmissionDetail() {
         },
     );
 
-    if (!submission) {
-        return <div className="bg-background text-foreground flex h-screen items-center justify-center">Submission not found</div>;
-    }
-
     const submitAction = async () => {
         submit({
             onFinish: () => {
