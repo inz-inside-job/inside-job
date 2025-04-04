@@ -25,7 +25,7 @@ export default function ProsConsStep({
     };
 
     const updateCon = (index: number, value: string) => {
-        const newCons = [...data['pros']];
+        const newCons = [...data['cons']];
         newCons[index] = value;
         setData('cons', newCons);
     };
