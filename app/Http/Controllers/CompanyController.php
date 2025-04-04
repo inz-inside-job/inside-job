@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Data\Companies\CompanyData;
 use App\Data\Company\CompanyData as CompanyPageData;
+use App\Http\Requests\CompanyIndexRequest;
 use App\Models\Company;
 use Illuminate\Database\Eloquent\Builder;
 use Inertia\Inertia;
@@ -13,14 +14,22 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 class CompanyController extends Controller
 {
-    public function index()
+    public function index(CompanyIndexRequest $request)
     {
-        $companies = QueryBuilder::for(
-            Company::withRating()
-                ->withAverageSalary()
-                ->withRecommended()
-                ->withCount('reviews')
-        )
+        $params = $request->validated();
+
+        $query = Company::withRating()
+            ->withAverageSalary()
+            ->withRecommended()
+            ->withCount('reviews')
+            ->when(! empty($params['query']), function (Builder $query) use ($params) {
+                $searchResults = Company::search($params['query'])->raw();
+                $ids = collect($searchResults['hits'])->pluck('id');
+
+                $query->whereIn('companies.id', $ids);
+            });
+
+        $companies = QueryBuilder::for($query)
             ->defaultSort(['-rating'])
             ->allowedSorts([
                 AllowedSort::field('rating'),

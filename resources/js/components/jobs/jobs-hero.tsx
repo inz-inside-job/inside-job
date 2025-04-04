@@ -1,8 +1,24 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Briefcase, MapPin, Search } from 'lucide-react';
+import { useGetQueryParams, withQueryBuilderParams } from '@/lib/utils';
+import { router } from '@inertiajs/react';
+import { Briefcase, Search } from 'lucide-react';
+import { useState } from 'react';
 
 export function JobsHero() {
+    const queryParams = useGetQueryParams();
+
+    const [searchQuery, setSearchQuery] = useState(queryParams.query || '');
+
+    const handleSearch = () => {
+        const query = withQueryBuilderParams({
+            ...queryParams,
+            query: searchQuery,
+        });
+
+        router.get(route('jobs'), query, { replace: false });
+    };
+
     return (
         <div className="bg-gradient-to-r from-orange-500 to-orange-400 text-white">
             <div className="container mx-auto px-4 py-12">
@@ -12,16 +28,17 @@ export function JobsHero() {
                 </div>
 
                 <div className="bg-background mx-auto max-w-3xl rounded-lg p-4 shadow-lg">
-                    <div className="grid grid-cols-1 gap-3 md:grid-cols-7">
+                    <div className="grid grid-cols-1 gap-3 md:grid-cols-4">
                         <div className="relative md:col-span-3">
                             <Briefcase className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 transform text-gray-400" />
-                            <Input className="text-foreground pl-10" placeholder="Job title, keywords, or company" />
+                            <Input
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                                className="text-foreground pl-10"
+                                placeholder="Job title, keywords, or company"
+                            />
                         </div>
-                        <div className="relative md:col-span-3">
-                            <MapPin className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 transform text-gray-400" />
-                            <Input className="text-foreground pl-10" placeholder="City, state, or remote" />
-                        </div>
-                        <Button className="cursor-pointer bg-orange-500 hover:bg-orange-600">
+                        <Button onClick={handleSearch} className="cursor-pointer bg-orange-500 hover:bg-orange-600">
                             <Search className="mr-1 h-4 w-4" />
                             Search
                         </Button>

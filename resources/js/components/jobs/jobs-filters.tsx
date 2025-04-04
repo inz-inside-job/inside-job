@@ -54,6 +54,7 @@ export function JobFilters() {
         const salary = minSalary[0] === 50 ? null : minSalary[0] * 1000;
 
         const query = withQueryBuilderParams({
+            ...queryParams,
             filters: {
                 salary,
                 posted_in,
@@ -62,24 +63,18 @@ export function JobFilters() {
                 'company.industry': selectedIndustries,
                 location,
             },
-            sorts: queryParams.sorts,
+            cursor: undefined,
         });
 
-        router.reload({
+        console.log(query);
+
+        router.get(route('jobs'), query, {
             only: ['jobs', 'next_cursor'],
             reset: ['jobs'],
-            data: {
-                salary: undefined,
-                posted_in: undefined,
-                employment_type: undefined,
-                employment_experience: undefined,
-                'company.industry': undefined,
-                location: undefined,
-                ...query,
-                cursor: undefined,
-            },
+            preserveState: true,
+            preserveScroll: true,
         });
-    }, [datePosted, location, minSalary, queryParams.sorts, selectedExperienceLevels, selectedIndustries, selectedJobTypes]);
+    }, [datePosted, location, minSalary, queryParams, selectedExperienceLevels, selectedIndustries, selectedJobTypes]);
 
     return (
         <div className="bg-background sticky top-20 max-h-[calc(100vh-9rem)] overflow-y-auto rounded-lg border p-4">

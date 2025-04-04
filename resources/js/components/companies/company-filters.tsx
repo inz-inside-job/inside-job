@@ -64,28 +64,25 @@ export function CompanyFilters() {
         const locationParam = location.trim();
 
         const query = withQueryBuilderParams({
+            ...queryParams,
             filters: {
                 min_rating: minRating,
                 industry: selectedIndustries,
                 company_sizes: companySizes,
                 location: locationParam === '' ? undefined : locationParam,
             },
-            sorts: queryParams.sorts,
+            cursor: undefined,
         });
 
-        router.reload({
+        console.log(query);
+
+        router.get(route('companies'), query, {
             only: ['companies', 'next_cursor'],
             reset: ['companies'],
-            data: {
-                min_rating: undefined,
-                industry: undefined,
-                company_sizes: undefined,
-                location: undefined,
-                ...query,
-                cursor: undefined,
-            },
+            preserveState: true,
+            preserveScroll: true,
         });
-    }, [location, queryParams.sorts, ratingFilter, selectedCompanySizes, selectedIndustries]);
+    }, [location, queryParams, ratingFilter, selectedCompanySizes, selectedIndustries]);
 
     return (
         <div className="bg-background sticky top-20 max-h-[calc(100vh-9rem)] overflow-y-auto rounded-lg border p-4">
