@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Data\Companies\CompanyData;
 use App\Data\Company\CompanyData as CompanyPageData;
 use App\Models\Company;
+use App\Models\Review;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedSort;
@@ -84,6 +86,45 @@ class CompanyController extends Controller
 
         return Inertia::render('company', [
             'company' => CompanyPageData::from($company),
+        ]);
+    }
+
+    public function storeReview(Request $request, string $slug)
+    {
+        $request->validate([
+            'rating' => 'required|integer|min:1|max:5',
+            'review' => 'required|string|max:5000',
+            'pros' => 'required|array',
+            'pros.*' => 'string|max:255',
+            'cons' => 'required|array',
+            'cons.*' => 'string|max:255',
+            'position' => 'required|string|max:255',
+            'work_life_balance' => 'required|integer|min:1|max:5',
+            'culture_values' => 'required|integer|min:1|max:5',
+            'career_opportunities' => 'required|integer|min:1|max:5',
+            'compensation_benefits' => 'required|integer|min:1|max:5',
+            'senior_management' => 'required|integer|min:1|max:5',
+            'recommend' => 'required|boolean',
+            'approve_of_ceo' => 'required|boolean',
+        ]);
+
+        $company = Company::whereSlug($slug)->firstOrFail();
+
+        new Review([
+            'user_id' => auth()->id(),
+            'company_id' => $company->id,
+            'rating' => $request->input('rating'),
+            'review' => $request->input('review'),
+            'pros' => $request->input('pros'),
+            'cons' => $request->input('cons'),
+            'position' => $request->input('position'),
+            'work_life_balance' => $request->input('work_life_balance'),
+            'culture_values' => $request->input('culture_values'),
+            'career_opportunities' => $request->input('career_opportunities'),
+            'compensation_benefits' => $request->input('compensation_benefits'),
+            'senior_management' => $request->input('senior_management'),
+            'recommend' => $request->input('recommend'),
+            'approve_of_ceo' => $request->input('approve_of_ceo'),
         ]);
     }
 }

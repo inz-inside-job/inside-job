@@ -1,309 +1,208 @@
 import type React from 'react';
 
 import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { PlusCircle, Star, ThumbsDown, ThumbsUp, X } from 'lucide-react';
+import clsx from 'clsx';
+import { useForm } from 'laravel-precognition-react-inertia';
+import { ArrowLeft, ArrowRight, Star } from 'lucide-react';
 import { useState } from 'react';
+import { toast } from 'sonner';
+import { ResponsiveModal, ResponsiveModalDescription, ResponsiveModalHeader, ResponsiveModalTitle } from '../responsive-modal';
+import PositionStep from './steps/position';
+import ProsConsStep from './steps/pros-cons';
+import RecommendStep from './steps/recommend';
+import ReviewStep from './steps/review';
 
-// Star Rating Component
-function StarRating({ rating, setRating }: { rating: number; setRating: (rating: number) => void }) {
+// Progress Steps Component
+function ProgressSteps({ currentStep, totalSteps }: { currentStep: number; totalSteps: number }) {
     return (
-        <div className="flex gap-1">
-            {[1, 2, 3, 4, 5].map((star) => (
-                <button key={star} type="button" onClick={() => setRating(star)} className="focus:outline-none">
-                    <Star className={`h-6 w-6 ${star <= rating ? 'fill-yellow-400 text-yellow-400' : 'text-gray-300'} transition-colors`} />
-                </button>
+        <div className="mb-6 flex items-center justify-center space-x-2">
+            {Array.from({ length: totalSteps }).map((_, index) => (
+                <div
+                    key={index}
+                    className={clsx('h-2 rounded-full transition-all', {
+                        'bg-primary w-8': index < currentStep,
+                        'bg-primary w-12': index === currentStep,
+                        'w-8 bg-gray-200': index > currentStep,
+                    })}
+                ></div>
             ))}
         </div>
     );
 }
 
-export default function ReviewModal() {
+export type ReviewFormInterface = {
+    pros: string[];
+    cons: string[];
+    position: string;
+    work_life_balance: number;
+    culture_values: number;
+    career_opportunities: number;
+    compensation_benefits: number;
+    senior_management: number;
+    recommend: boolean | null;
+    approve_of_ceo: boolean | null;
+};
+
+export default function ReviewModal({ companySlug }: { companySlug: string }) {
     const [open, setOpen] = useState(false);
-    const [pros, setPros] = useState<string[]>(['']);
-    const [cons, setCons] = useState<string[]>(['']);
-    const [position, setPosition] = useState('');
-    const [workLifeBalance, setWorkLifeBalance] = useState(3);
-    const [cultureValues, setCultureValues] = useState(3);
-    const [careerOpportunities, setCareerOpportunities] = useState(3);
-    const [compensationBenefits, setCompensationBenefits] = useState(3);
-    const [seniorManagement, setSeniorManagement] = useState(3);
-    const [recommend, setRecommend] = useState<boolean | null>(null);
-    const [approveOfCeo, setApproveOfCeo] = useState<boolean | null>(null);
-    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [currentStep, setCurrentStep] = useState(0);
+    const totalSteps = 4;
 
-    const addPro = () => {
-        setPros([...pros, '']);
-    };
+    const { data, setData, submit, processing, reset } = useForm<ReviewFormInterface>(
+        'post',
+        route('companies.reviews.store', {
+            slug: companySlug,
+        }),
+        {
+            pros: [],
+            cons: [],
+            position: '',
+            work_life_balance: 3,
+            culture_values: 3,
+            career_opportunities: 3,
+            compensation_benefits: 3,
+            senior_management: 3,
+            recommend: null,
+            approve_of_ceo: null,
+        },
+    );
 
-    const addCon = () => {
-        setCons([...cons, '']);
-    };
+    // Step titles
+    const stepTitles = ['Your Position', 'Pros & Cons', 'Rate the Company', 'Final Thoughts'];
 
-    const updatePro = (index: number, value: string) => {
-        const newPros = [...pros];
-        newPros[index] = value;
-        setPros(newPros);
-    };
-
-    const updateCon = (index: number, value: string) => {
-        const newCons = [...cons];
-        newCons[index] = value;
-        setCons(newCons);
-    };
-
-    const removePro = (index: number) => {
-        const newPros = [...pros];
-        newPros.splice(index, 1);
-        setPros(newPros.length ? newPros : ['']);
-    };
-
-    const removeCon = (index: number) => {
-        const newCons = [...cons];
-        newCons.splice(index, 1);
-        setCons(newCons.length ? newCons : ['']);
-    };
+    // Step descriptions
+    const stepDescriptions = [
+        'Tell us about your role at the company',
+        'Share what you liked and disliked about working here',
+        'Rate different aspects of the company',
+        'Would you recommend this company to others?',
+    ];
 
     const resetForm = () => {
-        setPros(['']);
-        setCons(['']);
-        setPosition('');
-        setWorkLifeBalance(3);
-        setCultureValues(3);
-        setCareerOpportunities(3);
-        setCompensationBenefits(3);
-        setSeniorManagement(3);
-        setRecommend(null);
-        setApproveOfCeo(null);
+        reset();
+        setCurrentStep(0);
+    };
+
+    const nextStep = () => {
+        // Validate current step
+        if (currentStep === 0 && !data['position'].trim()) {
+            alert('Please enter your position before continuing.');
+            return;
+        }
+
+        if (currentStep === 1) {
+            const validPros = data['pros'].filter((pro) => pro.trim() !== '');
+            const validCons = data['cons'].filter((con) => con.trim() !== '');
+
+            if (validPros.length === 0 || validCons.length === 0) {
+                alert('Please add at least one pro and one con before continuing.');
+                return;
+            }
+        }
+
+        if (currentStep < totalSteps - 1) {
+            setCurrentStep(currentStep + 1);
+        }
+    };
+
+    const prevStep = () => {
+        if (currentStep > 0) {
+            setCurrentStep(currentStep - 1);
+        }
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        // Validate that recommend and approveOfCeo are not null
-        if (recommend === null || approveOfCeo === null) {
+        // Validate final step
+        if (data['recommend'] === null || data['approve_of_ceo'] === null) {
             alert('Please answer all questions before submitting.');
             return;
         }
 
-        setIsSubmitting(true);
+        submit({
+            onSuccess: () => {
+                resetForm();
+                setOpen(false);
+                toast.success('Your review has been submitted successfully!');
+            },
+            onError: () => {
+                toast.error('There was an error submitting your review. Please try again.');
+            },
+        });
+    };
 
-        try {
-            // Filter out empty pros and cons
-            // const filteredPros = pros.filter((pro) => pro.trim() !== '');
-            //const filteredCons = cons.filter((con) => con.trim() !== '');
-
-            /*const reviewData = {
-                pros: filteredPros,
-                cons: filteredCons,
-                position,
-                work_life_balance: workLifeBalance,
-                culture_values: cultureValues,
-                career_opportunities: careerOpportunities,
-                compensation_benefits: compensationBenefits,
-                senior_management: seniorManagement,
-                recommend,
-                approve_of_ceo: approveOfCeo,
-            };*/
-
-            //await submitReview(reviewData);
-
-            // Close modal and reset form
-            setOpen(false);
-            resetForm();
-
-            // Show success message
-            alert('Review submitted successfully!');
-        } catch (error) {
-            console.error('Error submitting review:', error);
-            alert('Failed to submit review. Please try again.');
-        } finally {
-            setIsSubmitting(false);
+    // Render the current step content
+    const renderStepContent = () => {
+        switch (currentStep) {
+            case 0:
+                return <PositionStep position={data['position']} setPosition={(position: string) => setData('position', position)} />;
+            case 1:
+                return <ProsConsStep data={data} setData={(key: keyof ReviewFormInterface, value: string[]) => setData(key, value)} />;
+            case 2:
+                return <ReviewStep data={data} setData={(key: keyof ReviewFormInterface, value: number) => setData(key, value)} />;
+            case 3:
+                return (
+                    <RecommendStep
+                        recommend={data['recommend']}
+                        setRecommend={(value: boolean) => setData('recommend', value)}
+                        approveOfCeo={data['approve_of_ceo']}
+                        setApproveOfCeo={(value: boolean) => setData('approve_of_ceo', value)}
+                    />
+                );
+            default:
+                return null;
         }
     };
 
     return (
-        <Dialog
-            open={open}
-            onOpenChange={(newOpen) => {
-                setOpen(newOpen);
-                if (!newOpen) resetForm();
-            }}
-        >
-            <DialogTrigger asChild>
-                <Button size="lg">Write a Review</Button>
-            </DialogTrigger>
-            <DialogContent className="max-h-[90vh] max-w-3xl overflow-y-auto">
-                <DialogHeader>
-                    <DialogTitle>Write a Review</DialogTitle>
-                    <DialogDescription>Share your experience working at this company</DialogDescription>
-                </DialogHeader>
+        <>
+            <Button className="cursor-pointer bg-orange-500 hover:bg-orange-600" onClick={() => setOpen(true)}>
+                <Star className="mr-2 h-4 w-4" />
+                Write a Review
+            </Button>
+            <ResponsiveModal
+                open={open}
+                onOpenChange={(newOpen) => {
+                    setOpen(newOpen);
+                    if (!newOpen) resetForm();
+                }}
+            >
+                <ResponsiveModalHeader>
+                    <ResponsiveModalTitle>{stepTitles[currentStep]}</ResponsiveModalTitle>
+                    <ResponsiveModalDescription>{stepDescriptions[currentStep]}</ResponsiveModalDescription>
+                </ResponsiveModalHeader>
 
-                <form onSubmit={handleSubmit} className="space-y-6 py-4">
-                    <div>
-                        <Label htmlFor="position" className="text-base font-medium">
-                            Your Position
-                        </Label>
-                        <Input
-                            id="position"
-                            value={position}
-                            onChange={(e) => setPosition(e.target.value)}
-                            placeholder="e.g. Software Engineer"
-                            required
-                            className="mt-1"
-                        />
-                    </div>
+                <form onSubmit={(e) => e.preventDefault()} className="space-y-6 py-4">
+                    <ProgressSteps currentStep={currentStep} totalSteps={totalSteps} />
 
-                    <div className="space-y-4">
-                        <Label className="text-base font-medium">Pros</Label>
-                        {pros.map((pro, index) => (
-                            <div key={`pro-${index}`} className="flex items-center gap-2">
-                                <Input
-                                    value={pro}
-                                    onChange={(e) => updatePro(index, e.target.value)}
-                                    placeholder="What did you like about working here?"
-                                    className="flex-1"
-                                />
-                                <Button type="button" variant="ghost" size="icon" onClick={() => removePro(index)}>
-                                    <X className="h-4 w-4" />
-                                </Button>
-                            </div>
-                        ))}
-                        <Button type="button" variant="outline" size="sm" onClick={addPro} className="mt-2">
-                            <PlusCircle className="mr-2 h-4 w-4" />
-                            Add Pro
+                    {renderStepContent()}
+
+                    <div className="flex justify-between pt-6">
+                        <Button type="button" variant="outline" onClick={currentStep === 0 ? () => setOpen(false) : prevStep} disabled={processing}>
+                            {currentStep === 0 ? (
+                                'Cancel'
+                            ) : (
+                                <>
+                                    <ArrowLeft className="mr-2 h-4 w-4" />
+                                    Back
+                                </>
+                            )}
                         </Button>
+
+                        {currentStep < totalSteps - 1 ? (
+                            <Button type="button" onClick={nextStep}>
+                                Next
+                                <ArrowRight className="ml-2 h-4 w-4" />
+                            </Button>
+                        ) : (
+                            <Button type="button" onClick={handleSubmit} disabled={processing}>
+                                {processing ? 'Submitting...' : 'Submit Review'}
+                            </Button>
+                        )}
                     </div>
-
-                    <div className="space-y-4">
-                        <Label className="text-base font-medium">Cons</Label>
-                        {cons.map((con, index) => (
-                            <div key={`con-${index}`} className="flex items-center gap-2">
-                                <Input
-                                    value={con}
-                                    onChange={(e) => updateCon(index, e.target.value)}
-                                    placeholder="What didn't you like about working here?"
-                                    className="flex-1"
-                                />
-                                <Button type="button" variant="ghost" size="icon" onClick={() => removeCon(index)}>
-                                    <X className="h-4 w-4" />
-                                </Button>
-                            </div>
-                        ))}
-                        <Button type="button" variant="outline" size="sm" onClick={addCon} className="mt-2">
-                            <PlusCircle className="mr-2 h-4 w-4" />
-                            Add Con
-                        </Button>
-                    </div>
-
-                    <div className="space-y-6 pt-2">
-                        <h3 className="text-lg font-medium">Rate the Company</h3>
-
-                        <div className="grid gap-6 sm:grid-cols-2">
-                            <div className="space-y-2">
-                                <Label htmlFor="work-life-balance">Work-Life Balance</Label>
-                                <div className="flex items-center justify-between">
-                                    <StarRating rating={workLifeBalance} setRating={setWorkLifeBalance} />
-                                    <span className="font-medium">{workLifeBalance}/5</span>
-                                </div>
-                            </div>
-
-                            <div className="space-y-2">
-                                <Label htmlFor="culture-values">Culture & Values</Label>
-                                <div className="flex items-center justify-between">
-                                    <StarRating rating={cultureValues} setRating={setCultureValues} />
-                                    <span className="font-medium">{cultureValues}/5</span>
-                                </div>
-                            </div>
-
-                            <div className="space-y-2">
-                                <Label htmlFor="career-opportunities">Career Opportunities</Label>
-                                <div className="flex items-center justify-between">
-                                    <StarRating rating={careerOpportunities} setRating={setCareerOpportunities} />
-                                    <span className="font-medium">{careerOpportunities}/5</span>
-                                </div>
-                            </div>
-
-                            <div className="space-y-2">
-                                <Label htmlFor="compensation-benefits">Compensation & Benefits</Label>
-                                <div className="flex items-center justify-between">
-                                    <StarRating rating={compensationBenefits} setRating={setCompensationBenefits} />
-                                    <span className="font-medium">{compensationBenefits}/5</span>
-                                </div>
-                            </div>
-
-                            <div className="space-y-2">
-                                <Label htmlFor="senior-management">Senior Management</Label>
-                                <div className="flex items-center justify-between">
-                                    <StarRating rating={seniorManagement} setRating={setSeniorManagement} />
-                                    <span className="font-medium">{seniorManagement}/5</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="space-y-6 pt-2">
-                        <div className="space-y-4">
-                            <Label className="text-base font-medium">Would you recommend this company?</Label>
-                            <div className="flex gap-4">
-                                <Button
-                                    type="button"
-                                    variant={recommend === true ? 'default' : 'outline'}
-                                    className={`flex-1 ${recommend === true ? 'bg-green-600 hover:bg-green-700' : ''}`}
-                                    onClick={() => setRecommend(true)}
-                                >
-                                    <ThumbsUp className="mr-2 h-5 w-5" />
-                                    Yes, I would recommend
-                                </Button>
-                                <Button
-                                    type="button"
-                                    variant={recommend === false ? 'default' : 'outline'}
-                                    className={`flex-1 ${recommend === false ? 'bg-red-600 hover:bg-red-700' : ''}`}
-                                    onClick={() => setRecommend(false)}
-                                >
-                                    <ThumbsDown className="mr-2 h-5 w-5" />
-                                    No, I would not recommend
-                                </Button>
-                            </div>
-                        </div>
-
-                        <div className="space-y-4">
-                            <Label className="text-base font-medium">Do you approve of the CEO?</Label>
-                            <div className="flex gap-4">
-                                <Button
-                                    type="button"
-                                    variant={approveOfCeo === true ? 'default' : 'outline'}
-                                    className={`flex-1 ${approveOfCeo === true ? 'bg-green-600 hover:bg-green-700' : ''}`}
-                                    onClick={() => setApproveOfCeo(true)}
-                                >
-                                    <ThumbsUp className="mr-2 h-5 w-5" />
-                                    Yes, I approve
-                                </Button>
-                                <Button
-                                    type="button"
-                                    variant={approveOfCeo === false ? 'default' : 'outline'}
-                                    className={`flex-1 ${approveOfCeo === false ? 'bg-red-600 hover:bg-red-700' : ''}`}
-                                    onClick={() => setApproveOfCeo(false)}
-                                >
-                                    <ThumbsDown className="mr-2 h-5 w-5" />
-                                    No, I don't approve
-                                </Button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <DialogFooter className="pt-4">
-                        <Button type="button" variant="outline" onClick={() => setOpen(false)} disabled={isSubmitting}>
-                            Cancel
-                        </Button>
-                        <Button type="submit" disabled={isSubmitting}>
-                            {isSubmitting ? 'Submitting...' : 'Submit Review'}
-                        </Button>
-                    </DialogFooter>
                 </form>
-            </DialogContent>
-        </Dialog>
+            </ResponsiveModal>
+        </>
     );
 }

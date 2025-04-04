@@ -13,6 +13,10 @@ Route::get('/companies', [CompanyController::class, 'index'])
 Route::get('/companies/{slug}', [CompanyController::class, 'show'])
     ->name('companies.show');
 
+Route::post('/companies/{slug}/reviews', [CompanyController::class, 'storeReview'])
+    ->middleware('auth')
+    ->name('companies.reviews.store');
+
 Route::get('/jobs', [JobController::class, 'index'])
     ->name('jobs');
 

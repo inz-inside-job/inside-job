@@ -1,5 +1,6 @@
 import { CompanyReviewCard } from '@/components/homepage/company-review-card';
 import JobCard from '@/components/jobs/job-card';
+import ReviewModal from '@/components/reviews/review-modal';
 import { SharePopup } from '@/components/share-popup';
 import StarRating from '@/components/star-rating';
 import { Button } from '@/components/ui/button';
@@ -8,7 +9,7 @@ import { Progress } from '@/components/ui/progress';
 import { Separator } from '@/components/ui/separator';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Head, Link } from '@inertiajs/react';
-import { Briefcase, Building2, CheckCircle, ExternalLink, Globe, Heart, MapPin, MessageSquare, Share2, Star, Users } from 'lucide-react';
+import { Briefcase, Building2, CheckCircle, ExternalLink, Globe, Heart, MapPin, MessageSquare, Share2, Users } from 'lucide-react';
 import { useState } from 'react';
 
 export default function CompanyPage({ company }: { company: App.Data.Company.CompanyData }) {
@@ -98,12 +99,7 @@ export default function CompanyPage({ company }: { company: App.Data.Company.Com
                                         </div>
 
                                         <div className="mt-6 flex flex-wrap gap-3">
-                                            <Link href={`/companies/${company.id}/review`}>
-                                                <Button className="cursor-pointer bg-orange-500 hover:bg-orange-600">
-                                                    <Star className="mr-2 h-4 w-4" />
-                                                    Write a Review
-                                                </Button>
-                                            </Link>
+                                            <ReviewModal companySlug={company.slug} />
                                             <Button onClick={() => setTab('jobs')} variant="outline" className="cursor-pointer">
                                                 <Briefcase className="mr-2 h-4 w-4" />
                                                 See All Jobs {company.jobs_count}
@@ -215,12 +211,7 @@ export default function CompanyPage({ company }: { company: App.Data.Company.Com
                                             <TabsContent value="reviews" className="space-y-6">
                                                 <div className="flex items-center justify-between">
                                                     <h2 className="text-xl font-semibold">Employee Reviews</h2>
-                                                    <Link href={`/companies/${company.id}/reviews`}>
-                                                        <Button className="cursor-pointer bg-orange-500 hover:bg-orange-600">
-                                                            <Star className="mr-2 h-4 w-4" />
-                                                            Write a Review
-                                                        </Button>
-                                                    </Link>
+                                                    <ReviewModal companySlug={company.slug} />
                                                 </div>
 
                                                 {company.reviews.map((review) => (
@@ -312,24 +303,6 @@ export default function CompanyPage({ company }: { company: App.Data.Company.Com
                                                 <div className="bg-text text-xs">Approve of CEO</div>
                                             </div>
                                         </div>
-                                    </CardContent>
-                                </Card>
-
-                                <Card className="shadow-md">
-                                    <CardHeader className="pb-3">
-                                        <CardTitle>Company Actions</CardTitle>
-                                    </CardHeader>
-                                    <CardContent className="space-y-3 p-4">
-                                        <Link href={`/companies/${company.slug}/review`}>
-                                            <Button variant="outline" className="w-full cursor-pointer justify-start">
-                                                <Star className="mr-2 h-4 w-4" />
-                                                Write a Review
-                                            </Button>
-                                        </Link>
-                                        <Button variant="outline" className="w-full cursor-pointer justify-start">
-                                            <Heart className="mr-2 h-4 w-4" />
-                                            Follow
-                                        </Button>
                                     </CardContent>
                                 </Card>
                             </div>
