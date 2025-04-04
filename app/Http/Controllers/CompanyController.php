@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Data\Companies\CompanyData;
 use App\Data\Company\CompanyData as CompanyPageData;
+use App\Http\Requests\Company\StoreCompanyReviewRequest;
 use App\Models\Company;
 use App\Models\Review;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedSort;
@@ -75,6 +75,7 @@ class CompanyController extends Controller
             ->withRating()
             ->withAverageSalary()
             ->withRecommended()
+            ->withApproveOfCeo()
             ->withCount('reviews')
             ->withCount('jobs')
             ->with([
@@ -89,27 +90,8 @@ class CompanyController extends Controller
         ]);
     }
 
-    public function storeReview(Request $request, string $slug)
+    public function storeReview(StoreCompanyReviewRequest $request, Company $company)
     {
-        $request->validate([
-            'rating' => 'required|integer|min:1|max:5',
-            'review' => 'required|string|max:1000',
-            'pros' => 'required|array',
-            'pros.*' => 'string|max:255',
-            'cons' => 'required|array',
-            'cons.*' => 'string|max:255',
-            'position' => 'required|string|max:255',
-            'work_life_balance' => 'required|integer|min:1|max:5',
-            'culture_values' => 'required|integer|min:1|max:5',
-            'career_opportunities' => 'required|integer|min:1|max:5',
-            'compensation_benefits' => 'required|integer|min:1|max:5',
-            'senior_management' => 'required|integer|min:1|max:5',
-            'recommend' => 'required|boolean',
-            'approve_of_ceo' => 'required|boolean',
-        ]);
-
-        $company = Company::whereSlug($slug)->firstOrFail();
-
         Review::create([
             'user_id' => auth()->id(),
             'company_id' => $company->id,

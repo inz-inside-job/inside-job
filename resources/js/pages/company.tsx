@@ -263,7 +263,7 @@ export default function CompanyPage({ company }: { company: App.Data.Company.Com
                                     </CardHeader>
                                     <CardContent className="p-4">
                                         <div className="mb-4 flex items-center justify-between">
-                                            <div className="text-3xl font-bold">{company.rating}</div>
+                                            <div className="text-3xl font-bold">{Math.round(company.rating * 10) / 10}</div>
                                             <div className="flex">
                                                 <StarRating rating={company.rating} readOnly />
                                             </div>
@@ -311,11 +311,11 @@ export default function CompanyPage({ company }: { company: App.Data.Company.Com
 
                                         <div className="grid grid-cols-2 gap-4 text-center">
                                             <div className="bg-background rounded-md p-3 shadow">
-                                                <div className="text-2xl font-bold text-orange-600">{company.recommend}%</div>
+                                                <div className="text-2xl font-bold text-orange-600">{Math.round(company.recommend)}%</div>
                                                 <div className="bg-text text-xs">Recommend to a Friend</div>
                                             </div>
                                             <div className="bg-background rounded-md p-3 shadow">
-                                                <div className="text-2xl font-bold text-orange-600">60%</div>
+                                                <div className="text-2xl font-bold text-orange-600">{Math.round(company.approve_of_ceo)}%</div>
                                                 <div className="bg-text text-xs">Approve of CEO</div>
                                             </div>
                                         </div>

@@ -12,8 +12,9 @@ declare module 'ziggy-js' {
     ],
     "companies.reviews.store": [
         {
-            "name": "slug",
-            "required": true
+            "name": "company",
+            "required": true,
+            "binding": "slug"
         }
     ],
     "jobs": [],
