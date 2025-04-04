@@ -106,6 +106,13 @@ export default function ReviewModal({ companySlug }: { companySlug: string }) {
             }
         }
 
+        if (currentStep === 3) {
+            if (data['recommend'] === null || data['approve_of_ceo'] === null) {
+                alert('Please answer the recommendation questions before continuing.');
+                return;
+            }
+        }
+
         if (currentStep < totalSteps - 1) {
             setCurrentStep(currentStep + 1);
         }
@@ -121,8 +128,8 @@ export default function ReviewModal({ companySlug }: { companySlug: string }) {
         e.preventDefault();
 
         // Validate final step
-        if (data['recommend'] === null || data['approve_of_ceo'] === null) {
-            alert('Please answer all questions before submitting.');
+        if (!data['rating'] || !data['review'].trim()) {
+            alert('Please provide a rating and a review before submitting.');
             return;
         }
 
