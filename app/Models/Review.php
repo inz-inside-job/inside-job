@@ -25,6 +25,16 @@ class Review extends Pivot
         'rating',
         'review',
         'submitted_date',
+        'pros',
+        'cons',
+        'position',
+        'approve_of_ceo',
+        'recommend',
+        'senior_management',
+        'compensation_benefits',
+        'career_opportunities',
+        'culture_values',
+        'work_life_balance',
     ];
 
     protected $casts = [

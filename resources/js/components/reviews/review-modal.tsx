@@ -9,6 +9,7 @@ import { toast } from 'sonner';
 import { ResponsiveModal, ResponsiveModalDescription, ResponsiveModalHeader, ResponsiveModalTitle } from '../responsive-modal';
 import PositionStep from './steps/position';
 import ProsConsStep from './steps/pros-cons';
+import RateAndReviewStep from './steps/rate-review';
 import RecommendStep from './steps/recommend';
 import ReviewStep from './steps/review';
 
@@ -41,12 +42,14 @@ export type ReviewFormInterface = {
     senior_management: number;
     recommend: boolean | null;
     approve_of_ceo: boolean | null;
+    rating: number;
+    review: string;
 };
 
 export default function ReviewModal({ companySlug }: { companySlug: string }) {
     const [open, setOpen] = useState(false);
     const [currentStep, setCurrentStep] = useState(0);
-    const totalSteps = 4;
+    const totalSteps = 5;
 
     const { data, setData, submit, processing, reset } = useForm<ReviewFormInterface>(
         'post',
@@ -64,11 +67,13 @@ export default function ReviewModal({ companySlug }: { companySlug: string }) {
             senior_management: 3,
             recommend: null,
             approve_of_ceo: null,
+            rating: 3,
+            review: '',
         },
     );
 
     // Step titles
-    const stepTitles = ['Your Position', 'Pros & Cons', 'Rate the Company', 'Final Thoughts'];
+    const stepTitles = ['Your Position', 'Pros & Cons', 'Rate the Company', 'Recommendation', 'Final Thoughts'];
 
     // Step descriptions
     const stepDescriptions = [
@@ -76,6 +81,7 @@ export default function ReviewModal({ companySlug }: { companySlug: string }) {
         'Share what you liked and disliked about working here',
         'Rate different aspects of the company',
         'Would you recommend this company to others?',
+        'Share your overall thoughts',
     ];
 
     const resetForm = () => {
@@ -148,6 +154,17 @@ export default function ReviewModal({ companySlug }: { companySlug: string }) {
                         setRecommend={(value: boolean) => setData('recommend', value)}
                         approveOfCeo={data['approve_of_ceo']}
                         setApproveOfCeo={(value: boolean) => setData('approve_of_ceo', value)}
+                        rating={data['rating']}
+                        setRating={(value: number) => setData('rating', value)}
+                    />
+                );
+            case 4:
+                return (
+                    <RateAndReviewStep
+                        rating={data['rating']}
+                        setRating={(value: number) => setData('rating', value)}
+                        review={data['review']}
+                        setReview={(value: string) => setData('review', value)}
                     />
                 );
             default:

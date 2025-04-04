@@ -93,7 +93,7 @@ class CompanyController extends Controller
     {
         $request->validate([
             'rating' => 'required|integer|min:1|max:5',
-            'review' => 'required|string|max:5000',
+            'review' => 'required|string|max:1000',
             'pros' => 'required|array',
             'pros.*' => 'string|max:255',
             'cons' => 'required|array',
@@ -126,5 +126,9 @@ class CompanyController extends Controller
             'recommend' => $request->input('recommend'),
             'approve_of_ceo' => $request->input('approve_of_ceo'),
         ]);
+
+        return redirect()
+            ->route('companies.show', ['slug' => $company->slug])
+            ->with('success', 'Review submitted successfully.');
     }
 }
