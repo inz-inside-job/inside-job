@@ -22,9 +22,10 @@ export default function CompanyPage({ company }: { company: App.Data.Company.Com
                 10,
         ) / 10;
 
-    const cultureValuesRating = Math.round(
-        company.reviews.length > 0 ? company.reviews.reduce((sum, review) => sum + review.culture_values, 0) / company.reviews.length : 0,
-    ).toFixed(1);
+    const cultureValuesRating =
+        Math.round(
+            (company.reviews.length > 0 ? company.reviews.reduce((sum, review) => sum + review.culture_values, 0) / company.reviews.length : 0) * 10,
+        ) / 10;
 
     const careerOpportunitiesRating =
         Math.round(
