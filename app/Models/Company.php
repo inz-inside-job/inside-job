@@ -105,24 +105,30 @@ class Company extends Model
         ]);
     }
 
-    public function getRecommendedAttribute(): ?float
+    public function getRecommendAttribute(): ?float
     {
-        // If scoped with rating
-        if (isset($this->attributes['recommended']) && $this->attributes['recommended'] !== null) {
-            return $this->attributes['recommended'];
+        // If scoped with recommended
+        if (isset($this->attributes['recommend']) && $this->attributes['recommend'] !== null) {
+            return $this->attributes['recommend'];
         }
 
         // If not scoped, calculate
-        $recommended = $this->reviews->filter(fn ($review) => $review->rating > 2.5)->count() / $this->reviews->count() * 100;
+        $totalReviews = $this->reviews->count();
+        if ($totalReviews === 0) {
+            return 0;
+        }
 
-        return $recommended !== null ? $recommended : 0;
+        $recommendedCount = $this->reviews->where('recommend', true)->count();
+        $recommendedPercentage = ($recommendedCount / $totalReviews) * 100;
+
+        return $recommendedPercentage;
     }
 
-    public function scopeWithRecommended(Builder $query): Builder
+    public function scopeWithRecommend(Builder $query): Builder
     {
         return $query->addSelect([
             'recommend' => Review::selectRaw('
-                COALESCE(100 * COUNT(CASE WHEN reviews.rating > 2.5 THEN 1 END) / NULLIF(COUNT(*), 0), 0)
+                COALESCE(100 * COUNT(CASE WHEN reviews.recommend = true THEN 1 END) / NULLIF(COUNT(*), 0), 0)
             ')->whereColumn('companies.id', 'reviews.company_id'),
         ]);
     }

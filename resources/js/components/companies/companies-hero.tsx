@@ -3,25 +3,31 @@ import { Input } from '@/components/ui/input';
 import { useGetQueryParams, withQueryBuilderParams } from '@/lib/utils';
 import { router } from '@inertiajs/react';
 import { Building2, Search, Star } from 'lucide-react';
-import { useState } from 'react';
+import { BaseSyntheticEvent, useCallback, useState } from 'react';
 
 export function CompaniesHero() {
     const queryParams = useGetQueryParams();
 
     const [searchQuery, setSearchQuery] = useState(queryParams.query || '');
 
-    const handleSearch = (type: 'top-rated' | 'all') => {
-        const query = withQueryBuilderParams({
-            ...queryParams,
-            filters: {
-                ...queryParams.filters,
-                min_rating: type === 'top-rated' ? undefined : 0,
-            },
-            query: searchQuery,
-        });
+    const handleSearch = useCallback(
+        (e: BaseSyntheticEvent, type: 'top-rated' | 'all') => {
+            e.preventDefault();
 
-        router.get(route('companies'), query, { replace: false });
-    };
+            const query = withQueryBuilderParams({
+                ...queryParams,
+                filters: {
+                    ...queryParams.filters,
+                    min_rating: type === 'top-rated' ? null : 0,
+                },
+                query: searchQuery,
+                cursor: undefined,
+            });
+
+            router.get(route('companies'), query, { replace: false });
+        },
+        [queryParams, searchQuery],
+    );
 
     return (
         <div className="bg-gradient-to-r from-orange-500 to-orange-400 text-white">
@@ -31,33 +37,40 @@ export function CompaniesHero() {
                     <p className="text-lg opacity-90">Read millions of company reviews and ratings from employees who know best</p>
                 </div>
 
-                <div className="bg-background mx-auto max-w-2xl rounded-lg p-4 shadow-lg">
-                    <div className="grid grid-cols-1 gap-3">
-                        <div className="relative">
-                            <Building2 className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 transform text-gray-400" />
-                            <Input
-                                value={searchQuery}
-                                onChange={(e) => setSearchQuery(e.target.value)}
-                                className="text-foreground pl-10"
-                                placeholder="Search by company name, culture, benefits, or work environment"
-                            />
-                        </div>
-                        <div className="grid grid-cols-2 gap-3">
-                            <Button onClick={() => handleSearch('top-rated')} className="cursor-pointer bg-orange-500 hover:bg-orange-600">
-                                <Star className="mr-2 h-4 w-4" />
-                                Find Top-Rated Companies
-                            </Button>
-                            <Button
-                                onClick={() => handleSearch('all')}
-                                variant="outline"
-                                className="bg-background cursor-pointer border-orange-500 text-orange-500"
-                            >
-                                <Search className="mr-2 h-4 w-4" />
-                                Search All Companies
-                            </Button>
+                <form onSubmit={(e) => handleSearch(e, 'all')}>
+                    <div className="bg-background mx-auto max-w-2xl rounded-lg p-4 shadow-lg">
+                        <div className="grid grid-cols-1 gap-3">
+                            <div className="relative">
+                                <Building2 className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 transform text-gray-400" />
+                                <Input
+                                    value={searchQuery}
+                                    onChange={(e) => setSearchQuery(e.target.value)}
+                                    className="text-foreground pl-10"
+                                    placeholder="Search by company name, culture, benefits, or work environment"
+                                />
+                            </div>
+                            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                                <Button
+                                    type="button"
+                                    onClick={(e) => handleSearch(e, 'top-rated')}
+                                    className="cursor-pointer bg-orange-500 hover:bg-orange-600"
+                                >
+                                    <Star className="mr-2 h-4 w-4" />
+                                    Find Top-Rated Companies
+                                </Button>
+                                <Button
+                                    type="button"
+                                    onClick={(e) => handleSearch(e, 'all')}
+                                    variant="outline"
+                                    className="bg-background cursor-pointer border-orange-500 text-orange-500"
+                                >
+                                    <Search className="mr-2 h-4 w-4" />
+                                    Search All Companies
+                                </Button>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
     );

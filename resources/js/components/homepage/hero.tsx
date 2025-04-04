@@ -30,13 +30,9 @@ export function Hero() {
 
                         <TabsContent value="jobs" className="space-y-4">
                             <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
-                                <div className="relative">
+                                <div className="relative md:col-span-2">
                                     <Search className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 transform text-gray-400" />
                                     <Input className="pl-10" placeholder="Job title, keywords" />
-                                </div>
-                                <div className="relative">
-                                    <MapPin className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 transform text-gray-400" />
-                                    <Input className="pl-10" placeholder="City, state, or zip code" />
                                 </div>
                                 <Button className="cursor-pointer bg-orange-500 hover:bg-orange-600">Search Jobs</Button>
                             </div>

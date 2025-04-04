@@ -20,7 +20,7 @@ class CompanyController extends Controller
 
         $query = Company::withRating()
             ->withAverageSalary()
-            ->withRecommended()
+            ->withRecommend()
             ->withCount('reviews')
             ->when(! empty($params['query']), function (Builder $query) use ($params) {
                 $searchResults = Company::search($params['query'])->raw();
@@ -81,7 +81,7 @@ class CompanyController extends Controller
         $company = Company::whereSlug($slug)
             ->withRating()
             ->withAverageSalary()
-            ->withRecommended()
+            ->withRecommend()
             ->withCount('reviews')
             ->withCount('jobs')
             ->with([
