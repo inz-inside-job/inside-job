@@ -24,7 +24,7 @@ name: string;
 export type UserData = {
 id: number;
 name: string;
-image: string;
+image: string | null;
 };
 }
 declare namespace App.Data.Companies {

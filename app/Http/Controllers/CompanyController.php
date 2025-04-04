@@ -110,7 +110,7 @@ class CompanyController extends Controller
 
         $company = Company::whereSlug($slug)->firstOrFail();
 
-        new Review([
+        Review::create([
             'user_id' => auth()->id(),
             'company_id' => $company->id,
             'rating' => $request->input('rating'),
@@ -125,6 +125,7 @@ class CompanyController extends Controller
             'senior_management' => $request->input('senior_management'),
             'recommend' => $request->input('recommend'),
             'approve_of_ceo' => $request->input('approve_of_ceo'),
+            'submitted_date' => now(),
         ]);
 
         return redirect()

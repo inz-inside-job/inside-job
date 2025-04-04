@@ -17,19 +17,34 @@ export default function CompanyPage({ company }: { company: App.Data.Company.Com
     const [showSharePopup, setShowSharePopup] = useState(false);
 
     const workLifeBalanceRating =
-        company.reviews.length > 0 ? company.reviews.reduce((sum, review) => sum + review.work_life_balance, 0) / company.reviews.length : 0;
+        Math.round(
+            (company.reviews.length > 0 ? company.reviews.reduce((sum, review) => sum + review.work_life_balance, 0) / company.reviews.length : 0) *
+                10,
+        ) / 10;
 
-    const cultureValuesRating =
-        company.reviews.length > 0 ? company.reviews.reduce((sum, review) => sum + review.culture_values, 0) / company.reviews.length : 0;
+    const cultureValuesRating = Math.round(
+        company.reviews.length > 0 ? company.reviews.reduce((sum, review) => sum + review.culture_values, 0) / company.reviews.length : 0,
+    ).toFixed(1);
 
     const careerOpportunitiesRating =
-        company.reviews.length > 0 ? company.reviews.reduce((sum, review) => sum + review.career_opportunities, 0) / company.reviews.length : 0;
+        Math.round(
+            (company.reviews.length > 0
+                ? company.reviews.reduce((sum, review) => sum + review.career_opportunities, 0) / company.reviews.length
+                : 0) * 10,
+        ) / 10;
 
     const compensationBenefitsRating =
-        company.reviews.length > 0 ? company.reviews.reduce((sum, review) => sum + review.compensation_benefits, 0) / company.reviews.length : 0;
+        Math.round(
+            (company.reviews.length > 0
+                ? company.reviews.reduce((sum, review) => sum + review.compensation_benefits, 0) / company.reviews.length
+                : 0) * 10,
+        ) / 10;
 
     const seniorManagementRating =
-        company.reviews.length > 0 ? company.reviews.reduce((sum, review) => sum + review.senior_management, 0) / company.reviews.length : 0;
+        Math.round(
+            (company.reviews.length > 0 ? company.reviews.reduce((sum, review) => sum + review.senior_management, 0) / company.reviews.length : 0) *
+                10,
+        ) / 10;
 
     return (
         <>
