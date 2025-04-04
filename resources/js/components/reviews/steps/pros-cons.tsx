@@ -2,14 +2,16 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { PlusCircle, X } from 'lucide-react';
+import { ReviewFormInterface } from '../review-modal';
 
-export default function ProsConsStep({
-    data,
-    setData,
-}: {
+interface ProsConsStepProps {
     data: { pros: string[]; cons: string[] };
-    setData: (key: keyof typeof data, value: string[]) => void;
-}) {
+    setData: (key: keyof ReviewFormInterface, value: string[]) => void;
+    errors: Partial<Record<keyof ReviewFormInterface, string>>;
+    validate: (field: keyof ReviewFormInterface) => void;
+}
+
+export default function ProsConsStep({ data, setData, errors, validate }: ProsConsStepProps) {
     const addPro = () => {
         setData('pros', [...data.pros, '']);
     };
@@ -53,6 +55,7 @@ export default function ProsConsStep({
                             onChange={(e) => updatePro(index, e.target.value)}
                             placeholder="What did you like about working here?"
                             className="flex-1"
+                            onBlur={() => validate('pros')}
                         />
                         <Button type="button" variant="ghost" size="icon" onClick={() => removePro(index)}>
                             <X className="h-4 w-4" />
@@ -63,6 +66,7 @@ export default function ProsConsStep({
                     <PlusCircle className="mr-2 h-4 w-4" />
                     Add Pro
                 </Button>
+                {errors.pros && <p className="text-sm text-red-500">{errors.pros}</p>}
             </div>
 
             <div className="flex flex-col space-y-4">
@@ -74,6 +78,7 @@ export default function ProsConsStep({
                             onChange={(e) => updateCon(index, e.target.value)}
                             placeholder="What didn't you like about working here?"
                             className="flex-1"
+                            onBlur={() => validate('cons')}
                         />
                         <Button type="button" variant="ghost" size="icon" onClick={() => removeCon(index)}>
                             <X className="h-4 w-4" />
@@ -84,6 +89,7 @@ export default function ProsConsStep({
                     <PlusCircle className="mr-2 h-4 w-4" />
                     Add Con
                 </Button>
+                {errors.cons && <p className="text-sm text-red-500">{errors.cons}</p>}
             </div>
         </div>
     );

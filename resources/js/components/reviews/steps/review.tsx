@@ -2,13 +2,13 @@ import StarRating from '@/components/star-rating';
 import { Label } from '@/components/ui/label';
 import { ReviewFormInterface } from '../review-modal';
 
-export default function ReviewStep({
-    data,
-    setData,
-}: {
+interface ReviewStepProps {
     data: ReviewFormInterface;
     setData: (key: keyof ReviewFormInterface, value: number) => void;
-}) {
+    errors: Partial<Record<keyof ReviewFormInterface, string>>;
+}
+
+export default function ReviewStep({ data, setData }: ReviewStepProps) {
     return (
         <div className="space-y-6">
             <div className="grid gap-6 sm:grid-cols-2">

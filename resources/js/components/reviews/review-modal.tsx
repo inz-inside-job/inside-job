@@ -51,7 +51,7 @@ export default function ReviewModal({ companySlug }: { companySlug: string }) {
     const [currentStep, setCurrentStep] = useState(0);
     const totalSteps = 5;
 
-    const { data, setData, submit, processing, reset } = useForm<ReviewFormInterface>(
+    const { data, setData, submit, processing, reset, validate, errors, setError } = useForm<ReviewFormInterface>(
         'post',
         route('companies.reviews.store', {
             company: companySlug,
@@ -92,7 +92,7 @@ export default function ReviewModal({ companySlug }: { companySlug: string }) {
     const nextStep = () => {
         // Validate current step
         if (currentStep === 0 && !data['position'].trim()) {
-            alert('Please enter your position before continuing.');
+            setError('position', 'Please enter your position.');
             return;
         }
 
@@ -101,14 +101,16 @@ export default function ReviewModal({ companySlug }: { companySlug: string }) {
             const validCons = data['cons'].filter((con) => con.trim() !== '');
 
             if (validPros.length === 0 || validCons.length === 0) {
-                alert('Please add at least one pro and one con before continuing.');
+                setError('pros', 'Please add at least one pro.');
+                setError('cons', 'Please add at least one con.');
                 return;
             }
         }
 
         if (currentStep === 3) {
             if (data['recommend'] === null || data['approve_of_ceo'] === null) {
-                alert('Please answer the recommendation questions before continuing.');
+                setError('recommend', 'Please select an option.');
+                setError('approve_of_ceo', 'Please select an option.');
                 return;
             }
         }
@@ -129,7 +131,8 @@ export default function ReviewModal({ companySlug }: { companySlug: string }) {
 
         // Validate final step
         if (!data['rating'] || !data['review'].trim()) {
-            alert('Please provide a rating and a review before submitting.');
+            setError('rating', 'Please provide a rating.');
+            setError('review', 'Please provide a review.');
             return;
         }
 
@@ -149,14 +152,30 @@ export default function ReviewModal({ companySlug }: { companySlug: string }) {
     const renderStepContent = () => {
         switch (currentStep) {
             case 0:
-                return <PositionStep position={data['position']} setPosition={(position: string) => setData('position', position)} />;
+                return (
+                    <PositionStep
+                        errors={errors}
+                        validate={validate}
+                        position={data['position']}
+                        setPosition={(position: string) => setData('position', position)}
+                    />
+                );
             case 1:
-                return <ProsConsStep data={data} setData={(key: keyof ReviewFormInterface, value: string[]) => setData(key, value)} />;
+                return (
+                    <ProsConsStep
+                        errors={errors}
+                        validate={validate}
+                        data={data}
+                        setData={(key: keyof ReviewFormInterface, value: string[]) => setData(key, value)}
+                    />
+                );
             case 2:
-                return <ReviewStep data={data} setData={(key: keyof ReviewFormInterface, value: number) => setData(key, value)} />;
+                return <ReviewStep errors={errors} data={data} setData={(key: keyof ReviewFormInterface, value: number) => setData(key, value)} />;
             case 3:
                 return (
                     <RecommendStep
+                        errors={errors}
+                        validate={validate}
                         recommend={data['recommend']}
                         setRecommend={(value: boolean) => setData('recommend', value)}
                         approveOfCeo={data['approve_of_ceo']}
@@ -166,6 +185,8 @@ export default function ReviewModal({ companySlug }: { companySlug: string }) {
             case 4:
                 return (
                     <RateAndReviewStep
+                        validate={validate}
+                        errors={errors}
                         rating={data['rating']}
                         setRating={(value: number) => setData('rating', value)}
                         review={data['review']}
