@@ -154,8 +154,6 @@ export default function ReviewModal({ companySlug }: { companySlug: string }) {
                         setRecommend={(value: boolean) => setData('recommend', value)}
                         approveOfCeo={data['approve_of_ceo']}
                         setApproveOfCeo={(value: boolean) => setData('approve_of_ceo', value)}
-                        rating={data['rating']}
-                        setRating={(value: number) => setData('rating', value)}
                     />
                 );
             case 4:
