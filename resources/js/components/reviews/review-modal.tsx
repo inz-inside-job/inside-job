@@ -54,7 +54,7 @@ export default function ReviewModal({ companySlug }: { companySlug: string }) {
     const { data, setData, submit, processing, reset } = useForm<ReviewFormInterface>(
         'post',
         route('companies.reviews.store', {
-            slug: companySlug,
+            company: companySlug,
         }),
         {
             pros: [],
