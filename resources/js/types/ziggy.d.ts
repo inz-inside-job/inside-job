@@ -21,8 +21,7 @@ declare module 'ziggy-js' {
     "jobs.apply": [
         {
             "name": "slug",
-            "required": true,
-            "binding": "slug"
+            "required": true
         }
     ],
     "profile.edit": [],
