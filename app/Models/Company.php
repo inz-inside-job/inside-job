@@ -153,7 +153,7 @@ class Company extends Model
         }
 
         // If not scoped, calculate
-        $average = $this->salaries->avg('salaries.salary_amount');
+        $average = $this->jobs()->avg('job.salary_min');
 
         return $average !== null ? $average : 0;
     }
@@ -161,8 +161,8 @@ class Company extends Model
     public function scopeWithAverageSalary(Builder $query): Builder
     {
         return $query->addSelect([
-            'average_salary' => Salary::selectRaw('COALESCE(AVG(salaries.salary_amount), 0)')
-                ->whereColumn('companies.id', 'salaries.company_id'),
+            'average_salary' => Job::selectRaw('COALESCE(AVG(jobs.salary_min), 0)')
+                ->whereColumn('companies.id', 'jobs.company_id'),
         ]);
     }
 
@@ -173,6 +173,34 @@ class Company extends Model
             ->withTimestamps()
             ->withPivot('id')
             ->using(CompanyUser::class);
+    }
+
+    public function getApproveOfCeoAttribute(): ?float
+    {
+        // If scoped with approve_of_ceo
+        if (isset($this->attributes['approve_of_ceo']) && $this->attributes['approve_of_ceo'] !== null) {
+            return $this->attributes['approve_of_ceo'];
+        }
+
+        // If not scoped, calculate
+        $totalReviews = $this->reviews->count();
+        if ($totalReviews === 0) {
+            return 0;
+        }
+
+        $approveOfCeo = $this->reviews->where('approve_of_ceo', true)->count();
+        $approvePercent = ($approveOfCeo / $totalReviews) * 100;
+
+        return $approvePercent;
+    }
+
+    public function scopeWithApproveOfCeo(Builder $query): Builder
+    {
+        return $query->addSelect([
+            'approve_of_ceo' => Review::selectRaw('
+               COALESCE(100 * COUNT(CASE WHEN reviews.approve_of_ceo = true THEN 1 END) / NULLIF(COUNT(*), 0), 0)
+           ')->whereColumn('companies.id', 'reviews.company_id'),
+        ]);
     }
 
     public function getRouteKeyName(): string
