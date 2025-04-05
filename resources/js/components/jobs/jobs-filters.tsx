@@ -66,8 +66,6 @@ export function JobFilters() {
             cursor: undefined,
         });
 
-        console.log(query);
-
         router.get(route('jobs'), query, {
             only: ['jobs', 'next_cursor'],
             reset: ['jobs'],

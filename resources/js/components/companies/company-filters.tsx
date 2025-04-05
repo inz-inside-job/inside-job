@@ -74,8 +74,6 @@ export function CompanyFilters() {
             cursor: undefined,
         });
 
-        console.log(query);
-
         router.get(route('companies'), query, {
             only: ['companies', 'next_cursor'],
             reset: ['companies'],
