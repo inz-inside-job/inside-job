@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\GlobalSearchController;
 use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\JobController;
 use Illuminate\Support\Facades\Route;
@@ -16,9 +17,14 @@ Route::get('/companies/{slug}', [CompanyController::class, 'show'])
 Route::post('companies/{company}/claim', [CompanyController::class, 'submitClaim'])
     ->name('companies.submitClaim')
     ->middleware('auth');
+Route::post('/companies/{company}/reviews', [CompanyController::class, 'storeReview'])
+    ->middleware('auth')
+    ->name('companies.reviews.store');
 
 Route::get('/jobs', [JobController::class, 'index'])
     ->name('jobs');
+
+Route::get('/search', [GlobalSearchController::class, 'search'])->name('search');
 
 Route::impersonate();
 

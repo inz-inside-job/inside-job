@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Data\Companies\CompanyData;
 use App\Data\Company\CompanyData as CompanyPageData;
+use App\Http\Requests\Company\StoreCompanyReviewRequest;
+use App\Http\Requests\CompanyIndexRequest;
 use App\Models\Company;
 use App\Models\CompanyClaimSubmission;
+use App\Models\Review;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -15,14 +18,22 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 class CompanyController extends Controller
 {
-    public function index()
+    public function index(CompanyIndexRequest $request)
     {
-        $companies = QueryBuilder::for(
-            Company::withRating()
-                ->withAverageSalary()
-                ->withRecommended()
-                ->withCount('reviews')
-        )
+        $params = $request->validated();
+
+        $query = Company::withRating()
+            ->withAverageSalary()
+            ->withRecommend()
+            ->withCount('reviews')
+            ->when(! empty($params['query']), function (Builder $query) use ($params) {
+                $searchResults = Company::search($params['query'])->raw();
+                $ids = collect($searchResults['hits'])->pluck('id');
+
+                $query->whereIn('companies.id', $ids);
+            });
+
+        $companies = QueryBuilder::for($query)
             ->defaultSort(['-rating'])
             ->allowedSorts([
                 AllowedSort::field('rating'),
@@ -74,7 +85,8 @@ class CompanyController extends Controller
         $company = Company::whereSlug($slug)
             ->withRating()
             ->withAverageSalary()
-            ->withRecommended()
+            ->withRecommend()
+            ->withApproveOfCeo()
             ->withCount('reviews')
             ->withCount('jobs')
             ->with([
@@ -104,5 +116,38 @@ class CompanyController extends Controller
             'company_id' => $company->id,
             'user_id' => $request->user()->id,
         ]);
+    public function storeReview(StoreCompanyReviewRequest $request, Company $company)
+    {
+        $review = Review::where('company_id', $company->id)
+            ->where('user_id', auth()->id())
+            ->first();
+
+        if ($review) {
+            return redirect()
+                ->route('companies.show', ['slug' => $company->slug])
+                ->with('error', 'You have already submitted a review for this company.');
+        }
+
+        Review::create([
+            'user_id' => auth()->id(),
+            'company_id' => $company->id,
+            'rating' => $request->input('rating'),
+            'review' => $request->input('review'),
+            'pros' => $request->input('pros'),
+            'cons' => $request->input('cons'),
+            'position' => $request->input('position'),
+            'work_life_balance' => $request->input('work_life_balance'),
+            'culture_values' => $request->input('culture_values'),
+            'career_opportunities' => $request->input('career_opportunities'),
+            'compensation_benefits' => $request->input('compensation_benefits'),
+            'senior_management' => $request->input('senior_management'),
+            'recommend' => $request->input('recommend'),
+            'approve_of_ceo' => $request->input('approve_of_ceo'),
+            'submitted_date' => now(),
+        ]);
+
+        return redirect()
+            ->route('companies.show', ['slug' => $company->slug])
+            ->with('success', 'Review submitted successfully.');
     }
 }

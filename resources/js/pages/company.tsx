@@ -1,6 +1,7 @@
 import { CompanyClaimDialog } from '@/components/companies/company-claim-form';
 import { CompanyReviewCard } from '@/components/homepage/company-review-card';
 import JobCard from '@/components/jobs/job-card';
+import ReviewModal from '@/components/reviews/review-modal';
 import { SharePopup } from '@/components/share-popup';
 import StarRating from '@/components/star-rating';
 import { Badge } from '@/components/ui/badge';
@@ -9,28 +10,46 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Separator } from '@/components/ui/separator';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Head, Link } from '@inertiajs/react';
-import { Briefcase, Building2, CheckCircle, ExternalLink, Globe, Heart, MapPin, MessageSquare, Share2, Star, Users } from 'lucide-react';
+import { Head, Link, usePage } from '@inertiajs/react';
+import { Briefcase, Building2, CheckCircle, ExternalLink, Globe, Heart, MapPin, MessageSquare, Share2, Users } from 'lucide-react';
 import { useState } from 'react';
 
 export default function CompanyPage({ company }: { company: App.Data.Company.CompanyData }) {
     const [tab, setTab] = useState('overview');
     const [showSharePopup, setShowSharePopup] = useState(false);
+    const user = usePage().props.auth.user;
+    const alreadyReviewed = company.reviews.find((e: App.Data.Company.CompanyReviewData) => e.user.id === user?.id) ? true : false;
 
     const workLifeBalanceRating =
-        company.reviews.length > 0 ? company.reviews.reduce((sum, review) => sum + review.work_life_balance, 0) / company.reviews.length : 0;
+        Math.round(
+            (company.reviews.length > 0 ? company.reviews.reduce((sum, review) => sum + review.work_life_balance, 0) / company.reviews.length : 0) *
+                10,
+        ) / 10;
 
     const cultureValuesRating =
-        company.reviews.length > 0 ? company.reviews.reduce((sum, review) => sum + review.culture_values, 0) / company.reviews.length : 0;
+        Math.round(
+            (company.reviews.length > 0 ? company.reviews.reduce((sum, review) => sum + review.culture_values, 0) / company.reviews.length : 0) * 10,
+        ) / 10;
 
     const careerOpportunitiesRating =
-        company.reviews.length > 0 ? company.reviews.reduce((sum, review) => sum + review.career_opportunities, 0) / company.reviews.length : 0;
+        Math.round(
+            (company.reviews.length > 0
+                ? company.reviews.reduce((sum, review) => sum + review.career_opportunities, 0) / company.reviews.length
+                : 0) * 10,
+        ) / 10;
 
     const compensationBenefitsRating =
-        company.reviews.length > 0 ? company.reviews.reduce((sum, review) => sum + review.compensation_benefits, 0) / company.reviews.length : 0;
+        Math.round(
+            (company.reviews.length > 0
+                ? company.reviews.reduce((sum, review) => sum + review.compensation_benefits, 0) / company.reviews.length
+                : 0) * 10,
+        ) / 10;
 
     const seniorManagementRating =
-        company.reviews.length > 0 ? company.reviews.reduce((sum, review) => sum + review.senior_management, 0) / company.reviews.length : 0;
+        Math.round(
+            (company.reviews.length > 0 ? company.reviews.reduce((sum, review) => sum + review.senior_management, 0) / company.reviews.length : 0) *
+                10,
+        ) / 10;
 
     return (
         <>
@@ -68,7 +87,7 @@ export default function CompanyPage({ company }: { company: App.Data.Company.Com
                                                     <div className="flex">
                                                         <StarRating rating={company.rating} readOnly />
                                                     </div>
-                                                    <span className="ml-1 text-lg font-bold">{company.rating}</span>
+                                                    <span className="ml-1 text-lg font-bold">{Math.round(company.rating * 10) / 10}</span>
                                                     <span className="ml-1 text-sm text-gray-500">({company.reviews_count} reviews)</span>
                                                 </div>
                                             </div>
@@ -106,12 +125,7 @@ export default function CompanyPage({ company }: { company: App.Data.Company.Com
                                         </div>
 
                                         <div className="mt-6 flex flex-wrap gap-3">
-                                            <Link href={`/companies/${company.id}/review`}>
-                                                <Button className="cursor-pointer bg-orange-500 hover:bg-orange-600">
-                                                    <Star className="mr-2 h-4 w-4" />
-                                                    Write a Review
-                                                </Button>
-                                            </Link>
+                                            {!alreadyReviewed ? <ReviewModal companySlug={company.slug} /> : null}
                                             <Button onClick={() => setTab('jobs')} variant="outline" className="cursor-pointer">
                                                 <Briefcase className="mr-2 h-4 w-4" />
                                                 See All Jobs {company.jobs_count}
@@ -223,12 +237,7 @@ export default function CompanyPage({ company }: { company: App.Data.Company.Com
                                             <TabsContent value="reviews" className="space-y-6">
                                                 <div className="flex items-center justify-between">
                                                     <h2 className="text-xl font-semibold">Employee Reviews</h2>
-                                                    <Link href={`/companies/${company.id}/reviews`}>
-                                                        <Button className="cursor-pointer bg-orange-500 hover:bg-orange-600">
-                                                            <Star className="mr-2 h-4 w-4" />
-                                                            Write a Review
-                                                        </Button>
-                                                    </Link>
+                                                    {!alreadyReviewed ? <ReviewModal companySlug={company.slug} /> : null}
                                                 </div>
 
                                                 {company.reviews.map((review) => (
@@ -264,7 +273,7 @@ export default function CompanyPage({ company }: { company: App.Data.Company.Com
                                     </CardHeader>
                                     <CardContent className="p-4">
                                         <div className="mb-4 flex items-center justify-between">
-                                            <div className="text-3xl font-bold">{company.rating}</div>
+                                            <div className="text-3xl font-bold">{Math.round(company.rating * 10) / 10}</div>
                                             <div className="flex">
                                                 <StarRating rating={company.rating} readOnly />
                                             </div>
@@ -312,32 +321,14 @@ export default function CompanyPage({ company }: { company: App.Data.Company.Com
 
                                         <div className="grid grid-cols-2 gap-4 text-center">
                                             <div className="bg-background rounded-md p-3 shadow">
-                                                <div className="text-2xl font-bold text-orange-600">{company.recommend}%</div>
+                                                <div className="text-2xl font-bold text-orange-600">{Math.round(company.recommend)}%</div>
                                                 <div className="bg-text text-xs">Recommend to a Friend</div>
                                             </div>
                                             <div className="bg-background rounded-md p-3 shadow">
-                                                <div className="text-2xl font-bold text-orange-600">60%</div>
+                                                <div className="text-2xl font-bold text-orange-600">{Math.round(company.approve_of_ceo)}%</div>
                                                 <div className="bg-text text-xs">Approve of CEO</div>
                                             </div>
                                         </div>
-                                    </CardContent>
-                                </Card>
-
-                                <Card className="shadow-md">
-                                    <CardHeader className="pb-3">
-                                        <CardTitle>Company Actions</CardTitle>
-                                    </CardHeader>
-                                    <CardContent className="space-y-3 p-4">
-                                        <Link href={`/companies/${company.slug}/review`}>
-                                            <Button variant="outline" className="w-full cursor-pointer justify-start">
-                                                <Star className="mr-2 h-4 w-4" />
-                                                Write a Review
-                                            </Button>
-                                        </Link>
-                                        <Button variant="outline" className="w-full cursor-pointer justify-start">
-                                            <Heart className="mr-2 h-4 w-4" />
-                                            Follow
-                                        </Button>
                                     </CardContent>
                                 </Card>
                             </div>
