@@ -18,6 +18,13 @@ declare module 'ziggy-js' {
         }
     ],
     "jobs": [],
+    "jobs.apply": [
+        {
+            "name": "slug",
+            "required": true,
+            "binding": "slug"
+        }
+    ],
     "profile.edit": [],
     "profile.update": [],
     "profile.destroy": [],

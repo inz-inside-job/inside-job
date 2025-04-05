@@ -73,4 +73,16 @@ class JobController extends Controller
     {
         return $job;
     }
+
+    public function apply(string $slug)
+    {
+        $job = Job::whereSlug($slug)->with([
+            'company' => function (BelongsTo $query) {
+                $query->withRating()->withCount('reviews');
+            }])->firstOrFail();
+
+        return Inertia::render('apply', [
+            'job' => JobData::from($job),
+        ]);
+    }
 }

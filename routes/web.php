@@ -20,6 +20,9 @@ Route::post('/companies/{company}/reviews', [CompanyController::class, 'storeRev
 Route::get('/jobs', [JobController::class, 'index'])
     ->name('jobs');
 
+Route::get('/jobs/{slug}/apply', [JobController::class, 'apply'])
+    ->name('jobs.apply');
+
 Route::impersonate();
 
 require __DIR__.'/settings.php';
