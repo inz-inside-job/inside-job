@@ -10,7 +10,15 @@ declare module 'ziggy-js' {
             "required": true
         }
     ],
+    "companies.reviews.store": [
+        {
+            "name": "company",
+            "required": true,
+            "binding": "slug"
+        }
+    ],
     "jobs": [],
+    "search": [],
     "profile.edit": [],
     "profile.update": [],
     "profile.destroy": [],

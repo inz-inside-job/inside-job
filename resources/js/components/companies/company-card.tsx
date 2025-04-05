@@ -2,6 +2,7 @@ import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { useInitials } from '@/hooks/use-initials';
+import { moneyToHuman } from '@/lib/utils';
 import { Link } from '@inertiajs/react';
 import { DollarSign, MapPin, ThumbsUp, Users } from 'lucide-react';
 import StarRating from '../star-rating';
@@ -66,7 +67,7 @@ export default function CompanyCard({ company }: { company: App.Data.Companies.C
                                     <DollarSign className="text-gray-dark/70 h-4 w-4" />
                                     <span className="text-gray-dark text-sm font-medium">Average Salary</span>
                                 </div>
-                                <p className="text-gray-dark text-2xl font-semibold">{company.average_salary}</p>
+                                <p className="text-gray-dark text-2xl font-semibold">{moneyToHuman(company.average_salary)}</p>
                                 <span className="text-gray-dark/70 text-sm">Per year</span>
                             </div>
                             <div className="space-y-2">
