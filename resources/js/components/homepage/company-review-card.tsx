@@ -1,5 +1,6 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Card, CardContent } from '@/components/ui/card';
+import { useInitials } from '@/hooks/use-initials';
 import { Star } from 'lucide-react';
 
 export function CompanyReviewCard({
@@ -9,6 +10,8 @@ export function CompanyReviewCard({
     company: App.Data.Company.CompanyData | App.Data.Home.ReviewCompanyData;
     review: App.Data.Company.CompanyReviewData;
 }) {
+    const getInitials = useInitials();
+
     return (
         <Card className="h-full overflow-hidden transition-shadow hover:shadow-lg">
             <CardContent className="p-6">
@@ -16,7 +19,7 @@ export function CompanyReviewCard({
                     <div className="flex items-center gap-3">
                         <Avatar className="h-12 w-12">
                             <AvatarImage src={company.logo ?? ''} alt={company.name} />
-                            <AvatarFallback>{company.name.charAt(0)}</AvatarFallback>
+                            <AvatarFallback>{getInitials(company.name)}</AvatarFallback>
                         </Avatar>
                         <div>
                             <h3 className="font-semibold">{company.name}</h3>

@@ -24,6 +24,7 @@ declare module 'ziggy-js' {
             "required": true
         }
     ],
+    "search": [],
     "profile.edit": [],
     "profile.update": [],
     "profile.destroy": [],

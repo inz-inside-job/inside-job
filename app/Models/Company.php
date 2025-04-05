@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Laravel\Scout\Searchable;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
@@ -17,7 +18,7 @@ use Spatie\Sluggable\SlugOptions;
 class Company extends Model
 {
     /** @use HasFactory<CompanyFactory> */
-    use HasFactory, HasSlug;
+    use HasFactory, HasSlug, Searchable;
 
     protected $fillable = [
         'name',
@@ -107,24 +108,30 @@ class Company extends Model
         ]);
     }
 
-    public function getRecommendedAttribute(): ?float
+    public function getRecommendAttribute(): ?float
     {
-        // If scoped with rating
-        if (isset($this->attributes['recommended']) && $this->attributes['recommended'] !== null) {
-            return $this->attributes['recommended'];
+        // If scoped with recommended
+        if (isset($this->attributes['recommend']) && $this->attributes['recommend'] !== null) {
+            return $this->attributes['recommend'];
         }
 
         // If not scoped, calculate
-        $recommended = $this->reviews->filter(fn ($review) => $review->rating > 2.5)->count() / $this->reviews->count() * 100;
+        $totalReviews = $this->reviews->count();
+        if ($totalReviews === 0) {
+            return 0;
+        }
 
-        return $recommended !== null ? $recommended : 0;
+        $recommendedCount = $this->reviews->where('recommend', true)->count();
+        $recommendedPercentage = ($recommendedCount / $totalReviews) * 100;
+
+        return $recommendedPercentage;
     }
 
-    public function scopeWithRecommended(Builder $query): Builder
+    public function scopeWithRecommend(Builder $query): Builder
     {
         return $query->addSelect([
             'recommend' => Review::selectRaw('
-                COALESCE(100 * COUNT(CASE WHEN reviews.rating > 2.5 THEN 1 END) / NULLIF(COUNT(*), 0), 0)
+                COALESCE(100 * COUNT(CASE WHEN reviews.recommend = true THEN 1 END) / NULLIF(COUNT(*), 0), 0)
             ')->whereColumn('companies.id', 'reviews.company_id'),
         ]);
     }
@@ -146,7 +153,7 @@ class Company extends Model
         }
 
         // If not scoped, calculate
-        $average = $this->salaries->avg('salaries.salary_amount');
+        $average = $this->jobs()->avg('job.salary_min');
 
         return $average !== null ? $average : 0;
     }
@@ -154,8 +161,8 @@ class Company extends Model
     public function scopeWithAverageSalary(Builder $query): Builder
     {
         return $query->addSelect([
-            'average_salary' => Salary::selectRaw('COALESCE(AVG(salaries.salary_amount), 0)')
-                ->whereColumn('companies.id', 'salaries.company_id'),
+            'average_salary' => Job::selectRaw('COALESCE(AVG(jobs.salary_min), 0)')
+                ->whereColumn('companies.id', 'jobs.company_id'),
         ]);
     }
 

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\GlobalSearchController;
 use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\JobController;
 use Illuminate\Support\Facades\Route;
@@ -22,6 +23,8 @@ Route::get('/jobs', [JobController::class, 'index'])
 
 Route::get('/jobs/{slug}/apply', [JobController::class, 'apply'])
     ->name('jobs.apply');
+
+Route::get('/search', [GlobalSearchController::class, 'search'])->name('search');
 
 Route::impersonate();
 

@@ -17,6 +17,7 @@ export interface QueryBuilderParams<
     SortKeys extends string = string,
 > {
     cursor?: string;
+    query?: string;
     filters?: {
         [K in keyof FilterMap]?: FilterMap[K] | Readonly<FilterMap[K] extends ReadonlyArray<unknown> ? FilterMap[K] : never>;
     };
@@ -57,6 +58,10 @@ export const withQueryBuilderParams = (data?: QueryBuilderParams): Record<string
         query.cursor = data.cursor;
     }
 
+    if (data.query) {
+        query.query = data.query;
+    }
+
     if (sorts.length) {
         query.sort = sorts.join(',');
     }
@@ -90,6 +95,7 @@ export const useGetQueryParams = <
     const filters: QueryBuilderParams<FilterMap, SortKeys>['filters'] = {};
     const sorts: QueryBuilderParams<FilterMap, SortKeys>['sorts'] = {};
     let cursor: string | undefined;
+    let query: string | undefined;
 
     params.forEach((value, key) => {
         if (key.startsWith('filter[') && key.endsWith(']')) {
@@ -122,11 +128,14 @@ export const useGetQueryParams = <
             });
         } else if (key === 'cursor') {
             cursor = value;
+        } else if (key === 'query') {
+            query = value;
         }
     });
 
     return {
         cursor,
+        query,
         filters: filters as NonNullable<typeof filters>,
         sorts: sorts as NonNullable<typeof sorts>,
     };
