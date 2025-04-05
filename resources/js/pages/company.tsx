@@ -8,13 +8,15 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Separator } from '@/components/ui/separator';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, usePage } from '@inertiajs/react';
 import { Briefcase, Building2, CheckCircle, ExternalLink, Globe, Heart, MapPin, MessageSquare, Share2, Users } from 'lucide-react';
 import { useState } from 'react';
 
 export default function CompanyPage({ company }: { company: App.Data.Company.CompanyData }) {
     const [tab, setTab] = useState('overview');
     const [showSharePopup, setShowSharePopup] = useState(false);
+    const user = usePage().props.auth.user;
+    const alreadyReviewed = company.reviews.find((e: App.Data.Company.CompanyReviewData) => e.user.id === user?.id) ? true : false;
 
     const workLifeBalanceRating =
         Math.round(
@@ -78,7 +80,7 @@ export default function CompanyPage({ company }: { company: App.Data.Company.Com
                                                     <div className="flex">
                                                         <StarRating rating={company.rating} readOnly />
                                                     </div>
-                                                    <span className="ml-1 text-lg font-bold">{company.rating}</span>
+                                                    <span className="ml-1 text-lg font-bold">{Math.round(company.rating * 10) / 10}</span>
                                                     <span className="ml-1 text-sm text-gray-500">({company.reviews_count} reviews)</span>
                                                 </div>
                                             </div>
@@ -115,7 +117,7 @@ export default function CompanyPage({ company }: { company: App.Data.Company.Com
                                         </div>
 
                                         <div className="mt-6 flex flex-wrap gap-3">
-                                            <ReviewModal companySlug={company.slug} />
+                                            {!alreadyReviewed ? <ReviewModal companySlug={company.slug} /> : null}
                                             <Button onClick={() => setTab('jobs')} variant="outline" className="cursor-pointer">
                                                 <Briefcase className="mr-2 h-4 w-4" />
                                                 See All Jobs {company.jobs_count}
@@ -227,7 +229,7 @@ export default function CompanyPage({ company }: { company: App.Data.Company.Com
                                             <TabsContent value="reviews" className="space-y-6">
                                                 <div className="flex items-center justify-between">
                                                     <h2 className="text-xl font-semibold">Employee Reviews</h2>
-                                                    <ReviewModal companySlug={company.slug} />
+                                                    {!alreadyReviewed ? <ReviewModal companySlug={company.slug} /> : null}
                                                 </div>
 
                                                 {company.reviews.map((review) => (

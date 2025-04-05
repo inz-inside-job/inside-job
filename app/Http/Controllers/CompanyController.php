@@ -93,6 +93,16 @@ class CompanyController extends Controller
 
     public function storeReview(StoreCompanyReviewRequest $request, Company $company)
     {
+        $review = Review::where('company_id', $company->id)
+            ->where('user_id', auth()->id())
+            ->first();
+
+        if ($review) {
+            return redirect()
+                ->route('companies.show', ['slug' => $company->slug])
+                ->with('error', 'You have already submitted a review for this company.');
+        }
+
         Review::create([
             'user_id' => auth()->id(),
             'company_id' => $company->id,
