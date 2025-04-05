@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Data;
+namespace App\Data\CompanySubmission;
 
 use App\Enums\CompanyType;
 use Spatie\LaravelData\Data;

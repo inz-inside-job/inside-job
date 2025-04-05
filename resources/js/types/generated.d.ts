@@ -1,26 +1,4 @@
 declare namespace App.Data {
-export type CompanySubmissionCountsData = {
-pending: number;
-approved: number;
-rejected: number;
-total: number;
-};
-export type CompanySubmissionData = {
-name: string;
-industry: string;
-description: string;
-employee_count: number;
-founded_year: string;
-status: string;
-created_at: string;
-id: number;
-user: App.Data.CompanySubmissionUserData;
-ceo: string;
-type: App.Enums.CompanyType;
-};
-export type CompanySubmissionUserData = {
-name: string;
-};
 export type UserData = {
 id: number;
 name: string;
@@ -73,6 +51,7 @@ benefits: Array<string>;
 type: App.Enums.CompanyType;
 jobs_count: number;
 website: string;
+claimed: boolean;
 };
 export type CompanyJobData = {
 id: number;
@@ -105,6 +84,45 @@ compensation_benefits: number;
 senior_management: number;
 recommend: boolean;
 approve_of_ceo: boolean;
+};
+}
+declare namespace App.Data.CompanySubmission {
+export type CompanyClaimSubmissionCompanyData = {
+name: string;
+industry: string;
+id: number;
+};
+export type CompanyClaimSubmissionData = {
+job_title: string;
+verification_details: string;
+email: string;
+created_at: string;
+id: number;
+status: string;
+user: App.Data.CompanySubmission.CompanySubmissionUserData;
+company: App.Data.CompanySubmission.CompanyClaimSubmissionCompanyData;
+};
+export type CompanySubmissionCountsData = {
+pending: number;
+approved: number;
+rejected: number;
+total: number;
+};
+export type CompanySubmissionData = {
+name: string;
+industry: string;
+description: string;
+employee_count: number;
+founded_year: string;
+status: string;
+created_at: string;
+id: number;
+user: App.Data.CompanySubmission.CompanySubmissionUserData;
+ceo: string;
+type: App.Enums.CompanyType;
+};
+export type CompanySubmissionUserData = {
+name: string;
 };
 }
 declare namespace App.Data.Home {

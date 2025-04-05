@@ -13,6 +13,10 @@ Route::get('/companies', [CompanyController::class, 'index'])
 Route::get('/companies/{slug}', [CompanyController::class, 'show'])
     ->name('companies.show');
 
+Route::post('companies/{company}/claim', [CompanyController::class, 'submitClaim'])
+    ->name('companies.submitClaim')
+    ->middleware('auth');
+
 Route::get('/jobs', [JobController::class, 'index'])
     ->name('jobs');
 

@@ -10,6 +10,12 @@ declare module 'ziggy-js' {
             "required": true
         }
     ],
+    "companies.submitClaim": [
+        {
+            "name": "company",
+            "required": true
+        }
+    ],
     "jobs": [],
     "profile.edit": [],
     "profile.update": [],
@@ -54,6 +60,19 @@ declare module 'ziggy-js' {
             "name": "submission",
             "required": true,
             "binding": "id"
+        }
+    ],
+    "admin.claims": [],
+    "admin.claim": [
+        {
+            "name": "claim",
+            "required": true
+        }
+    ],
+    "admin.claim.update": [
+        {
+            "name": "claim",
+            "required": true
         }
     ],
     "storage.local": [

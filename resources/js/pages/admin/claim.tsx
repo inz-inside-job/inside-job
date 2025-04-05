@@ -19,20 +19,20 @@ import { useForm } from 'laravel-precognition-react-inertia';
 import { ArrowLeft, Building2, Clock, User, Users } from 'lucide-react';
 
 interface Props extends PageProps {
-    submission: App.Data.CompanySubmission.CompanySubmissionData;
+    claim: App.Data.CompanySubmission.CompanyClaimSubmissionData;
 }
 
-type SubmissionAction = {
+type ClaimAction = {
     action: 'approve' | 'reject' | '';
 };
 
-export default function SubmissionDetail() {
-    const { submission } = usePage<Props>().props;
+export default function Claim() {
+    const { claim } = usePage<Props>().props;
 
-    const { setData, submit, processing, reset } = useForm<SubmissionAction>(
+    const { setData, submit, processing, reset } = useForm<ClaimAction>(
         'post',
-        route('admin.submission.update', {
-            submission: submission.id,
+        route('admin.claim.update', {
+            claim: claim.id,
         }),
         {
             action: '',
@@ -46,14 +46,13 @@ export default function SubmissionDetail() {
             },
         });
     };
-
     return (
         <div className="container mx-auto px-4 py-8">
-            <Head title="Submission" />
+            <Head title="Claim" />
             <div className="space-y-6">
-                <Link href={route('admin.dashboard')}>
+                <Link href={route('admin.claims')}>
                     <Button variant="ghost" className="flex items-center gap-2">
-                        <ArrowLeft className="h-4 w-4" /> Back to Submissions
+                        <ArrowLeft className="h-4 w-4" /> Back to Claims
                     </Button>
                 </Link>
 
@@ -62,61 +61,39 @@ export default function SubmissionDetail() {
                         <CardHeader>
                             <div className="flex items-center justify-between">
                                 <div>
-                                    <CardTitle className="text-2xl">{submission.name}</CardTitle>
-                                    <CardDescription>{submission.industry}</CardDescription>
+                                    <CardTitle className="text-2xl">{claim.company.name}</CardTitle>
+                                    <CardDescription>{claim.company.industry}</CardDescription>
                                 </div>
-                                <Badge
-                                    variant={
-                                        submission.status === 'pending' ? 'outline' : submission.status === 'approved' ? 'default' : 'destructive'
-                                    }
-                                >
-                                    {submission.status.charAt(0).toUpperCase() + submission.status.slice(1)}
+                                <Badge variant={claim.status === 'pending' ? 'outline' : claim.status === 'approved' ? 'default' : 'destructive'}>
+                                    {claim.status.charAt(0).toUpperCase() + claim.status.slice(1)}
                                 </Badge>
                             </div>
                         </CardHeader>
                         <CardContent className="space-y-6">
-                            <div className="grid gap-4 md:grid-cols-2">
-                                <div className="flex items-center gap-2">
-                                    <Clock className="text-muted-foreground h-4 w-4" />
-                                    <span>Founded: {new Date(submission.founded_year).getFullYear()}</span>
-                                </div>
-                                <div className="flex items-center gap-2">
-                                    <Users className="text-muted-foreground h-4 w-4" />
-                                    <span>Size: {submission.employee_count} employees</span>
-                                </div>
-                                <div className="flex items-center gap-2">
-                                    <User className="text-muted-foreground h-4 w-4" />
-                                    <span>CEO: {submission.ceo}</span>
-                                </div>
-                                <div className="flex items-center gap-2">
-                                    <Building2 className="text-muted-foreground h-4 w-4" />
-                                    <span>Type: {submission.type} company</span>
-                                </div>
+                            <div className="flex items-center gap-2">
+                                <User className="text-muted-foreground h-4 w-4" />
+                                <p className="text-muted-foreground text-sm">Claimed by: {claim.user.name}</p>
                             </div>
-
                             <Separator />
-
-                            <div>
-                                <h3 className="mb-2 font-medium">Company Description</h3>
-                                <p className="text-muted-foreground">{submission.description}</p>
+                            <div className="flex items-center gap-2">
+                                <Building2 className="text-muted-foreground h-4 w-4" />
+                                <p className="text-muted-foreground text-sm">Company: {claim.company.name}</p>
                             </div>
-
-                            <div>
-                                <h3 className="mb-2 font-medium">Submitter Information</h3>
-                                <div className="grid gap-2">
-                                    <div className="flex gap-1">
-                                        <span className="text-muted-foreground">Name:</span>
-                                        <span>{submission.user.name}</span>
-                                    </div>
-                                    <div className="flex gap-1">
-                                        <span className="text-muted-foreground">Submitted:</span>
-                                        <span>{new Date(submission.created_at).toDateString()}</span>
-                                    </div>
-                                </div>
+                            <Separator />
+                            <div className="flex items-center gap-2">
+                                <Users className="text-muted-foreground h-4 w-4" />
+                                <p className="text-muted-foreground text-sm">Job title: {claim.job_title}</p>
+                            </div>
+                            <Separator />
+                            <div className="flex items-center gap-2">
+                                <Clock className="text-muted-foreground h-4 w-4" />
+                                <p className="text-muted-foreground text-sm">
+                                    Claimed submitted on: {new Date(claim.created_at).toLocaleDateString()}
+                                </p>
                             </div>
                         </CardContent>
                         <CardFooter className="flex justify-end gap-4">
-                            {submission.status === 'pending' && (
+                            {claim.status === 'pending' && (
                                 <>
                                     <AlertDialog>
                                         <AlertDialogTrigger asChild>

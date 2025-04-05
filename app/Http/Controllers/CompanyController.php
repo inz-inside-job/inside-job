@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Data\Companies\CompanyData;
 use App\Data\Company\CompanyData as CompanyPageData;
 use App\Models\Company;
+use App\Models\CompanyClaimSubmission;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedSort;
@@ -84,6 +86,23 @@ class CompanyController extends Controller
 
         return Inertia::render('company', [
             'company' => CompanyPageData::from($company),
+        ]);
+    }
+
+    public function submitClaim(Request $request, Company $company)
+    {
+        $request->validate([
+            'job_title' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'verification_details' => 'required|string|max:1000',
+        ]);
+
+        CompanyClaimSubmission::create([
+            'job_title' => $request->input('job_title'),
+            'email' => $request->input('email'),
+            'verification_details' => $request->input('verification_details'),
+            'company_id' => $company->id,
+            'user_id' => $request->user()->id,
         ]);
     }
 }
