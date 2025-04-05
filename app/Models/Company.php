@@ -168,6 +168,34 @@ class Company extends Model
             ->using(CompanyUser::class);
     }
 
+    public function getApproveOfCeoAttribute(): ?float
+    {
+        // If scoped with approve_of_ceo
+        if (isset($this->attributes['approve_of_ceo']) && $this->attributes['approve_of_ceo'] !== null) {
+            return $this->attributes['approve_of_ceo'];
+        }
+
+        // If not scoped, calculate
+        $totalReviews = $this->reviews->count();
+        if ($totalReviews === 0) {
+            return 0;
+        }
+
+        $approveOfCeo = $this->reviews->where('approve_of_ceo', true)->count();
+        $approvePercent = ($approveOfCeo / $totalReviews) * 100;
+
+        return $approvePercent;
+    }
+
+    public function scopeWithApproveOfCeo(Builder $query): Builder
+    {
+        return $query->addSelect([
+            'approve_of_ceo' => Review::selectRaw('
+               COALESCE(100 * COUNT(CASE WHEN reviews.approve_of_ceo = true THEN 1 END) / NULLIF(COUNT(*), 0), 0)
+           ')->whereColumn('companies.id', 'reviews.company_id'),
+        ]);
+    }
+
     public function getRouteKeyName(): string
     {
         return 'slug';

@@ -34,6 +34,7 @@ class CompanyData extends Data
         public float $rating,
         public float $average_salary,
         public float $recommend,
+        public float $approve_of_ceo,
         public int $reviews_count,
         ?string $logo,
         public string $description,

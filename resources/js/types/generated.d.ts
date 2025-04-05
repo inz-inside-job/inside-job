@@ -24,7 +24,7 @@ name: string;
 export type UserData = {
 id: number;
 name: string;
-image: string;
+image: string | null;
 };
 }
 declare namespace App.Data.Companies {
@@ -41,6 +41,7 @@ founded_year: string;
 rating: number;
 average_salary: number;
 recommend: number;
+approve_of_ceo: number;
 reviews_count: number;
 description: string;
 ceo: string;
@@ -64,6 +65,7 @@ founded_year: string;
 rating: number;
 average_salary: number;
 recommend: number;
+approve_of_ceo: number;
 reviews_count: number;
 description: string;
 slug: string;
