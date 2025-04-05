@@ -1,4 +1,26 @@
 declare namespace App.Data {
+export type CompanySubmissionCountsData = {
+pending: number;
+approved: number;
+rejected: number;
+total: number;
+};
+export type CompanySubmissionData = {
+name: string;
+industry: string;
+description: string;
+employee_count: number;
+founded_year: string;
+status: string;
+created_at: string;
+id: number;
+user: App.Data.CompanySubmissionUserData;
+ceo: string;
+type: App.Enums.CompanyType;
+};
+export type CompanySubmissionUserData = {
+name: string;
+};
 export type UserData = {
 id: number;
 name: string;
@@ -146,12 +168,13 @@ description: string;
 }
 declare namespace App.Enums {
 export type ApplicationStatus = 'Applied' | 'Invited' | 'Rejected';
+export type CompanySubmissionStatus = 'pending' | 'approved' | 'rejected';
+export type CompanyType = 'Public' | 'Private' | 'Non-profit';
+export type CompanyUserPermission = 'view company details' | 'edit company details' | 'delete company' | 'view employee' | 'edit employee' | 'add employee' | 'delete employee' | 'view job' | 'edit job' | 'create job' | 'delete job' | 'view job application' | 'accept job application' | 'decline job application';
 export type UserPermission = {
 name: string;
 value: string;
 };
-export type CompanyType = 'Public' | 'Private' | 'Non-profit';
-export type CompanyUserPermission = 'view company details' | 'edit company details' | 'delete company' | 'view employee' | 'edit employee' | 'add employee' | 'delete employee' | 'view job' | 'edit job' | 'create job' | 'delete job' | 'view job application' | 'accept job application' | 'decline job application';
 export type CompanyUserRole = 'owner' | 'hr' | 'employee';
 export type EmploymentExperience = 'Entry Level' | 'Mid Level' | 'Senior Level' | 'Manager' | 'Director' | 'Executive';
 export type EmploymentType = 'Full Time' | 'Part Time' | 'Contract' | 'Internship' | 'Temporary' | 'Remote';

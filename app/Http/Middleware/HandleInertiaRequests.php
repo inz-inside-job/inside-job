@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Enums\UserRole;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Tighten\Ziggy\Ziggy;
@@ -42,6 +43,7 @@ class HandleInertiaRequests extends Middleware
             'auth' => [
                 'status' => $request->session()->get('status'),
                 'user' => $request->user(),
+                'isAdmin' => $request->user()?->hasRole(UserRole::ADMIN) ?? false,
             ],
             'ziggy' => fn (): array => [
                 ...(new Ziggy)->toArray(),
