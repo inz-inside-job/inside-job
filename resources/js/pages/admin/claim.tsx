@@ -76,6 +76,11 @@ export default function Claim() {
                             </div>
                             <Separator />
                             <div className="flex items-center gap-2">
+                                <User className="text-muted-foreground h-4 w-4" />
+                                <p className="text-muted-foreground text-sm">Details: {claim.verification_details}</p>
+                            </div>
+                            <Separator />
+                            <div className="flex items-center gap-2">
                                 <Building2 className="text-muted-foreground h-4 w-4" />
                                 <p className="text-muted-foreground text-sm">Company: {claim.company.name}</p>
                             </div>
