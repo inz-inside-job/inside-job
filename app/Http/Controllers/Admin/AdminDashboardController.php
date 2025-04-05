@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Data\CompanySubmissionData;
+use App\Data\CompanySubmission\CompanyClaimSubmissionData;
+use App\Data\CompanySubmission\CompanySubmissionData;
 use App\Models\Company;
+use App\Models\CompanyClaimSubmission;
 use App\Models\CompanySubmission;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -60,7 +62,7 @@ class AdminDashboardController
         ]);
     }
 
-    public function update(Request $request, CompanySubmission $submission)
+    public function updateSubmission(Request $request, CompanySubmission $submission)
     {
         $action = $request->post('action');
 
@@ -81,5 +83,60 @@ class AdminDashboardController
         }
 
         return redirect()->route('admin.submission', $submission);
+    }
+
+    public function claims()
+    {
+        $submissions = QueryBuilder::for(
+            CompanyClaimSubmission::query()->with('user')->with('company')
+        )
+            ->defaultSort('-email')
+            ->allowedSorts([
+                AllowedSort::field('email'),
+                AllowedSort::field('created_at'),
+                AllowedSort::field('job_title'),
+            ])
+            ->cursorPaginate(20)
+            ->withQueryString();
+
+        $paginated = $submissions->toArray();
+
+        $data = CompanyClaimSubmissionData::collect($paginated['data']);
+
+        return Inertia::render('admin/claims',
+            [
+                'claims' => Inertia::merge($data),
+                'next_cursor' => $paginated['next_cursor'],
+            ]
+        );
+    }
+
+    public function viewClaim(Request $request, CompanyClaimSubmission $claim)
+    {
+        $claim->load('user', 'company');
+
+        $data = CompanyClaimSubmissionData::from($claim);
+
+        return Inertia::render('admin/claim', [
+            'claim' => $data,
+        ]);
+    }
+
+    public function updateClaim(Request $request, CompanyClaimSubmission $claim)
+    {
+        $action = $request->post('action');
+
+        if ($action === 'approve') {
+            $claim->update(['status' => 'approved']);
+            $claim->company()->update([
+                'claimed' => true,
+                'claimed_by' => $claim->user_id,
+            ]);
+
+        } elseif ($action === 'reject') {
+            $claim->update(['status' => 'rejected']);
+        }
+
+        return redirect()->route('admin.claim', $claim);
     }
 }

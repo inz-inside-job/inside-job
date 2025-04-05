@@ -1,38 +1,36 @@
-'use client';
-
-import { Button } from '@/components/ui/button';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import { Input } from '@/components/ui/input';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { PageProps } from '@inertiajs/core';
 import { Link, router, usePage } from '@inertiajs/react';
 import { ArrowUpDown, MoreHorizontal, Search } from 'lucide-react';
 import { useCallback, useEffect, useState } from 'react';
+import { Button } from '../ui/button';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '../ui/dropdown-menu';
+import { Input } from '../ui/input';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../ui/table';
 
 type SubmissionStatus = 'pending' | 'approved' | 'rejected';
 
-interface SubmissionsTableProps {
+interface ClaimsTableProps {
     status: SubmissionStatus;
 }
 
 interface Props extends PageProps {
-    submissions: App.Data.CompanySubmission.CompanySubmissionData[];
+    claims: App.Data.CompanySubmission.CompanyClaimSubmissionData[];
     next_cursor: string | null;
 }
 
-export function SubmissionsTable({ status }: SubmissionsTableProps) {
+export default function ClaimsTable({ status }: ClaimsTableProps) {
+    const { claims, next_cursor } = usePage<Props>().props;
+    const [prevSort, setPrevSort] = useState<string>('email');
     const [searchQuery, setSearchQuery] = useState('');
-    const [prevSort, setPrevSort] = useState<string>('name');
-    const { submissions, next_cursor } = usePage<Props>().props;
 
     const onSortChange = useCallback(
         (sortValue: string) => {
             const sort = sortValue === prevSort ? `-${sortValue}` : sortValue;
 
             router.reload({
-                only: ['submissions', 'next_cursor'],
+                only: ['claims', 'next_cursor'],
                 replace: true,
-                reset: ['submissions'],
+                reset: ['claims'],
                 // Force cursor to be null as this is a new sort
                 data: { sort, cursor: null },
             });
@@ -46,14 +44,13 @@ export function SubmissionsTable({ status }: SubmissionsTableProps) {
     }, [prevSort, onSortChange]);
 
     const onLoadMore = useCallback(() => {
-        router.reload({ data: { cursor: next_cursor! }, replace: true, only: ['submissions', 'next_cursor'] });
+        router.reload({ data: { cursor: next_cursor! }, replace: true, only: ['claims', 'next_cursor'] });
     }, [next_cursor]);
 
-    const filteredSubmissions = submissions.filter(
-        (submission) =>
-            submission.status === status &&
-            (submission.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                submission.industry.toLowerCase().includes(searchQuery.toLowerCase())),
+    const filteredClaims = claims.filter(
+        (claim) =>
+            claim.status === status &&
+            (claim.email.toLowerCase().includes(searchQuery.toLowerCase()) || claim.job_title.toLowerCase().includes(searchQuery.toLowerCase())),
     );
 
     return (
@@ -75,13 +72,14 @@ export function SubmissionsTable({ status }: SubmissionsTableProps) {
                 <Table>
                     <TableHeader>
                         <TableRow>
+                            <TableHead className="w-[300px]">Company Name</TableHead>
                             <TableHead className="w-[300px]">
                                 <Button
                                     variant="ghost"
                                     className="flex items-center gap-1 p-0 font-medium"
-                                    onClick={() => setPrevSort((prev) => (prev === 'name' ? '-name' : 'name'))}
+                                    onClick={() => setPrevSort((prev) => (prev === 'job_title' ? '-job_title' : 'job_title'))}
                                 >
-                                    Company Name
+                                    Job Title
                                     <ArrowUpDown className="h-3 w-3" />
                                 </Button>
                             </TableHead>
@@ -89,13 +87,12 @@ export function SubmissionsTable({ status }: SubmissionsTableProps) {
                                 <Button
                                     variant="ghost"
                                     className="flex items-center gap-1 p-0 font-medium"
-                                    onClick={() => setPrevSort((prev) => (prev === 'industry' ? '-industry' : 'industry'))}
+                                    onClick={() => setPrevSort((prev) => (prev === 'email' ? '-email' : 'email'))}
                                 >
-                                    Industry
+                                    Email
                                     <ArrowUpDown className="h-3 w-3" />
                                 </Button>
                             </TableHead>
-                            <TableHead>Submitted By</TableHead>
                             <TableHead>
                                 <Button
                                     variant="ghost"
@@ -110,19 +107,19 @@ export function SubmissionsTable({ status }: SubmissionsTableProps) {
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        {filteredSubmissions.length === 0 ? (
+                        {filteredClaims.length === 0 ? (
                             <TableRow>
                                 <TableCell colSpan={5} className="h-24 text-center">
                                     No submissions found.
                                 </TableCell>
                             </TableRow>
                         ) : (
-                            filteredSubmissions.map((submission) => (
-                                <TableRow key={submission.id}>
-                                    <TableCell className="font-medium">{submission.name}</TableCell>
-                                    <TableCell>{submission.industry}</TableCell>
-                                    <TableCell>{submission.user.name}</TableCell>
-                                    <TableCell>{new Date(submission.created_at).toDateString()}</TableCell>
+                            filteredClaims.map((claim) => (
+                                <TableRow key={claim.id}>
+                                    <TableCell className="font-medium">{claim.company.name}</TableCell>
+                                    <TableCell className="font-medium">{claim.job_title}</TableCell>
+                                    <TableCell>{claim.email}</TableCell>
+                                    <TableCell>{new Date(claim.created_at).toDateString()}</TableCell>
                                     <TableCell className="text-right">
                                         <DropdownMenu>
                                             <DropdownMenuTrigger asChild>
@@ -133,7 +130,7 @@ export function SubmissionsTable({ status }: SubmissionsTableProps) {
                                             </DropdownMenuTrigger>
                                             <DropdownMenuContent align="end">
                                                 <DropdownMenuItem asChild>
-                                                    <Link href={`/admin/submissions/${submission.id}`}>View Details</Link>
+                                                    <Link href={`/admin/claims/${claim.id}`}>View Details</Link>
                                                 </DropdownMenuItem>
                                             </DropdownMenuContent>
                                         </DropdownMenu>
