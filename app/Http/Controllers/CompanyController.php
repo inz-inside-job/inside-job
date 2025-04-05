@@ -21,6 +21,7 @@ class CompanyController extends Controller
             Company::withRating()
                 ->withAverageSalary()
                 ->withRecommended()
+                ->withApproveOfCeo()
                 ->withCount('reviews')
         )
             ->defaultSort(['-rating'])
