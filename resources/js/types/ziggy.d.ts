@@ -13,7 +13,10 @@ declare module 'ziggy-js' {
     "companies.submitClaim": [
         {
             "name": "company",
-            "required": true
+            "required": true,
+            "binding": "slug"
+        }
+    ],
     "companies.reviews.store": [
         {
             "name": "company",
@@ -72,13 +75,15 @@ declare module 'ziggy-js' {
     "admin.claim": [
         {
             "name": "claim",
-            "required": true
+            "required": true,
+            "binding": "id"
         }
     ],
     "admin.claim.update": [
         {
             "name": "claim",
-            "required": true
+            "required": true,
+            "binding": "id"
         }
     ],
     "storage.local": [
@@ -86,7 +91,7 @@ declare module 'ziggy-js' {
             "name": "path",
             "required": true
         }
-    ]
+    ],
 }
 }
 export {};

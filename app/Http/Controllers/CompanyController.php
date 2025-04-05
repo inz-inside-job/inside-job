@@ -116,6 +116,8 @@ class CompanyController extends Controller
             'company_id' => $company->id,
             'user_id' => $request->user()->id,
         ]);
+    }
+
     public function storeReview(StoreCompanyReviewRequest $request, Company $company)
     {
         $review = Review::where('company_id', $company->id)
