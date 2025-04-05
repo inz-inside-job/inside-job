@@ -18,7 +18,6 @@ class JobController extends Controller
     public function index(JobIndexRequest $request)
     {
         $params = $request->validated();
-        debug($params);
 
         $query = Job::with([
             'company' => fn (BelongsTo $query) => $query->withRating()->withCount('reviews'),
