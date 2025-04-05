@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Data\CompanySubmission\CompanyClaimSubmissionData;
 use App\Data\CompanySubmission\CompanySubmissionData;
+use App\Enums\CompanyUserRole;
 use App\Models\Company;
 use App\Models\CompanyClaimSubmission;
 use App\Models\CompanySubmission;
@@ -130,7 +131,10 @@ class AdminDashboardController
             $claim->update(['status' => 'approved']);
             $claim->company()->update([
                 'claimed' => true,
-                'claimed_by' => $claim->user_id,
+            ]);
+
+            $claim->user->companies()->attach($claim->company_id, [
+                'role' => CompanyUserRole::OWNER,
             ]);
 
         } elseif ($action === 'reject') {

@@ -91,7 +91,7 @@ declare module 'ziggy-js' {
             "name": "path",
             "required": true
         }
-    ],
+    ]
 }
 }
 export {};

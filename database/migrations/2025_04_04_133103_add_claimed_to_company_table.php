@@ -13,11 +13,6 @@ return new class extends Migration
     {
         Schema::table('companies', function (Blueprint $table) {
             $table->boolean('claimed')->default(false)->after('slug');
-            $table->foreignId('claimed_by')
-                ->nullable()
-                ->constrained('users')
-                ->nullOnDelete()
-                ->after('claimed');
         });
     }
 
@@ -27,8 +22,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('companies', function (Blueprint $table) {
-            $table->dropForeign(['claimed_by']);
-            $table->dropColumn('claimed_by');
             $table->dropColumn('claimed');
         });
     }

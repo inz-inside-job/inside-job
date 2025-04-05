@@ -1,7 +1,6 @@
-import { Button } from '@/components/ui/button';
 import { Link, usePage } from '@inertiajs/react';
 import clsx from 'clsx';
-import { Building2, LayoutDashboard, LogOut } from 'lucide-react';
+import { Building2, LayoutDashboard } from 'lucide-react';
 
 export function AdminSidebar() {
     const pathname = usePage().url;
@@ -44,12 +43,6 @@ export function AdminSidebar() {
                             </Link>
                         ))}
                     </nav>
-                </div>
-                <div className="mt-auto p-4">
-                    <Button variant="outline" className="w-full justify-start gap-2">
-                        <LogOut className="h-4 w-4" />
-                        Log out
-                    </Button>
                 </div>
             </div>
         </div>
