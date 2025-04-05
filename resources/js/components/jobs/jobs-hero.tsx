@@ -14,8 +14,6 @@ export function JobsHero() {
         (e: React.FormEvent<HTMLFormElement>) => {
             e.preventDefault();
 
-            if (queryParams.query ?? '' === searchQuery) return;
-
             const query = withQueryBuilderParams({
                 ...queryParams,
                 query: searchQuery,

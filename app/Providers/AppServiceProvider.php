@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Enums\UserRole;
+use App\Search\GlobalSearch;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -30,6 +31,9 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Vite::prefetch(concurrency: 3);
+
+        // Register the global search
+        GlobalSearch::bootSearchable();
 
         // A few failsafes to prevent data loss and performance issues
         Model::shouldBeStrict(! $this->app->isProduction());

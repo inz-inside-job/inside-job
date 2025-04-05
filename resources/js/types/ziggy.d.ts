@@ -11,6 +11,7 @@ declare module 'ziggy-js' {
         }
     ],
     "jobs": [],
+    "search": [],
     "profile.edit": [],
     "profile.update": [],
     "profile.destroy": [],

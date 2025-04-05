@@ -135,6 +135,15 @@ description: string;
 requirements: Array<string>;
 };
 }
+declare namespace App.Data.Search {
+export type SearchResultData = {
+logo: string | null;
+id: string;
+name: string;
+link: string;
+description: string;
+};
+}
 declare namespace App.Enums {
 export type ApplicationStatus = 'Applied' | 'Invited' | 'Rejected';
 export type UserPermission = {

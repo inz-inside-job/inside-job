@@ -3,10 +3,6 @@ import type { route as routeFn } from 'ziggy-js';
 import { SharedData as AppPageProps } from './';
 
 declare global {
-    interface Window {
-        axios: AxiosInstance;
-    }
-
     const route: typeof routeFn;
 }
 
