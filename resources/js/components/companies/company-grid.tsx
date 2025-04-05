@@ -5,6 +5,7 @@ import { router, usePage } from '@inertiajs/react';
 import { useCallback, useState } from 'react';
 import WhenVisible from '../when-visible';
 import CompanyCard from './company-card';
+import SubmitCompanyButton from './submit-company-button';
 
 interface CompanyPageProps extends PageProps {
     companies: App.Data.Companies.CompanyData[];
@@ -68,9 +69,12 @@ export function CompanyGrid() {
                     disabled={!next_cursor}
                     buffer={500}
                 >
-                    <Button variant="outline" className="mx-auto" onClick={onLoadMore} disabled={!next_cursor}>
-                        Load More Companies
-                    </Button>
+                    <div className="flex flex-col items-center gap-2">
+                        <Button variant="outline" className="mx-auto" onClick={onLoadMore} disabled={!next_cursor}>
+                            Load More Companies
+                        </Button>
+                        <SubmitCompanyButton />
+                    </div>
                 </WhenVisible>
             </div>
         </div>
