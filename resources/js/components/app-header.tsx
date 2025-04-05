@@ -1,14 +1,14 @@
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { useInitials } from '@/hooks/use-initials';
 import { useMediaQuery } from '@/hooks/use-media-query';
 import { Link, router, usePage } from '@inertiajs/react';
 import clsx from 'clsx';
-import { Menu, Search, X } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { useCallback, useMemo, useState } from 'react';
 import AppLogoIcon from './app-logo-icon';
 import AppearanceToggleDropdown from './appearance-dropdown';
 import LoginModal from './login-modal';
+import SearchInput from './search-input';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from './ui/dropdown-menu';
 import { UserMenuContent } from './user-menu-content';
@@ -81,8 +81,7 @@ export function AppHeader() {
                             <AppearanceToggleDropdown />
                         </div>
                         <div className="relative w-full lg:w-auto">
-                            <Search className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 transform text-gray-400" />
-                            <Input className="w-full pl-10 lg:w-[300px]" placeholder="Search jobs, companies..." />
+                            <SearchInput />
                         </div>
                         <div className="flex w-full gap-3 lg:w-auto">
                             {auth.user ? (

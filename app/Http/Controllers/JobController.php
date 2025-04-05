@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Data\Jobs\JobData;
+use App\Http\Requests\JobIndexRequest;
 use App\Models\Job;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
@@ -14,15 +15,20 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 class JobController extends Controller
 {
-    public function index()
+    public function index(JobIndexRequest $request)
     {
-        $jobs = QueryBuilder::for(
-            Job::with([
-                'company' => function (BelongsTo $query) {
-                    $query->withRating()->withCount('reviews');
-                },
-            ])
-        )
+        $params = $request->validated();
+
+        $query = Job::with([
+            'company' => fn (BelongsTo $query) => $query->withRating()->withCount('reviews'),
+        ])->when(! empty($params['query']), function (Builder $query) use ($params) {
+            $searchResults = Job::search($params['query'])->raw();
+            $ids = collect($searchResults['hits'])->pluck('id');
+
+            $query->whereIn('jobs.id', $ids);
+        });
+
+        $jobs = QueryBuilder::for($query)
             ->allowedSorts(
                 [
                     AllowedSort::field('posted_date'),

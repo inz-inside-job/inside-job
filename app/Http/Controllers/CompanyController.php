@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Data\Companies\CompanyData;
 use App\Data\Company\CompanyData as CompanyPageData;
 use App\Http\Requests\Company\StoreCompanyReviewRequest;
+use App\Http\Requests\CompanyIndexRequest;
 use App\Models\Company;
 use App\Models\Review;
 use Illuminate\Database\Eloquent\Builder;
@@ -15,15 +16,22 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 class CompanyController extends Controller
 {
-    public function index()
+    public function index(CompanyIndexRequest $request)
     {
-        $companies = QueryBuilder::for(
-            Company::withRating()
-                ->withAverageSalary()
-                ->withRecommended()
-                ->withApproveOfCeo()
-                ->withCount('reviews')
-        )
+        $params = $request->validated();
+
+        $query = Company::withRating()
+            ->withAverageSalary()
+            ->withRecommend()
+            ->withCount('reviews')
+            ->when(! empty($params['query']), function (Builder $query) use ($params) {
+                $searchResults = Company::search($params['query'])->raw();
+                $ids = collect($searchResults['hits'])->pluck('id');
+
+                $query->whereIn('companies.id', $ids);
+            });
+
+        $companies = QueryBuilder::for($query)
             ->defaultSort(['-rating'])
             ->allowedSorts([
                 AllowedSort::field('rating'),
@@ -75,7 +83,7 @@ class CompanyController extends Controller
         $company = Company::whereSlug($slug)
             ->withRating()
             ->withAverageSalary()
-            ->withRecommended()
+            ->withRecommend()
             ->withApproveOfCeo()
             ->withCount('reviews')
             ->withCount('jobs')
