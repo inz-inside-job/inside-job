@@ -59,11 +59,8 @@ export default function JobApplicationForm({ jobSlug }: { jobSlug: string }) {
     const totalSteps = 2;
 
     const { data, setData, submit, processing, reset, validate, errors, setError } = useForm<JobFormInterface>(
-        //placeholder
         'post',
-        route('companies.reviews.store', {
-            company: jobSlug,
-        }),
+        route('jobs.apply.store', { job: jobSlug }),
         {
             first_name: '',
             last_name: '',
@@ -123,8 +120,8 @@ export default function JobApplicationForm({ jobSlug }: { jobSlug: string }) {
                 resetForm();
                 toast.success('Your application has been submitted successfully!');
             },
-            onError: () => {
-                toast.error('There was an error submitting your application. Please try again.');
+            onError: (error) => {
+                toast.error(error[0] || 'There was an error submitting your application. Please try again.');
             },
         });
     };
