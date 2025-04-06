@@ -45,7 +45,7 @@ mission: string | null;
 benefits: Array<string>;
 type: App.Enums.CompanyType;
 jobs_count: number;
-website: string;
+website: string | null;
 claimed: boolean;
 };
 export type CompanyJobData = {
