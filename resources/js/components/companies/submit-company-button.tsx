@@ -57,7 +57,7 @@ export default function SubmitCompanyButton() {
         // Validate current step
         if (currentStep === 0) {
             if (!data['name'].trim()) {
-                setError('name', 'Please enter your position.');
+                setError('name', 'Please enter the company name.');
                 return;
             }
             if (!data['industry'].trim()) {
@@ -65,7 +65,7 @@ export default function SubmitCompanyButton() {
                 return;
             }
             if (!data['ceo'].trim()) {
-                setError('ceo', 'Please enter a description.');
+                setError('ceo', 'Please enter a CEO name.');
                 return;
             }
         }
