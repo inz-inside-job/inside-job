@@ -126,8 +126,8 @@ class CompanyController extends Controller
 
         if ($review) {
             return redirect()
-                ->route('companies.show', ['slug' => $company->slug])
-                ->with('error', 'You have already submitted a review for this company.');
+                ->back()
+                ->withErrors('You have already submitted a review for this company.');
         }
 
         Review::create([
@@ -149,7 +149,7 @@ class CompanyController extends Controller
         ]);
 
         return redirect()
-            ->route('companies.show', ['slug' => $company->slug])
+            ->back()
             ->with('success', 'Review submitted successfully.');
     }
 }

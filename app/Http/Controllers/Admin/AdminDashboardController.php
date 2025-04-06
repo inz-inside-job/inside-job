@@ -8,6 +8,7 @@ use App\Enums\CompanyUserRole;
 use App\Models\Company;
 use App\Models\CompanyClaimSubmission;
 use App\Models\CompanySubmission;
+use App\Models\CompanyUser;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Spatie\QueryBuilder\AllowedSort;
@@ -43,7 +44,8 @@ class AdminDashboardController
 
         $data = CompanySubmissionData::collect($paginated['data']);
 
-        return Inertia::render('admin/dashboard',
+        return Inertia::render(
+            'admin/dashboard',
             [
                 'submissions' => Inertia::merge($data),
                 'next_cursor' => $paginated['next_cursor'],
@@ -104,7 +106,8 @@ class AdminDashboardController
 
         $data = CompanyClaimSubmissionData::collect($paginated['data']);
 
-        return Inertia::render('admin/claims',
+        return Inertia::render(
+            'admin/claims',
             [
                 'claims' => Inertia::merge($data),
                 'next_cursor' => $paginated['next_cursor'],
@@ -133,10 +136,20 @@ class AdminDashboardController
                 'claimed' => true,
             ]);
 
-            $claim->user->companies()->attach($claim->company_id, [
-                'role' => CompanyUserRole::OWNER,
+            // Reject all other claims for the same company
+            CompanyClaimSubmission::where('company_id', $claim->company_id)
+                ->where('id', '!=', $claim->id)
+                ->update(['status' => 'rejected']);
+
+            /**
+             * @var CompanyUser $companyUser
+             */
+            $companyUser = CompanyUser::create([
+                'user_id' => $claim->user_id,
+                'company_id' => $claim->company_id,
             ]);
 
+            $companyUser->syncRoles([CompanyUserRole::OWNER]);
         } elseif ($action === 'reject') {
             $claim->update(['status' => 'rejected']);
         }
