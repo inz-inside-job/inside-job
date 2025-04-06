@@ -1,12 +1,14 @@
 import type React from 'react';
 
 import { Button } from '@/components/ui/button';
+import { usePage } from '@inertiajs/react';
 import { useForm } from 'laravel-precognition-react-inertia';
 import { ArrowLeft, ArrowRight, Star } from 'lucide-react';
 import { useState } from 'react';
 import { toast } from 'sonner';
 import ProgressSteps from '../progress-steps';
 import { ResponsiveModal, ResponsiveModalDescription, ResponsiveModalHeader, ResponsiveModalTitle } from '../responsive-modal';
+import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip';
 import PositionStep from './steps/position';
 import ProsConsStep from './steps/pros-cons';
 import RateAndReviewStep from './steps/rate-review';
@@ -32,6 +34,8 @@ export default function ReviewModal({ companySlug }: { companySlug: string }) {
     const [open, setOpen] = useState(false);
     const [currentStep, setCurrentStep] = useState(0);
     const totalSteps = 5;
+
+    const { auth } = usePage().props;
 
     const { data, setData, submit, processing, reset, validate, errors, setError } = useForm<ReviewFormInterface>(
         'post',
@@ -182,10 +186,24 @@ export default function ReviewModal({ companySlug }: { companySlug: string }) {
 
     return (
         <>
-            <Button className="cursor-pointer bg-orange-500 hover:bg-orange-600" onClick={() => setOpen(true)}>
-                <Star className="mr-2 h-4 w-4" />
-                Write a Review
-            </Button>
+            <Tooltip disableHoverableContent={false}>
+                <TooltipTrigger>
+                    <Button disabled={!auth.user} className="cursor-pointer bg-orange-500 hover:bg-orange-600" onClick={() => setOpen(true)}>
+                        <Star className="mr-2 h-4 w-4" />
+                        Write a Review
+                    </Button>
+                </TooltipTrigger>
+
+                <TooltipContent>
+                    {!auth.user ? (
+                        <p className="text-sm">You need to be logged in to write a review.</p>
+                    ) : (
+                        <p className="text-sm">
+                            Write a review to share your experience with this company. Your feedback helps others make informed decisions.
+                        </p>
+                    )}
+                </TooltipContent>
+            </Tooltip>
             <ResponsiveModal
                 open={open}
                 onOpenChange={(newOpen) => {

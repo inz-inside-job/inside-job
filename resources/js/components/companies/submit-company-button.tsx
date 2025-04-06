@@ -1,5 +1,6 @@
+import { Link, usePage } from '@inertiajs/react';
 import { useForm } from 'laravel-precognition-react-inertia';
-import { ArrowLeft, ArrowRight, Building2 } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Building2, Link as LinkIcon } from 'lucide-react';
 import { useState } from 'react';
 import { toast } from 'sonner';
 import ProgressSteps from '../progress-steps';
@@ -26,6 +27,8 @@ export default function SubmitCompanyButton() {
     const [open, setOpen] = useState(false);
     const [currentStep, setCurrentStep] = useState(0);
     const totalSteps = 4;
+
+    const { auth } = usePage().props;
 
     const { data, setData, reset, processing, errors, setError, submit } = useForm<SubmitCompanyInterface>('post', route('companies.submit'), {
         name: '',
@@ -134,10 +137,19 @@ export default function SubmitCompanyButton() {
 
     return (
         <>
-            <Button className="cursor-pointer bg-orange-500 hover:bg-orange-600" onClick={() => setOpen(true)}>
-                <Building2 className="mr-2 h-4 w-4" />
-                Don't see a company you like? Submit it!
-            </Button>
+            {auth.user ? (
+                <Button className="cursor-pointer bg-orange-500 hover:bg-orange-600" onClick={() => setOpen(true)}>
+                    <Building2 className="mr-2 h-4 w-4" />
+                    Don't see a company you like? Submit it!
+                </Button>
+            ) : (
+                <p className="flex gap-2">
+                    Don't see your company?
+                    <Link className="text-primary flex items-center" href={route('login')}>
+                        <LinkIcon className="size-4" /> Sign in to create
+                    </Link>
+                </p>
+            )}
             <ResponsiveModal
                 open={open}
                 onOpenChange={(newOpen) => {

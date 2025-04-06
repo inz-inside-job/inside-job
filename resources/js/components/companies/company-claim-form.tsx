@@ -9,6 +9,7 @@ import { useState } from 'react';
 import { toast } from 'sonner';
 import { ResponsiveModal, ResponsiveModalDescription, ResponsiveModalHeader, ResponsiveModalTitle } from '../responsive-modal';
 import { Label } from '../ui/label';
+import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip';
 
 type CompanyClaimForm = {
     job_title: string | null;
@@ -19,6 +20,7 @@ type CompanyClaimForm = {
 export function CompanyClaimDialog({ company }: { company: App.Data.Company.CompanyData }) {
     const [open, setOpen] = useState(false);
     const page = usePage();
+
     const { auth } = page.props;
 
     const { data, setData, errors, submit, reset, processing, validate } = useForm<CompanyClaimForm>(
@@ -51,10 +53,31 @@ export function CompanyClaimDialog({ company }: { company: App.Data.Company.Comp
 
     return (
         <>
-            <Button size={'sm'} className="cursor-pointer bg-orange-500 hover:bg-orange-600" onClick={() => setOpen(true)}>
-                <Building2 className="mr-2 h-4 w-4" />
-                Claim this company
-            </Button>
+            <Tooltip disableHoverableContent={false}>
+                <TooltipTrigger>
+                    <Button
+                        disabled={!auth.user}
+                        size={'sm'}
+                        className="cursor-pointer bg-orange-500 hover:bg-orange-600"
+                        onClick={() => setOpen(true)}
+                    >
+                        <Building2 className="mr-2 h-4 w-4" />
+                        Claim this company
+                    </Button>
+                </TooltipTrigger>
+
+                <TooltipContent>
+                    {!auth.user ? (
+                        <p className="text-sm">You need to be logged in to claim this company.</p>
+                    ) : (
+                        <p className="text-sm">
+                            Claim this company to verify your association with it. This helps us ensure that the information is accurate and
+                            trustworthy.
+                        </p>
+                    )}
+                </TooltipContent>
+            </Tooltip>
+
             <ResponsiveModal open={open} onOpenChange={setOpen}>
                 <ResponsiveModalHeader>
                     <ResponsiveModalTitle>Claim this company</ResponsiveModalTitle>
