@@ -25,6 +25,8 @@ class CompanySubmission extends Model
         'founded_year',
         'status',
         'user_id',
+        'ceo',
+        'type',
     ];
 
     protected $casts = [

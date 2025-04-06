@@ -1,8 +1,10 @@
+import { CompanyClaimDialog } from '@/components/companies/company-claim-form';
 import { CompanyReviewCard } from '@/components/homepage/company-review-card';
 import JobCard from '@/components/jobs/job-card';
 import ReviewModal from '@/components/reviews/review-modal';
 import { SharePopup } from '@/components/share-popup';
 import StarRating from '@/components/star-rating';
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
@@ -75,7 +77,12 @@ export default function CompanyPage({ company }: { company: App.Data.Company.Com
                                     <div className="flex-1">
                                         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                                             <div>
-                                                <h1 className="text-2xl font-bold md:text-3xl">{company.name}</h1>
+                                                <div className="flex flex-row items-center gap-2">
+                                                    <h1 className="text-2xl font-bold md:text-3xl">{company.name}</h1>
+                                                    <Badge variant={company.claimed ? 'default' : 'outline'} className="mt-2">
+                                                        {company.claimed ? 'Verified' : 'Unverified'}
+                                                    </Badge>
+                                                </div>
                                                 <div className="mt-1 flex items-center">
                                                     <div className="flex">
                                                         <StarRating rating={company.rating} readOnly />
@@ -98,6 +105,7 @@ export default function CompanyPage({ company }: { company: App.Data.Company.Com
                                                     <Heart className="mr-2 h-4 w-4" />
                                                     Follow
                                                 </Button>
+                                                {!company.claimed ? <CompanyClaimDialog company={company} /> : null}
                                             </div>
                                         </div>
 
@@ -122,13 +130,15 @@ export default function CompanyPage({ company }: { company: App.Data.Company.Com
                                                 <Briefcase className="mr-2 h-4 w-4" />
                                                 See All Jobs {company.jobs_count}
                                             </Button>
-                                            <a href={company.website} target="_blank" rel="noopener noreferrer">
-                                                <Button variant="outline" className="cursor-pointer">
-                                                    <Globe className="mr-2 h-4 w-4" />
-                                                    Visit Website
-                                                    <ExternalLink className="ml-1 h-3 w-3" />
-                                                </Button>
-                                            </a>
+                                            {company.website ? (
+                                                <a href={company.website} target="_blank" rel="noopener noreferrer">
+                                                    <Button variant="outline" className="cursor-pointer">
+                                                        <Globe className="mr-2 h-4 w-4" />
+                                                        Visit Website
+                                                        <ExternalLink className="ml-1 h-3 w-3" />
+                                                    </Button>
+                                                </a>
+                                            ) : null}
                                         </div>
                                     </div>
                                 </div>
@@ -196,17 +206,19 @@ export default function CompanyPage({ company }: { company: App.Data.Company.Com
                                                                 <span className="w-24 text-sm font-medium">CEO:</span>
                                                                 <span className="bg-text text-sm">{company.ceo}</span>
                                                             </div>
-                                                            <div className="flex items-start">
-                                                                <span className="w-24 text-sm font-medium">Website:</span>
-                                                                <a
-                                                                    href={company.website}
-                                                                    target="_blank"
-                                                                    rel="noopener noreferrer"
-                                                                    className="text-sm text-orange-600 hover:underline"
-                                                                >
-                                                                    Link
-                                                                </a>
-                                                            </div>
+                                                            {company.website ? (
+                                                                <div className="flex items-start">
+                                                                    <span className="w-24 text-sm font-medium">Website:</span>
+                                                                    <a
+                                                                        href={company.website}
+                                                                        target="_blank"
+                                                                        rel="noopener noreferrer"
+                                                                        className="text-sm text-orange-600 hover:underline"
+                                                                    >
+                                                                        Link
+                                                                    </a>
+                                                                </div>
+                                                            ) : null}
                                                         </div>
                                                     </div>
                                                 </div>

@@ -5,10 +5,14 @@ namespace App\Http\Controllers;
 use App\Data\Companies\CompanyData;
 use App\Data\Company\CompanyData as CompanyPageData;
 use App\Http\Requests\Company\StoreCompanyReviewRequest;
+use App\Http\Requests\Company\StoreCompanySubmissionRequest;
 use App\Http\Requests\CompanyIndexRequest;
 use App\Models\Company;
+use App\Models\CompanyClaimSubmission;
+use App\Models\CompanySubmission;
 use App\Models\Review;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedSort;
@@ -99,6 +103,23 @@ class CompanyController extends Controller
         ]);
     }
 
+    public function submitClaim(Request $request, Company $company)
+    {
+        $request->validate([
+            'job_title' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'verification_details' => 'required|string|max:1000',
+        ]);
+
+        CompanyClaimSubmission::create([
+            'job_title' => $request->input('job_title'),
+            'email' => $request->input('email'),
+            'verification_details' => $request->input('verification_details'),
+            'company_id' => $company->id,
+            'user_id' => $request->user()->id,
+        ]);
+    }
+
     public function storeReview(StoreCompanyReviewRequest $request, Company $company)
     {
         $review = Review::where('company_id', $company->id)
@@ -107,8 +128,8 @@ class CompanyController extends Controller
 
         if ($review) {
             return redirect()
-                ->route('companies.show', ['slug' => $company->slug])
-                ->with('error', 'You have already submitted a review for this company.');
+                ->back()
+                ->withErrors('You have already submitted a review for this company.');
         }
 
         Review::create([
@@ -130,7 +151,25 @@ class CompanyController extends Controller
         ]);
 
         return redirect()
-            ->route('companies.show', ['slug' => $company->slug])
+            ->back()
             ->with('success', 'Review submitted successfully.');
+    }
+
+    public function submit(StoreCompanySubmissionRequest $request)
+    {
+        CompanySubmission::create([
+            'user_id' => auth()->id(),
+            'name' => $request->input('name'),
+            'industry' => $request->input('industry'),
+            'description' => $request->input('description'),
+            'employee_count' => $request->input('employee_count'),
+            'founded_year' => $request->input('founded_year'),
+            'ceo' => $request->input('ceo'),
+            'type' => $request->input('type'),
+        ]);
+
+        return redirect()
+            ->route('companies')
+            ->with('success', 'Company submission received successfully.');
     }
 }

@@ -10,6 +10,13 @@ declare module 'ziggy-js' {
             "required": true
         }
     ],
+    "companies.submitClaim": [
+        {
+            "name": "company",
+            "required": true,
+            "binding": "slug"
+        }
+    ],
     "companies.reviews.store": [
         {
             "name": "company",
@@ -17,6 +24,7 @@ declare module 'ziggy-js' {
             "binding": "slug"
         }
     ],
+    "companies.submit": [],
     "jobs": [],
     "jobs.apply": [
         {
@@ -72,6 +80,21 @@ declare module 'ziggy-js' {
     "admin.submission.update": [
         {
             "name": "submission",
+            "required": true,
+            "binding": "id"
+        }
+    ],
+    "admin.claims": [],
+    "admin.claim": [
+        {
+            "name": "claim",
+            "required": true,
+            "binding": "id"
+        }
+    ],
+    "admin.claim.update": [
+        {
+            "name": "claim",
             "required": true,
             "binding": "id"
         }

@@ -14,9 +14,17 @@ Route::get('/companies', [CompanyController::class, 'index'])
 Route::get('/companies/{slug}', [CompanyController::class, 'show'])
     ->name('companies.show');
 
+Route::post('companies/{company}/claim', [CompanyController::class, 'submitClaim'])
+    ->name('companies.submitClaim')
+    ->middleware('auth');
+
 Route::post('/companies/{company}/reviews', [CompanyController::class, 'storeReview'])
     ->middleware('auth')
     ->name('companies.reviews.store');
+
+Route::post('/companies/submit', [CompanyController::class, 'submit'])
+    ->middleware('auth')
+    ->name('companies.submit');
 
 Route::get('/jobs', [JobController::class, 'index'])
     ->name('jobs');

@@ -46,7 +46,8 @@ class CompanyData extends Data
         public array $benefits,
         public CompanyType $type,
         public int $jobs_count,
-        public string $website,
+        public ?string $website,
+        public bool $claimed,
     ) {
         $this->logo = $logo;
         $this->header = $header;
