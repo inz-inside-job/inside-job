@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Data;
+namespace App\Data\CompanySubmission;
 
 use Spatie\LaravelData\Data;
 
