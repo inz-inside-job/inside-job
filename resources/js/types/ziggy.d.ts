@@ -17,6 +17,7 @@ declare module 'ziggy-js' {
             "binding": "slug"
         }
     ],
+    "companies.submit": [],
     "jobs": [],
     "search": [],
     "profile.edit": [],

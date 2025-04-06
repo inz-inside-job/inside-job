@@ -1,35 +1,17 @@
 import type React from 'react';
 
 import { Button } from '@/components/ui/button';
-import clsx from 'clsx';
 import { useForm } from 'laravel-precognition-react-inertia';
 import { ArrowLeft, ArrowRight, Star } from 'lucide-react';
 import { useState } from 'react';
 import { toast } from 'sonner';
+import ProgressSteps from '../progress-steps';
 import { ResponsiveModal, ResponsiveModalDescription, ResponsiveModalHeader, ResponsiveModalTitle } from '../responsive-modal';
 import PositionStep from './steps/position';
 import ProsConsStep from './steps/pros-cons';
 import RateAndReviewStep from './steps/rate-review';
 import RecommendStep from './steps/recommend';
 import ReviewStep from './steps/review';
-
-// Progress Steps Component
-function ProgressSteps({ currentStep, totalSteps }: { currentStep: number; totalSteps: number }) {
-    return (
-        <div className="mb-6 flex items-center justify-center space-x-2">
-            {Array.from({ length: totalSteps }).map((_, index) => (
-                <div
-                    key={index}
-                    className={clsx('h-2 rounded-full transition-all', {
-                        'bg-primary w-8': index < currentStep,
-                        'bg-primary w-12': index === currentStep,
-                        'w-8 bg-gray-200': index > currentStep,
-                    })}
-                ></div>
-            ))}
-        </div>
-    );
-}
 
 export type ReviewFormInterface = {
     pros: string[];

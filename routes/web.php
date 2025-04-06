@@ -18,6 +18,10 @@ Route::post('/companies/{company}/reviews', [CompanyController::class, 'storeRev
     ->middleware('auth')
     ->name('companies.reviews.store');
 
+Route::post('/companies/submit', [CompanyController::class, 'submit'])
+    ->middleware('auth')
+    ->name('companies.submit');
+
 Route::get('/jobs', [JobController::class, 'index'])
     ->name('jobs');
 
