@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Company;
 use App\Models\CompanyClaimSubmission;
 use Illuminate\Database\Seeder;
 
@@ -18,7 +19,13 @@ class CompanyClaimSubmissionSeeder extends Seeder
         // Remove all existing companies
         CompanyClaimSubmission::query()->delete();
 
-        // Create 20 companies
-        CompanyClaimSubmission::factory(20)->create();
+        $companies = Company::all();
+
+        foreach ($companies as $company) {
+            // Create company claims for half of the companies
+            if ($company->id % 2 == 0) {
+                CompanyClaimSubmission::factory()->for($company)->create();
+            }
+        }
     }
 }

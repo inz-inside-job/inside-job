@@ -22,7 +22,7 @@ class DataSeeder extends Seeder
         Company::query()->delete();
 
         // Create 20 companies
-        $companies = Company::factory(20)->create();
+        $companies = Company::factory(30)->create();
 
         $logoPaths = glob(base_path('database/seeders/CompanyLogos').'/*.png');
         $headerPaths = glob(base_path('database/seeders/CompanyHeaders').'/*.jpg');
