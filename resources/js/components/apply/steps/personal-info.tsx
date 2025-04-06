@@ -5,13 +5,11 @@ import { JobFormInterface } from '../job-application-form';
 interface PersonalInfoStepProps {
     first_name: string;
     last_name: string;
-    email: string;
     phone: string;
     linkedin: string | null;
     portfolio: string | null;
     setFirstName: (firstName: string) => void;
     setLastName: (lastName: string) => void;
-    setEmail: (email: string) => void;
     setPhone: (phone: string) => void;
     setLinkedin: (linkedin: string | null) => void;
     setPortfolio: (porfolio: string | null) => void;
@@ -24,8 +22,6 @@ export default function PersonalInfoStep({
     setFirstName,
     last_name,
     setLastName,
-    email,
-    setEmail,
     phone,
     setPhone,
     linkedin,
@@ -65,21 +61,7 @@ export default function PersonalInfoStep({
             />
             {errors.last_name && <p className="text-sm text-red-500">{errors.last_name}</p>}
 
-            <Label htmlFor="last_name" className="text-base font-medium">
-                Email
-            </Label>
-            <Input
-                id="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Enter your email"
-                required
-                className="mt-1"
-                onBlur={() => validate('email')}
-            />
-            {errors.email && <p className="text-sm text-red-500">{errors.email}</p>}
-
-            <Label htmlFor="last_name" className="text-base font-medium">
+            <Label htmlFor="phone" className="text-base font-medium">
                 Phone number
             </Label>
             <Input
@@ -93,7 +75,7 @@ export default function PersonalInfoStep({
             />
             {errors.phone && <p className="text-sm text-red-500">{errors.phone}</p>}
 
-            <Label htmlFor="last_name" className="text-base font-medium">
+            <Label htmlFor="linkedin" className="text-base font-medium">
                 LinkedIn Profile (Optional)
             </Label>
             <Input
@@ -106,7 +88,7 @@ export default function PersonalInfoStep({
             />
             {errors.linkedin && <p className="text-sm text-red-500">{errors.linkedin}</p>}
 
-            <Label htmlFor="last_name" className="text-base font-medium">
+            <Label htmlFor="portfolio" className="text-base font-medium">
                 Portfolio/Website (Optional)
             </Label>
             <Input

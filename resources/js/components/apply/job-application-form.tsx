@@ -46,7 +46,6 @@ function ProgressSteps({ currentStep }: { currentStep: number }) {
 export type JobFormInterface = {
     first_name: string;
     last_name: string;
-    email: string;
     phone: string;
     linkedin: string | null;
     portfolio: string | null;
@@ -64,7 +63,6 @@ export default function JobApplicationForm({ jobSlug }: { jobSlug: string }) {
         {
             first_name: '',
             last_name: '',
-            email: '',
             phone: '',
             linkedin: null,
             portfolio: null,
@@ -93,10 +91,6 @@ export default function JobApplicationForm({ jobSlug }: { jobSlug: string }) {
             }
             if (data['last_name'] === '') {
                 setError('last_name', 'Last name is required.');
-                return;
-            }
-            if (data['email'] === '') {
-                setError('email', 'Email is required.');
                 return;
             }
             if (data['phone'] === '') {
@@ -138,8 +132,6 @@ export default function JobApplicationForm({ jobSlug }: { jobSlug: string }) {
                         setFirstName={(first_name: string) => setData('first_name', first_name)}
                         last_name={data['last_name']}
                         setLastName={(last_name: string) => setData('last_name', last_name)}
-                        email={data['email']}
-                        setEmail={(email: string) => setData('email', email)}
                         phone={data['phone']}
                         setPhone={(phone: string) => setData('phone', phone)}
                         linkedin={data['linkedin']}
