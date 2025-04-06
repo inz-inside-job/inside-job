@@ -1,5 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
+import { moneyToHuman } from '@/lib/utils';
 import { Building2, CheckCircle2, Clock, MapPin, Star } from 'lucide-react';
 
 export function JobApplicationSidebar({ job }: { job: App.Data.Jobs.JobData }) {
@@ -41,7 +42,7 @@ export function JobApplicationSidebar({ job }: { job: App.Data.Jobs.JobData }) {
                                 Posted {job.posted_date}
                             </div>
                             <div className="text-foreground-muted text-sm font-medium">
-                                Salary - {job.salary_min} - {job.salary_max}$
+                                Salary - {moneyToHuman(job.salary_min)} - {moneyToHuman(job.salary_max)}
                             </div>
                         </div>
 
@@ -124,10 +125,7 @@ export function JobApplicationSidebar({ job }: { job: App.Data.Jobs.JobData }) {
                         <Building2 className="bg-text mr-2 h-5 w-5" />
                         <span className="text-sm font-medium">Company Overview</span>
                     </div>
-                    <p className="text-foreground-muted mb-4 text-sm">
-                        {job.company.name} is a leading technology company focused on innovative solutions for enterprise clients. With a strong
-                        emphasis on employee development and work-life balance, we strive to create an inclusive and collaborative environment.
-                    </p>
+                    <p className="text-foreground-muted mb-4 text-sm">{job.company.description}</p>
                 </CardContent>
             </Card>
         </div>

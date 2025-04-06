@@ -13,6 +13,7 @@ class JobCompanyData extends Data
 
     public function __construct(
         public string $name,
+        public string $description,
         public string $slug,
         public float $rating,
         public int $reviews_count,
