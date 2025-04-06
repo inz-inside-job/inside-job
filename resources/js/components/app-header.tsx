@@ -56,20 +56,12 @@ export function AppHeader() {
                     )}
                 >
                     <nav className="mb-4 flex flex-col gap-4 lg:mb-0 lg:w-full lg:flex-row lg:items-center lg:gap-6">
-                        <Link
-                            onClick={() => setIsMenuOpen(false)}
-                            href={route('jobs')}
-                            className="text-sm font-medium transition-colors hover:text-emerald-600"
-                        >
+                        <Link onClick={() => setIsMenuOpen(false)} href={route('jobs')} className="text-sm font-medium transition-colors">
                             <Button className="w-full cursor-pointer" variant="ghost">
                                 Jobs
                             </Button>
                         </Link>
-                        <Link
-                            onClick={() => setIsMenuOpen(false)}
-                            href={route('companies')}
-                            className="text-sm font-medium transition-colors hover:text-emerald-600"
-                        >
+                        <Link onClick={() => setIsMenuOpen(false)} href={route('companies')} className="text-sm font-medium transition-colors">
                             <Button className="w-full cursor-pointer" variant="ghost">
                                 Companies
                             </Button>
