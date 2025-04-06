@@ -46,6 +46,11 @@ class Job extends Model
             });
     }
 
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
+
     public function company(): BelongsTo
     {
         return $this->belongsTo(Company::class);

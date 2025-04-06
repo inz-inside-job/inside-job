@@ -99,7 +99,7 @@ export default function JobCard({
                 <div className="border-gray-light flex items-center justify-between border-t pt-4">
                     <div className="text-gray-dark/70 text-sm">Be an early applicant</div>
                     <div className="flex gap-3">
-                        <Link href={`/jobs/${job.id}/apply`}>
+                        <Link href={route('jobs.apply', { slug: job.slug })}>
                             <Button className="cursor-pointer bg-orange-500 hover:bg-orange-600">Easy Apply</Button>
                         </Link>
                     </div>

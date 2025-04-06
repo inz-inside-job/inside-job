@@ -26,7 +26,20 @@ declare module 'ziggy-js' {
     ],
     "companies.submit": [],
     "jobs": [],
+    "jobs.apply": [
+        {
+            "name": "slug",
+            "required": true
+        }
+    ],
     "search": [],
+    "jobs.apply.store": [
+        {
+            "name": "job",
+            "required": true,
+            "binding": "slug"
+        }
+    ],
     "profile.edit": [],
     "profile.update": [],
     "profile.destroy": [],

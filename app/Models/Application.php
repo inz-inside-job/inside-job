@@ -21,6 +21,13 @@ class Application extends Pivot
         'user_id',
         'status',
         'applied_date',
+        'first_name',
+        'last_name',
+        'phone',
+        'linkedin',
+        'portfolio',
+        'resume',
+        'cover_letter',
     ];
 
     protected $casts = [

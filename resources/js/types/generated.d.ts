@@ -150,6 +150,7 @@ declare namespace App.Data.Jobs {
 export type JobCompanyData = {
 logo: string | null;
 name: string;
+description: string;
 slug: string;
 rating: number;
 reviews_count: number;

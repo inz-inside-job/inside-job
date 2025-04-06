@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Data\Jobs\JobData;
+use App\Enums\ApplicationStatus;
+use App\Http\Requests\Job\StoreJobApplicationRequest;
 use App\Http\Requests\JobIndexRequest;
+use App\Models\Application;
 use App\Models\Job;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
@@ -78,5 +81,50 @@ class JobController extends Controller
     public function show(Job $job)
     {
         return $job;
+    }
+
+    public function apply(string $slug)
+    {
+        $job = Job::whereSlug($slug)->with([
+            'company' => function (BelongsTo $query) {
+                $query->withRating()->withCount('reviews');
+            }])->firstOrFail();
+
+        return Inertia::render('apply', [
+            'job' => JobData::from($job),
+        ]);
+    }
+
+    public function storeApplication(StoreJobApplicationRequest $request, Job $job)
+    {
+        $application = Application::where('job_id', $job->id)
+            ->where('user_id', auth()->id())
+            ->first();
+
+        if ($application) {
+            return redirect()->back()->withErrors('You have already applied for this job.');
+        }
+
+        $resume_path = $request->file('resume')->storeAs('resumes', auth()->id().'_'.$request->file('resume')->getClientOriginalName(), 'local');
+
+        if (! $resume_path) {
+            return redirect()->back()->withErrors('Failed to upload resume.');
+        }
+        Application::create([
+            'job_id' => $job->id,
+            'user_id' => auth()->id(),
+            'status' => ApplicationStatus::APPLIED,
+            'applied_date' => now(),
+            'first_name' => $request->input('first_name'),
+            'last_name' => $request->input('last_name'),
+            'phone' => $request->input('phone'),
+            'linkedin' => $request->input('linkedin'),
+            'portfolio' => $request->input('portfolio'),
+            'resume' => $resume_path,
+            'cover_letter' => $request->input('cover_letter'),
+        ]);
+
+        return redirect()->route('jobs');
+
     }
 }

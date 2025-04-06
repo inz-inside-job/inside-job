@@ -29,7 +29,15 @@ Route::post('/companies/submit', [CompanyController::class, 'submit'])
 Route::get('/jobs', [JobController::class, 'index'])
     ->name('jobs');
 
+Route::get('/jobs/{slug}/apply', [JobController::class, 'apply'])
+    ->middleware('auth')
+    ->name('jobs.apply');
+
 Route::get('/search', [GlobalSearchController::class, 'search'])->name('search');
+
+Route::post('/jobs/{job}/apply', [JobController::class, 'storeApplication'])
+    ->middleware('auth')
+    ->name('jobs.apply.store');
 
 Route::impersonate();
 
