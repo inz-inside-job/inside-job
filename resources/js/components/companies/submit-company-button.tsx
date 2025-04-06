@@ -10,7 +10,7 @@ import CompanyTypeStep from './steps/company-type';
 import CompanyDetailsStep from './steps/details';
 import ReviewInformationStep from './steps/review-information';
 
-type CompanyType = 'public' | 'private' | 'non-profit';
+type CompanyType = 'Public' | 'Private' | 'Non-profit';
 
 export type SubmitCompanyInterface = {
     name: string;
@@ -34,7 +34,7 @@ export default function SubmitCompanyButton() {
         employee_count: 0,
         founded_year: new Date(),
         ceo: '',
-        type: 'public',
+        type: 'Public',
     });
 
     // Step titles
