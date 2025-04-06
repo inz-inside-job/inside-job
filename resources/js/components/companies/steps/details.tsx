@@ -51,7 +51,7 @@ export default function CompanyDetailsStep({ data, setData, errors }: DetailsSte
                 <Label htmlFor="foundedYear" className="text-base font-medium">
                     Founded Year
                 </Label>
-                <Popover>
+                <Popover modal>
                     <PopoverTrigger asChild>
                         <Button
                             variant={'outline'}
@@ -61,7 +61,7 @@ export default function CompanyDetailsStep({ data, setData, errors }: DetailsSte
                             {data['founded_year'] ? format(data['founded_year'], 'PPP') : <span>Pick a date</span>}
                         </Button>
                     </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0" align="start">
+                    <PopoverContent side="top" className="w-auto p-0" align="start">
                         <Calendar mode="single" selected={data['founded_year']} onSelect={(e) => setData('founded_year', e as Date)} initialFocus />
                     </PopoverContent>
                 </Popover>

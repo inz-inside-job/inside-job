@@ -130,13 +130,15 @@ export default function CompanyPage({ company }: { company: App.Data.Company.Com
                                                 <Briefcase className="mr-2 h-4 w-4" />
                                                 See All Jobs {company.jobs_count}
                                             </Button>
-                                            <a href={company.website} target="_blank" rel="noopener noreferrer">
-                                                <Button variant="outline" className="cursor-pointer">
-                                                    <Globe className="mr-2 h-4 w-4" />
-                                                    Visit Website
-                                                    <ExternalLink className="ml-1 h-3 w-3" />
-                                                </Button>
-                                            </a>
+                                            {company.website ? (
+                                                <a href={company.website} target="_blank" rel="noopener noreferrer">
+                                                    <Button variant="outline" className="cursor-pointer">
+                                                        <Globe className="mr-2 h-4 w-4" />
+                                                        Visit Website
+                                                        <ExternalLink className="ml-1 h-3 w-3" />
+                                                    </Button>
+                                                </a>
+                                            ) : null}
                                         </div>
                                     </div>
                                 </div>
@@ -204,17 +206,19 @@ export default function CompanyPage({ company }: { company: App.Data.Company.Com
                                                                 <span className="w-24 text-sm font-medium">CEO:</span>
                                                                 <span className="bg-text text-sm">{company.ceo}</span>
                                                             </div>
-                                                            <div className="flex items-start">
-                                                                <span className="w-24 text-sm font-medium">Website:</span>
-                                                                <a
-                                                                    href={company.website}
-                                                                    target="_blank"
-                                                                    rel="noopener noreferrer"
-                                                                    className="text-sm text-orange-600 hover:underline"
-                                                                >
-                                                                    Link
-                                                                </a>
-                                                            </div>
+                                                            {company.website ? (
+                                                                <div className="flex items-start">
+                                                                    <span className="w-24 text-sm font-medium">Website:</span>
+                                                                    <a
+                                                                        href={company.website}
+                                                                        target="_blank"
+                                                                        rel="noopener noreferrer"
+                                                                        className="text-sm text-orange-600 hover:underline"
+                                                                    >
+                                                                        Link
+                                                                    </a>
+                                                                </div>
+                                                            ) : null}
                                                         </div>
                                                     </div>
                                                 </div>
