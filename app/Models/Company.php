@@ -149,14 +149,14 @@ class Company extends Model
         ]);
     }
 
-    //    public function users(): BelongsToMany
-    //    {
-    //        return $this->belongsToMany(User::class, 'user_company', 'company_id', 'user_id')
-    //            ->as('users')
-    //            ->withTimestamps()
-    //            ->withPivot('id')
-    //            ->using(CompanyUser::class);
-    //    }
+    public function users(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'user_company', 'company_id', 'user_id')
+            ->as('users')
+            ->withTimestamps()
+            ->withPivot('id')
+            ->using(CompanyUser::class);
+    }
 
     public function getApproveOfCeoAttribute(): ?float
     {

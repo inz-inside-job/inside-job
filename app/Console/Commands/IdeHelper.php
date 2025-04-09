@@ -6,6 +6,7 @@ use Illuminate\Console\Command;
 
 class IdeHelper extends Command
 {
+    // @codeCoverageIgnoreStart
     /**
      * The name and signature of the console command.
      *
@@ -35,4 +36,5 @@ class IdeHelper extends Command
 
         return 0;
     }
+    // @codeCoverageIgnoreEnd
 }

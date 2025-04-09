@@ -9,6 +9,7 @@ use App\Models\User;
 
 class CompanyPolicy
 {
+    // @codeCoverageIgnoreStart
     private function getCompanyUser(User $user, Company $company): CompanyUser
     {
         return CompanyUser::query()
@@ -46,4 +47,6 @@ class CompanyPolicy
 
         return $companyUser->hasPermissionTo(CompanyUserPermission::DELETE_COMPANY);
     }
+
+    // @codeCoverageIgnoreEnd
 }

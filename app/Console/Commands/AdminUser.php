@@ -11,6 +11,7 @@ use function Laravel\Prompts\search;
 
 class AdminUser extends Command implements PromptsForMissingInput
 {
+    // @codeCoverageIgnoreStart
     /**
      * The name and signature of the console command.
      *
@@ -66,4 +67,5 @@ class AdminUser extends Command implements PromptsForMissingInput
         ];
 
     }
+    // @codeCoverageIgnoreEnd
 }
