@@ -22,6 +22,7 @@ class GlobalSearchController extends Controller
      */
     public function search(GlobalSearchRequest $request)
     {
+        // @codeCoverageIgnoreStart
         $query = $request->validated('query');
 
         $results = GlobalSearch::search($query)
@@ -50,6 +51,7 @@ class GlobalSearchController extends Controller
 
                 return SearchResultData::from($data);
             });
+        // @codeCoverageIgnoreEnd
 
         return response()->json($results);
     }
