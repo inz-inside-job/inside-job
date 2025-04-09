@@ -10,14 +10,14 @@ use App\Search\GlobalSearch;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class GlobalSearchController extends Controller
 {
     /**
      * Handle the global search request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function search(GlobalSearchRequest $request)
     {
