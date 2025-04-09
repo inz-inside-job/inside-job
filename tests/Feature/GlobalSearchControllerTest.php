@@ -51,3 +51,38 @@ it('handles global search requests', function () {
 
     $response->assertStatus(200);
 });
+
+it('returns an empty array when no results are found', function () {
+    $response = $this->get('/search?query=NonExistent');
+
+    $response->assertStatus(200);
+    $response->assertExactJson([]);
+});
+
+it('throws an exception for unknown model types', function () {
+    $user = \App\Models\User::factory()->create();
+
+    // Mock the GlobalSearch class at a low level to avoid any database operations
+    $this->mock(GlobalSearch::class, function (MockInterface $mock) use ($user) {
+        $mock->shouldReceive('search')
+            ->andReturn($mock);
+
+        $mock->shouldReceive('query')
+            ->andReturn($mock);
+
+        $mock->shouldReceive('get')
+            ->andReturn(new Collection([$user]));
+    });
+
+    // Mock the GlobalSearchRequest to avoid validation issues
+    $this->mock(GlobalSearchRequest::class, function (MockInterface $mock) {
+        $mock->shouldReceive('validated')
+            ->with('query')
+            ->andReturn('Test');
+    });
+
+    $this->expectException(Exception::class);
+    $this->expectExceptionMessage('Unknown model type');
+
+    $this->get('/search?query=Test');
+});

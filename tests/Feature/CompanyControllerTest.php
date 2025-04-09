@@ -1,7 +1,9 @@
 <?php
 
+use App\Data\Company\CompanyJobData;
 use App\Enums\CompanyType;
 use App\Models\Company;
+use App\Models\Job;
 use App\Models\Review;
 use App\Models\User;
 use Carbon\Carbon;
@@ -210,4 +212,12 @@ describe('CompanyController submit method', function () {
         $response->assertSessionHas('success', 'Company submission received successfully.');
         $this->assertDatabaseHas('company_submissions', ['name' => 'New Test Company', 'user_id' => $user->id]);
     });
+});
+
+it('Test CompanyJobData data', function () {
+    $job = Job::factory()->create();
+
+    CompanyJobData::from($job);
+
+    $this->assertTrue(true);
 });

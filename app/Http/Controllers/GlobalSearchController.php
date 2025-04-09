@@ -7,6 +7,7 @@ use App\Http\Requests\GlobalSearchRequest;
 use App\Models\Company;
 use App\Models\Job;
 use App\Search\GlobalSearch;
+use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
@@ -44,7 +45,7 @@ class GlobalSearchController extends Controller
                     $data['id'] = "job-{$result->id}";
                 } else {
                     // Unreachable
-                    throw new \Exception('Unknown model type');
+                    throw new Exception('Unknown model type');
                 }
 
                 return SearchResultData::from($data);

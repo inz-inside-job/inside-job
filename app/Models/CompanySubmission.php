@@ -37,4 +37,9 @@ class CompanySubmission extends Model
         return $this->belongsTo(User::class);
     }
     // @codeCoverageIgnoreEnd
+
+    public function company(): BelongsTo
+    {
+        return $this->belongsTo(Company::class);
+    }
 }
