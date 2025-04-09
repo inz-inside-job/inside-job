@@ -30,6 +30,7 @@ class Company extends Model
         'description',
         'ceo',
         'type',
+        'logo',
     ];
 
     protected function casts(): array
@@ -50,27 +51,18 @@ class Company extends Model
             ->saveSlugsTo('slug');
     }
 
-    public function followers(): BelongsToMany
-    {
-        return $this->belongsToMany(User::class, 'companies_followed', 'company_id', 'user_id')
-            ->as('followers')
-            ->withTimestamps()
-            ->withPivot('id', 'followed_date')
-            ->using(CompanyFollowed::class);
-    }
+    //    public function followers(): BelongsToMany
+    //    {
+    //        return $this->belongsToMany(User::class, 'companies_followed', 'company_id', 'user_id')
+    //            ->as('followers')
+    //            ->withTimestamps()
+    //            ->withPivot('id', 'followed_date')
+    //            ->using(CompanyFollowed::class);
+    //    }
 
     public function jobs(): HasMany
     {
         return $this->hasMany(Job::class);
-    }
-
-    public function interviewExperiences(): BelongsToMany
-    {
-        return $this->belongsToMany(User::class, 'interview_experiences', 'company_id', 'user_id')
-            ->as('interview_experiences')
-            ->withTimestamps()
-            ->withPivot('id', 'job_title', 'difficulty_level', 'interview_questions', 'overall_experience', 'submitted_date')
-            ->using(InterviewExperience::class);
     }
 
     public function reviews(): HasMany
@@ -78,14 +70,14 @@ class Company extends Model
         return $this->hasMany(Review::class);
     }
 
-    public function reviewUsers(): BelongsToMany
-    {
-        return $this->belongsToMany(User::class, 'reviews', 'company_id', 'user_id')
-            ->as('reviews')
-            ->withTimestamps()
-            ->withPivot('id', 'rating', 'review', 'submitted_date')
-            ->using(Review::class);
-    }
+    //    public function reviewUsers(): BelongsToMany
+    //    {
+    //        return $this->belongsToMany(User::class, 'reviews', 'company_id', 'user_id')
+    //            ->as('reviews')
+    //            ->withTimestamps()
+    //            ->withPivot('id', 'rating', 'review', 'submitted_date')
+    //            ->using(Review::class);
+    //    }
 
     public function getRatingAttribute(): ?float
     {
@@ -95,7 +87,7 @@ class Company extends Model
         }
 
         // If not scoped, calculate
-        $average = $this->reviews->avg('reviews.rating');
+        $average = $this->reviews()->avg('reviews.rating');
 
         return $average !== null ? $average : 0;
     }
@@ -136,15 +128,6 @@ class Company extends Model
         ]);
     }
 
-    public function salaries(): BelongsToMany
-    {
-        return $this->belongsToMany(User::class, 'salaries', 'company_id', 'user_id')
-            ->as('salaries')
-            ->withTimestamps()
-            ->withPivot('id', 'job_title', 'salary_amount', 'location', 'submitted_date')
-            ->using(Salary::class);
-    }
-
     public function getAverageSalarayAttribute(): ?float
     {
         // If scoped with rating
@@ -153,7 +136,7 @@ class Company extends Model
         }
 
         // If not scoped, calculate
-        $average = $this->jobs()->avg('job.salary_min');
+        $average = $this->jobs()->avg('jobs.salary_min');
 
         return $average !== null ? $average : 0;
     }

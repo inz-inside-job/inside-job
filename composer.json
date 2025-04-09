@@ -40,7 +40,8 @@
         "pestphp/pest": "^3.7",
         "pestphp/pest-plugin-drift": "^3.0",
         "pestphp/pest-plugin-laravel": "^3.1",
-        "spatie/laravel-ignition": "^2.9"
+        "spatie/laravel-ignition": "^2.9",
+        "sti3bas/laravel-scout-array-driver": "*"
     },
     "autoload": {
         "psr-4": {

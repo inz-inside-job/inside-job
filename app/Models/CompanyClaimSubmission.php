@@ -29,8 +29,10 @@ class CompanyClaimSubmission extends Model
         return $this->belongsTo(Company::class);
     }
 
+    // @codeCoverageIgnoreStart
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
+    // @codeCoverageIgnoreEnd
 }

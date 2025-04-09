@@ -56,67 +56,49 @@ class User extends Authenticatable implements MustVerifyEmail
         ];
     }
 
-    public function canImpersonate(): bool
-    {
-        return $this->hasRole(UserRole::ADMIN);
-    }
+    //    public function canImpersonate(): bool
+    //    {
+    //        return $this->hasRole(UserRole::ADMIN);
+    //    }
 
-    public function companySubmittions(): HasMany
-    {
-        return $this->hasMany(CompanySubmission::class);
-    }
+    //    public function companySubmittions(): HasMany
+    //    {
+    //        return $this->hasMany(CompanySubmission::class);
+    //    }
 
-    public function companiesFollowed(): BelongsToMany
-    {
-        return $this->belongsToMany(Company::class, 'companies_followed', 'user_id', 'company_id')
-            ->as('companies_followed')
-            ->withTimestamps()
-            ->withPivot('id', 'followed_date')
-            ->using(CompanyFollowed::class);
-    }
+    //    public function companiesFollowed(): BelongsToMany
+    //    {
+    //        return $this->belongsToMany(Company::class, 'companies_followed', 'user_id', 'company_id')
+    //            ->as('companies_followed')
+    //            ->withTimestamps()
+    //            ->withPivot('id', 'followed_date')
+    //            ->using(CompanyFollowed::class);
+    //    }
 
-    public function applications(): BelongsToMany
-    {
-        return $this->belongsToMany(Job::class, 'applications', 'user_id', 'job_id')
-            ->as('applications')
-            ->withTimestamps()
-            ->withPivot('id', 'status', 'applied_date')
-            ->using(Application::class);
-    }
-
-    public function interviewExperiences(): BelongsToMany
-    {
-        return $this->belongsToMany(Company::class, 'interview_experiences', 'user_id', 'company_id')
-            ->as('interview_experiences')
-            ->withTimestamps()
-            ->withPivot('id', 'job_title', 'difficulty_level', 'interview_questions', 'overall_experience', 'submitted_date')
-            ->using(InterviewExperience::class);
-    }
-
-    public function reviews(): BelongsToMany
-    {
-        return $this->belongsToMany(Company::class, 'reviews', 'user_id', 'company_id')
-            ->as('reviews')
-            ->withTimestamps()
-            ->withPivot('id', 'rating', 'review', 'submitted_date')
-            ->using(Review::class);
-    }
-
-    public function salaries(): BelongsToMany
-    {
-        return $this->belongsToMany(Company::class, 'salaries', 'user_id', 'company_id')
-            ->as('salaries')
-            ->withTimestamps()
-            ->withPivot('id', 'job_title', 'salary_amount', 'location', 'submitted_date')
-            ->using(Salary::class);
-    }
-
-    public function companies(): BelongsToMany
-    {
-        return $this->belongsToMany(Company::class, 'user_company', 'user_id', 'company_id')
-            ->as('companies')
-            ->withTimestamps()
-            ->withPivot('id')
-            ->using(CompanyUser::class);
-    }
+    //    public function applications(): BelongsToMany
+    //    {
+    //        return $this->belongsToMany(Job::class, 'applications', 'user_id', 'job_id')
+    //            ->as('applications')
+    //            ->withTimestamps()
+    //            ->withPivot('id', 'status', 'applied_date')
+    //            ->using(Application::class);
+    //    }
+    //
+    //    public function reviews(): BelongsToMany
+    //    {
+    //        return $this->belongsToMany(Company::class, 'reviews', 'user_id', 'company_id')
+    //            ->as('reviews')
+    //            ->withTimestamps()
+    //            ->withPivot('id', 'rating', 'review', 'submitted_date')
+    //            ->using(Review::class);
+    //    }
+    //
+    //    public function companies(): BelongsToMany
+    //    {
+    //        return $this->belongsToMany(Company::class, 'user_company', 'user_id', 'company_id')
+    //            ->as('companies')
+    //            ->withTimestamps()
+    //            ->withPivot('id')
+    //            ->using(CompanyUser::class);
+    //    }
 }

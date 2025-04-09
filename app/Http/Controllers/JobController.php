@@ -78,11 +78,6 @@ class JobController extends Controller
         ]);
     }
 
-    public function show(Job $job)
-    {
-        return $job;
-    }
-
     public function apply(string $slug)
     {
         $job = Job::whereSlug($slug)->with([
@@ -110,6 +105,7 @@ class JobController extends Controller
         if (! $resume_path) {
             return redirect()->back()->withErrors('Failed to upload resume.');
         }
+
         Application::create([
             'job_id' => $job->id,
             'user_id' => auth()->id(),
