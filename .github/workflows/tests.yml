@@ -13,7 +13,7 @@ jobs:
 
     services:
       database:
-        image: docker.io/library/mariadb:latest
+        image: docker.io/library/mariadb:10.6
         env:
           MYSQL_ALLOW_EMPTY_PASSWORD: yes
           MYSQL_DATABASE: testing
