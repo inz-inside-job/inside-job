@@ -41,3 +41,20 @@ test('users can logout', function () {
     $this->assertGuest();
     $response->assertRedirect('/');
 });
+
+test('users cannot login with missing credentials', function () {
+    $response = $this->post('/auth/login', []);
+
+    $response->assertSessionHasErrors(['email', 'password']);
+    $this->assertGuest();
+});
+
+test('users cannot login with invalid email format', function () {
+    $response = $this->post('/auth/login', [
+        'email' => 'invalid-email',
+        'password' => 'password',
+    ]);
+
+    $response->assertSessionHasErrors(['email']);
+    $this->assertGuest();
+});

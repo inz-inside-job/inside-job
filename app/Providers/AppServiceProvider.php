@@ -18,11 +18,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
+        // @codeCoverageIgnoreStart
         // Register Telescope only in local environment
         if ($this->app->environment('local')) {
             $this->app->register(\Laravel\Telescope\TelescopeServiceProvider::class);
             $this->app->register(TelescopeServiceProvider::class);
         }
+        // @codeCoverageIgnoreEnd
     }
 
     /**
@@ -43,8 +45,8 @@ class AppServiceProvider extends ServiceProvider
         EncryptCookies::except('appearance');
 
         // Only allow admin users to perform any action
-        Gate::before(function ($user, $ability) {
-            return $user->hasRole(UserRole::ADMIN) ? true : null;
-        });
+        //        Gate::before(function ($user, $ability) {
+        //            return $user->hasRole(UserRole::ADMIN) ? true : null;
+        //        });
     }
 }

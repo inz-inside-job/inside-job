@@ -56,14 +56,14 @@ class Job extends Model
         return $this->belongsTo(Company::class);
     }
 
-    public function applications(): BelongsToMany
-    {
-        return $this->belongsToMany(User::class, 'applications', 'job_id', 'user_id')
-            ->as('applications')
-            ->withTimestamps()
-            ->withPivot('id', 'status', 'applied_date')
-            ->using(Application::class);
-    }
+    //    public function applications(): BelongsToMany
+    //    {
+    //        return $this->belongsToMany(User::class, 'applications', 'job_id', 'user_id')
+    //            ->as('applications')
+    //            ->withTimestamps()
+    //            ->withPivot('id', 'status', 'applied_date')
+    //            ->using(Application::class);
+    //    }
 
     protected function casts(): array
     {

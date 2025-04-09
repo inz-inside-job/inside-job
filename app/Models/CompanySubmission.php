@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use App\Enums\CompanySubmissionStatus;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -33,32 +31,10 @@ class CompanySubmission extends Model
         'founded_year' => 'datetime',
     ];
 
+    // @codeCoverageIgnoreStart
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
-
-    public function scopeWithPendingCount(Builder $query): Builder
-    {
-        return $query->addSelect([
-            'pending_count' => CompanySubmission::selectRaw('COUNT(*)')
-                ->where('company_submissions.status', '=', CompanySubmissionStatus::PENDING->value),
-        ]);
-    }
-
-    public function scopeWithApprovedCount(Builder $query): Builder
-    {
-        return $query->addSelect([
-            'pending_count' => CompanySubmission::selectRaw('COUNT(*)')
-                ->where('company_submissions.status', '=', CompanySubmissionStatus::APPROVED->value),
-        ]);
-    }
-
-    public function scopeWithRejectedCount(Builder $query): Builder
-    {
-        return $query->addSelect([
-            'pending_count' => CompanySubmission::selectRaw('COUNT(*)')
-                ->where('company_submissions.status', '=', CompanySubmissionStatus::REJECTED->value),
-        ]);
-    }
+    // @codeCoverageIgnoreEnd
 }

@@ -46,3 +46,9 @@ test('email is not verified with invalid hash', function () {
 
     expect($user->fresh()->hasVerifiedEmail())->toBeFalse();
 });
+
+test('guest cannot access email verification screen', function () {
+    $response = $this->get('/auth/verify-email');
+
+    $response->assertRedirect('/auth/login');
+});

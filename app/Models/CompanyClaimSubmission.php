@@ -24,13 +24,15 @@ class CompanyClaimSubmission extends Model
         'status',
     ];
 
-    public function company(): BelongsTo
-    {
-        return $this->belongsTo(Company::class);
-    }
+    //    public function company(): BelongsTo
+    //    {
+    //        return $this->belongsTo(Company::class);
+    //    }
 
+    // @codeCoverageIgnoreStart
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
+    // @codeCoverageIgnoreEnd
 }

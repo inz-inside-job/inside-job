@@ -52,6 +52,19 @@ test('email verification status is unchanged when the email address is unchanged
     expect($user->refresh()->email_verified_at)->not->toBeNull();
 });
 
+test('profile cannot be updated with invalid email', function () {
+    $user = User::factory()->create();
+
+    $response = $this
+        ->actingAs($user)
+        ->patch('/settings/profile', [
+            'name' => 'Test User',
+            'email' => 'invalid-email',
+        ]);
+
+    $response->assertSessionHasErrors(['email']);
+});
+
 test('user can delete their account', function () {
     $user = User::factory()->create();
 
@@ -84,4 +97,14 @@ test('correct password must be provided to delete account', function () {
         ->assertRedirect('/settings/profile');
 
     expect($user->fresh())->not->toBeNull();
+});
+
+test('account cannot be deleted without password', function () {
+    $user = User::factory()->create();
+
+    $response = $this
+        ->actingAs($user)
+        ->delete('/settings/profile', []);
+
+    $response->assertSessionHasErrors(['password']);
 });
