@@ -89,6 +89,7 @@ class CompanyController extends Controller
             ->withAverageSalary()
             ->withRecommend()
             ->withApproveOfCeo()
+            ->withFollowed()
             ->withCount('reviews')
             ->withCount('jobs')
             ->with([
@@ -101,6 +102,32 @@ class CompanyController extends Controller
         return Inertia::render('company', [
             'company' => CompanyPageData::from($company),
         ]);
+    }
+
+    public function follow(Request $request, Company $company)
+    {
+        if ($company->followers()->where('user_id', $request->user()->id)->exists()) {
+            return redirect()
+                ->back()
+                ->withErrors('You are already following this company.');
+        }
+
+        $company->followers()->attach($request->user()->id);
+
+        return back();
+    }
+
+    public function unfollow(Request $request, Company $company)
+    {
+        if (! $company->followers()->where('user_id', $request->user()->id)->exists()) {
+            return redirect()
+                ->back()
+                ->withErrors('You are not following this company.');
+        }
+
+        $company->followers()->detach($request->user()->id);
+
+        return back();
     }
 
     public function submitClaim(Request $request, Company $company)

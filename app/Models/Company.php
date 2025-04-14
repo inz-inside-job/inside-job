@@ -51,14 +51,36 @@ class Company extends Model
             ->saveSlugsTo('slug');
     }
 
-    //    public function followers(): BelongsToMany
-    //    {
-    //        return $this->belongsToMany(User::class, 'companies_followed', 'company_id', 'user_id')
-    //            ->as('followers')
-    //            ->withTimestamps()
-    //            ->withPivot('id', 'followed_date')
-    //            ->using(CompanyFollowed::class);
-    //    }
+    public function followers(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'companies_followed', 'company_id', 'user_id')
+            ->as('followers')
+            ->withTimestamps()
+            ->withPivot('id', 'followed_date')
+            ->using(CompanyFollowed::class);
+    }
+
+    public function getFollowedAttribute(): ?float
+    {
+        // If scoped with followed
+        if (isset($this->attributes['followed']) && $this->attributes['followed'] !== null) {
+            return $this->attributes['followed'];
+        }
+
+        // If not scoped, check if the user is following the company
+        $followed = $this->followers()->where('user_id', auth()->id())->exists();
+
+        return $followed;
+    }
+
+    public function scopeWithFollowed(Builder $query): Builder
+    {
+        return $query->addSelect([
+            'followed' => CompanyFollowed::selectRaw('COALESCE(COUNT(*), 0)')
+                ->whereColumn('companies.id', 'companies_followed.company_id')
+                ->where('companies_followed.user_id', auth()->id()),
+        ]);
+    }
 
     public function jobs(): HasMany
     {

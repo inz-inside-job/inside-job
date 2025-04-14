@@ -24,6 +24,20 @@ declare module 'ziggy-js' {
             "binding": "slug"
         }
     ],
+    "companies.follow": [
+        {
+            "name": "company",
+            "required": true,
+            "binding": "slug"
+        }
+    ],
+    "companies.unfollow": [
+        {
+            "name": "company",
+            "required": true,
+            "binding": "slug"
+        }
+    ],
     "companies.submit": [],
     "jobs": [],
     "jobs.apply": [
@@ -32,7 +46,6 @@ declare module 'ziggy-js' {
             "required": true
         }
     ],
-    "search": [],
     "jobs.apply.store": [
         {
             "name": "job",
@@ -40,6 +53,7 @@ declare module 'ziggy-js' {
             "binding": "slug"
         }
     ],
+    "search": [],
     "profile.edit": [],
     "profile.update": [],
     "profile.destroy": [],
