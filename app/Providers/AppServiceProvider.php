@@ -39,6 +39,7 @@ class AppServiceProvider extends ServiceProvider
 
         // A few failsafes to prevent data loss and performance issues
         Model::shouldBeStrict(! $this->app->isProduction());
+        Model::automaticallyEagerLoadRelationships();
         DB::prohibitDestructiveCommands($this->app->isProduction());
 
         // Do not encrypt the appearance cookie
