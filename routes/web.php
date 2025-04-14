@@ -39,6 +39,9 @@ Route::post('/jobs/{job}/apply', [JobController::class, 'storeApplication'])
     ->middleware('auth')
     ->name('jobs.apply.store');
 
+Route::get('/jobs/{slug}', [JobController::class, 'show'])
+    ->name('jobs.show');
+
 Route::impersonate();
 
 require __DIR__.'/settings.php';

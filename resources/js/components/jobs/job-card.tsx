@@ -31,7 +31,7 @@ export default function JobCard({
                             <div>
                                 <h2 className="text-gray-dark text-xl font-semibold">
                                     {/* TODO: Use route link */}
-                                    <Link href={`/jobs/${job.slug}`} className="hover:underline">
+                                    <Link href={route('jobs.show', { slug: job.slug })} className="hover:underline">
                                         {job.title}
                                     </Link>
                                 </h2>

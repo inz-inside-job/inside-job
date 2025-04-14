@@ -123,4 +123,15 @@ class JobController extends Controller
         return redirect()->route('jobs');
 
     }
+
+    public function show(string $slug)
+    {
+        $job = Job::with([
+            'company' => fn (BelongsTo $query) => $query->withRating()->withCount('reviews'),
+        ])->firstOrFail();
+
+        return Inertia::render('job', [
+            'job' => JobData::from($job),
+        ]);
+    }
 }
