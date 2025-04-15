@@ -48,6 +48,7 @@ class CompanyData extends Data
         public int $jobs_count,
         public ?string $website,
         public bool $claimed,
+        public bool $followed
     ) {
         $this->logo = $logo;
         $this->header = $header;
