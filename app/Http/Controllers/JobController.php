@@ -120,15 +120,19 @@ class JobController extends Controller
             'cover_letter' => $request->input('cover_letter'),
         ]);
 
+        $job->increment('apply_count');
+
         return redirect()->route('jobs');
 
     }
 
     public function show(string $slug)
     {
-        $job = Job::with([
+        $job = Job::whereSlug($slug)->with([
             'company' => fn (BelongsTo $query) => $query->withRating()->withCount('reviews'),
         ])->firstOrFail();
+
+        $job->increment('visit_count');
 
         return Inertia::render('job', [
             'job' => JobData::from($job),

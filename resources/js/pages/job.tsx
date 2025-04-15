@@ -220,12 +220,12 @@ export default function JobPage({ job }: { job: App.Data.Jobs.JobData }) {
                                             <Separator />
                                             <div className="flex items-center justify-between">
                                                 <span className="text-sm text-gray-600">Applicants</span>
-                                                <span className="text-sm font-medium">APPLICANTS</span>
+                                                <span className="text-sm font-medium">{job.apply_count}</span>
                                             </div>
                                             <Separator />
                                             <div className="flex items-center justify-between">
                                                 <span className="text-sm text-gray-600">Views</span>
-                                                <span className="text-sm font-medium">VIEWS</span>
+                                                <span className="text-sm font-medium">{job.visit_count}</span>
                                             </div>
                                         </div>
 

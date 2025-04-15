@@ -31,6 +31,8 @@ class Job extends Model
         'salary_min',
         'salary_max',
         'description',
+        'visit_count',
+        'apply_count',
     ];
 
     /**

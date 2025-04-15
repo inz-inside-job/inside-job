@@ -175,6 +175,8 @@ salary_min: number;
 salary_max: number;
 description: string;
 requirements: Array<string>;
+visit_count: number;
+apply_count: number;
 };
 }
 declare namespace App.Data.Search {
