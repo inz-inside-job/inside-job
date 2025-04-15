@@ -12,7 +12,7 @@ export default function JobPage({ job }: { job: App.Data.Jobs.JobData }) {
     return (
         <>
             <SharePopup url={route('jobs.show', { slug: job.slug })} open={showSharePopup} onClose={() => setShowSharePopup(false)} />
-            <div className="min-h-screen bg-gray-50 py-8">
+            <div className="bg-background min-h-screen py-8">
                 <div className="container mx-auto px-4">
                     <div className="mx-auto max-w-5xl">
                         {/* Job Header */}
@@ -60,15 +60,15 @@ export default function JobPage({ job }: { job: App.Data.Jobs.JobData }) {
                                         </div>
 
                                         <div className="mt-4 flex flex-wrap gap-4">
-                                            <div className="flex items-center text-sm text-gray-600">
+                                            <div className="text-foreground flex items-center text-sm">
                                                 <MapPin className="mr-1 h-4 w-4 text-gray-400" />
                                                 {job.location}
                                             </div>
-                                            <div className="flex items-center text-sm text-gray-600">
+                                            <div className="text-foreground flex items-center text-sm">
                                                 <Briefcase className="mr-1 h-4 w-4 text-gray-400" />
                                                 {job.employment_type}
                                             </div>
-                                            <div className="flex items-center text-sm text-gray-600">
+                                            <div className="text-foreground flex items-center text-sm">
                                                 <Clock className="mr-1 h-4 w-4 text-gray-400" />
                                                 Posted {new Date(job.posted_date).toDateString()}
                                             </div>
@@ -113,14 +113,14 @@ export default function JobPage({ job }: { job: App.Data.Jobs.JobData }) {
                                             <TabsContent value="description" className="space-y-4">
                                                 <div>
                                                     <h2 className="mb-3 text-xl font-semibold">Job Description</h2>
-                                                    <p className="text-gray-700">{job.description}</p>
+                                                    <p className="text-foreground">{job.description}</p>
                                                 </div>
                                             </TabsContent>
 
                                             <TabsContent value="requirements" className="space-y-4">
                                                 <div>
                                                     <h2 className="mb-3 text-xl font-semibold">Requirements</h2>
-                                                    <ul className="list-disc space-y-1 pl-5 text-gray-700">
+                                                    <ul className="text-foreground list-disc space-y-1 pl-5">
                                                         {job.requirements.map((item, index) => (
                                                             <li key={index}>{item}</li>
                                                         ))}
@@ -166,38 +166,36 @@ export default function JobPage({ job }: { job: App.Data.Jobs.JobData }) {
                                             <div className="space-y-2">
                                                 <div className="flex items-start">
                                                     <span className="w-24 text-sm font-medium">Industry:</span>
-                                                    <span className="text-sm text-gray-600">{job.company.industry}</span>
+                                                    <span className="text-foreground text-sm">{job.company.industry}</span>
                                                 </div>
                                                 <div className="flex items-start">
                                                     <span className="w-24 text-sm font-medium">Size:</span>
-                                                    <span className="text-sm text-gray-600">{job.company.employee_count} employees</span>
+                                                    <span className="text-foreground text-sm">{job.company.employee_count} employees</span>
                                                 </div>
                                                 <div className="flex items-start">
                                                     <span className="w-24 text-sm font-medium">Founded:</span>
-                                                    <span className="text-sm text-gray-600">{job.company.founded_year}</span>
+                                                    <span className="text-foreground text-sm">
+                                                        {new Date(job.company.founded_year).getFullYear()}
+                                                    </span>
                                                 </div>
                                             </div>
                                             <div className="space-y-2">
                                                 <div className="flex items-start">
                                                     <span className="w-24 text-sm font-medium">Type:</span>
-                                                    <span className="text-sm text-gray-600">{job.company.type}</span>
+                                                    <span className="text-foreground text-sm">{job.company.type}</span>
                                                 </div>
                                                 <div className="flex items-start">
                                                     <span className="w-24 text-sm font-medium">CEO:</span>
-                                                    <span className="text-sm text-gray-600">{job.company.ceo}</span>
+                                                    <span className="text-foreground text-sm">{job.company.ceo}</span>
                                                 </div>
                                                 <div className="flex items-start">
                                                     <span className="w-24 text-sm font-medium">CEO Approval:</span>
-                                                    <span className="text-sm text-gray-600">100%</span>
+                                                    <span className="text-foreground text-sm">100%</span>
                                                 </div>
                                             </div>
                                         </div>
 
                                         <div className="flex items-center justify-between">
-                                            <p className="text-sm text-gray-600">
-                                                {job.company.name} is a leading technology company focused on innovative solutions for enterprise
-                                                clients.
-                                            </p>
                                             <Link href={route('companies.show', job.company.slug)}>
                                                 <Button variant="outline" size="sm" className="cursor-pointer">
                                                     View Company Profile
