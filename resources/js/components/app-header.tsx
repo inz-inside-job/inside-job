@@ -66,6 +66,11 @@ export function AppHeader() {
                                 Companies
                             </Button>
                         </Link>
+                        <Link onClick={() => setIsMenuOpen(false)} href={route('about')} className="text-sm font-medium transition-colors">
+                            <Button className="w-full cursor-pointer" variant="ghost">
+                                About Us
+                            </Button>
+                        </Link>
                     </nav>
 
                     <div className="flex flex-col gap-3 lg:ml-auto lg:flex-row lg:items-center lg:gap-4">
