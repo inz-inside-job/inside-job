@@ -154,6 +154,12 @@ description: string;
 slug: string;
 rating: number;
 reviews_count: number;
+industry: string;
+employee_count: number;
+founded_year: string;
+type: App.Enums.CompanyType;
+ceo: string;
+website: string | null;
 };
 export type JobData = {
 company: App.Data.Jobs.JobCompanyData;
@@ -181,12 +187,12 @@ description: string;
 };
 }
 declare namespace App.Enums {
-export type ApplicationStatus = 'Applied' | 'Invited' | 'Rejected';
-export type CompanySubmissionStatus = 'pending' | 'approved' | 'rejected';
 export type UserPermission = {
 name: string;
 value: string;
 };
+export type ApplicationStatus = 'Applied' | 'Invited' | 'Rejected';
+export type CompanySubmissionStatus = 'pending' | 'approved' | 'rejected';
 export type CompanyType = 'Public' | 'Private' | 'Non-profit';
 export type CompanyUserPermission = 'view company details' | 'edit company details' | 'delete company' | 'view employee' | 'edit employee' | 'add employee' | 'delete employee' | 'view job' | 'edit job' | 'create job' | 'delete job' | 'view job application' | 'accept job application' | 'decline job application';
 export type CompanyUserRole = 'owner' | 'hr' | 'employee';
