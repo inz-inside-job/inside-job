@@ -23,7 +23,7 @@ class JobController extends Controller
         $params = $request->validated();
 
         $query = Job::with([
-            'company' => fn (BelongsTo $query) => $query->withRating()->withCount('reviews'),
+            'company' => fn (BelongsTo $query) => $query->withRating()->withCount('reviews')->withApproveOfCeo(),
         ])->when(! empty($params['query']), function (Builder $query) use ($params) {
             $searchResults = Job::search($params['query'])->raw();
             $ids = collect($searchResults['hits'])->pluck('id');
@@ -129,7 +129,7 @@ class JobController extends Controller
     public function show(string $slug)
     {
         $job = Job::whereSlug($slug)->with([
-            'company' => fn (BelongsTo $query) => $query->withRating()->withCount('reviews'),
+            'company' => fn (BelongsTo $query) => $query->withRating()->withCount('reviews')->withApproveOfCeo(),
         ])->firstOrFail();
 
         $job->increment('visit_count');

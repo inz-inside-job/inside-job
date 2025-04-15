@@ -181,16 +181,16 @@ export default function JobPage({ job }: { job: App.Data.Jobs.JobData }) {
                                             </div>
                                             <div className="space-y-2">
                                                 <div className="flex items-start">
-                                                    <span className="w-24 text-sm font-medium">Type:</span>
+                                                    <span className="w-26 text-sm font-medium">Type:</span>
                                                     <span className="text-foreground text-sm">{job.company.type}</span>
                                                 </div>
                                                 <div className="flex items-start">
-                                                    <span className="w-24 text-sm font-medium">CEO:</span>
+                                                    <span className="w-26 text-sm font-medium">CEO:</span>
                                                     <span className="text-foreground text-sm">{job.company.ceo}</span>
                                                 </div>
                                                 <div className="flex items-start">
-                                                    <span className="w-24 text-sm font-medium">CEO Approval:</span>
-                                                    <span className="text-foreground text-sm">100%</span>
+                                                    <span className="w-26 text-sm font-medium">CEO Approval:</span>
+                                                    <span className="text-foreground text-sm">{job.company.approve_of_ceo}%</span>
                                                 </div>
                                             </div>
                                         </div>

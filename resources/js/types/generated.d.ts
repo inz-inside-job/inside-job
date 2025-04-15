@@ -160,6 +160,7 @@ founded_year: string;
 type: App.Enums.CompanyType;
 ceo: string;
 website: string | null;
+approve_of_ceo: number;
 };
 export type JobData = {
 company: App.Data.Jobs.JobCompanyData;

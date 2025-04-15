@@ -24,6 +24,7 @@ class JobCompanyData extends Data
         public CompanyType $type,
         public string $ceo,
         public ?string $website,
+        public float $approve_of_ceo,
         ?string $logo,
     ) {
         $this->logo = $logo;
