@@ -84,7 +84,7 @@ export default function JobPage({ job }: { job: App.Data.Jobs.JobData }) {
                                             </Link>
                                             <Button variant="outline" className="cursor-pointer">
                                                 <Building2 className="mr-2 h-4 w-4" />
-                                                <a href={job.company.website ?? ''} target="_blank">
+                                                <a href={job.company.website ?? ''} target="_blank" rel="noopener noreferrer">
                                                     Visit Company Website
                                                 </a>
                                                 <ExternalLink className="ml-1 h-3 w-3" />
