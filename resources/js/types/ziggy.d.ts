@@ -40,6 +40,12 @@ declare module 'ziggy-js' {
     ],
     "companies.submit": [],
     "jobs": [],
+    "jobs.show": [
+        {
+            "name": "slug",
+            "required": true
+        }
+    ],
     "jobs.apply": [
         {
             "name": "slug",

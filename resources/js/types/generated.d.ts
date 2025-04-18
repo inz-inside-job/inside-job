@@ -155,6 +155,13 @@ description: string;
 slug: string;
 rating: number;
 reviews_count: number;
+industry: string;
+employee_count: number;
+founded_year: string;
+type: App.Enums.CompanyType;
+ceo: string;
+website: string | null;
+approve_of_ceo: number;
 };
 export type JobData = {
 company: App.Data.Jobs.JobCompanyData;
@@ -170,6 +177,8 @@ salary_min: number;
 salary_max: number;
 description: string;
 requirements: Array<string>;
+visit_count: number;
+applications_count: number;
 };
 }
 declare namespace App.Data.Search {

@@ -39,6 +39,9 @@ Route::group(['prefix' => 'jobs'], function () {
         ->name('jobs');
 
     Route::group(['middleware' => 'auth'], function () {
+        Route::get('{slug}', [JobController::class, 'show'])
+            ->name('jobs.show');
+
         Route::get('{slug}/apply', [JobController::class, 'apply'])
             ->name('jobs.apply');
 
