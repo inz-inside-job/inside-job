@@ -47,6 +47,7 @@ type: App.Enums.CompanyType;
 jobs_count: number;
 website: string | null;
 claimed: boolean;
+followed: boolean;
 };
 export type CompanyJobData = {
 id: number;

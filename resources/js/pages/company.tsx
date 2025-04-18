@@ -11,8 +11,11 @@ import { Progress } from '@/components/ui/progress';
 import { Separator } from '@/components/ui/separator';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Head, Link, usePage } from '@inertiajs/react';
+import clsx from 'clsx';
+import { useForm } from 'laravel-precognition-react-inertia';
 import { Briefcase, Building2, CheckCircle, ExternalLink, Globe, Heart, MapPin, MessageSquare, Share2, Users } from 'lucide-react';
 import { useState } from 'react';
+import { toast } from 'sonner';
 
 export default function CompanyPage({ company }: { company: App.Data.Company.CompanyData }) {
     const [tab, setTab] = useState('overview');
@@ -50,6 +53,9 @@ export default function CompanyPage({ company }: { company: App.Data.Company.Com
             (company.reviews.length > 0 ? company.reviews.reduce((sum, review) => sum + review.senior_management, 0) / company.reviews.length : 0) *
                 10,
         ) / 10;
+
+    const { submit: follow } = useForm('post', route('companies.follow', { company: company.slug }), {});
+    const { submit: unfollow } = useForm('post', route('companies.unfollow', { company: company.slug }), {});
 
     return (
         <>
@@ -101,9 +107,32 @@ export default function CompanyPage({ company }: { company: App.Data.Company.Com
                                                     <Share2 className="mr-2 h-4 w-4" />
                                                     Share
                                                 </Button>
-                                                <Button variant="outline" size="sm" className="cursor-pointer">
-                                                    <Heart className="mr-2 h-4 w-4" />
-                                                    Follow
+                                                <Button
+                                                    onClick={() => {
+                                                        if (company.followed) {
+                                                            unfollow({
+                                                                onError: (error) => {
+                                                                    toast.error(error[0]);
+                                                                },
+                                                            });
+                                                        } else {
+                                                            follow({
+                                                                onError: (error) => {
+                                                                    toast.error(error[0]);
+                                                                },
+                                                            });
+                                                        }
+                                                    }}
+                                                    variant="outline"
+                                                    size="sm"
+                                                    className="cursor-pointer"
+                                                >
+                                                    <Heart
+                                                        className={clsx('mr-1 h-4 w-4', {
+                                                            'fill-red-500 text-red-500': company.followed,
+                                                        })}
+                                                    />
+                                                    {company.followed ? 'Unfollow' : 'Follow'}
                                                 </Button>
                                                 {!company.claimed ? <CompanyClaimDialog company={company} /> : null}
                                             </div>

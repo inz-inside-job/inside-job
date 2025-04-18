@@ -4,7 +4,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { moneyToHuman } from '@/lib/utils';
-import { Link } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
 import { Briefcase, Building2, Clock, ExternalLink, MapPin, Share2, Star } from 'lucide-react';
 import { useState } from 'react';
 
@@ -12,6 +12,7 @@ export default function JobPage({ job }: { job: App.Data.Jobs.JobData }) {
     const [showSharePopup, setShowSharePopup] = useState(false);
     return (
         <>
+            <Head title={job.title} />
             <SharePopup url={route('jobs.show', { slug: job.slug })} open={showSharePopup} onClose={() => setShowSharePopup(false)} />
             <div className="bg-background min-h-screen py-8">
                 <div className="container mx-auto px-4">
