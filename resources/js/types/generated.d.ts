@@ -177,7 +177,7 @@ salary_max: number;
 description: string;
 requirements: Array<string>;
 visit_count: number;
-apply_count: number;
+applications_count: number;
 };
 }
 declare namespace App.Data.Search {
@@ -190,12 +190,12 @@ description: string;
 };
 }
 declare namespace App.Enums {
+export type ApplicationStatus = 'Applied' | 'Invited' | 'Rejected';
+export type CompanySubmissionStatus = 'pending' | 'approved' | 'rejected';
 export type UserPermission = {
 name: string;
 value: string;
 };
-export type ApplicationStatus = 'Applied' | 'Invited' | 'Rejected';
-export type CompanySubmissionStatus = 'pending' | 'approved' | 'rejected';
 export type CompanyType = 'Public' | 'Private' | 'Non-profit';
 export type CompanyUserPermission = 'view company details' | 'edit company details' | 'delete company' | 'view employee' | 'edit employee' | 'add employee' | 'delete employee' | 'view job' | 'edit job' | 'create job' | 'delete job' | 'view job application' | 'accept job application' | 'decline job application';
 export type CompanyUserRole = 'owner' | 'hr' | 'employee';

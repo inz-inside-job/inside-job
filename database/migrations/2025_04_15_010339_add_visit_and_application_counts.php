@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::table('jobs', function (Blueprint $table) {
             $table->unsignedInteger('visit_count')->default(0);
-            $table->unsignedInteger('apply_count')->default(0);
         });
     }
 
@@ -24,7 +23,6 @@ return new class extends Migration
     {
         Schema::table('jobs', function (Blueprint $table) {
             $table->dropColumn('visit_count');
-            $table->dropColumn('apply_count');
         });
     }
 };

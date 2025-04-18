@@ -24,12 +24,14 @@ class JobController extends Controller
 
         $query = Job::with([
             'company' => fn (BelongsTo $query) => $query->withRating()->withCount('reviews')->withApproveOfCeo(),
-        ])->when(! empty($params['query']), function (Builder $query) use ($params) {
-            $searchResults = Job::search($params['query'])->raw();
-            $ids = collect($searchResults['hits'])->pluck('id');
+        ])
+            ->withCount('applications')
+            ->when(! empty($params['query']), function (Builder $query) use ($params) {
+                $searchResults = Job::search($params['query'])->raw();
+                $ids = collect($searchResults['hits'])->pluck('id');
 
-            $query->whereIn('jobs.id', $ids);
-        });
+                $query->whereIn('jobs.id', $ids);
+            });
 
         $jobs = QueryBuilder::for($query)
             ->allowedSorts(
@@ -83,7 +85,8 @@ class JobController extends Controller
         $job = Job::whereSlug($slug)->with([
             'company' => function (BelongsTo $query) {
                 $query->withRating()->withCount('reviews');
-            }])->firstOrFail();
+            },
+        ])->withCount('applications')->firstOrFail();
 
         return Inertia::render('apply', [
             'job' => JobData::from($job),
@@ -120,8 +123,6 @@ class JobController extends Controller
             'cover_letter' => $request->input('cover_letter'),
         ]);
 
-        $job->increment('apply_count');
-
         return redirect()->route('jobs');
 
     }
@@ -130,7 +131,7 @@ class JobController extends Controller
     {
         $job = Job::whereSlug($slug)->with([
             'company' => fn (BelongsTo $query) => $query->withRating()->withCount('reviews')->withApproveOfCeo(),
-        ])->firstOrFail();
+        ])->withCount('applications')->firstOrFail();
 
         $job->increment('visit_count');
 

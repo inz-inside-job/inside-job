@@ -3,8 +3,9 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { moneyToHuman } from '@/lib/utils';
 import { Link } from '@inertiajs/react';
-import { Bookmark, Briefcase, Building2, Clock, ExternalLink, MapPin, Share2, Star } from 'lucide-react';
+import { Briefcase, Building2, Clock, ExternalLink, MapPin, Share2, Star } from 'lucide-react';
 import { useState } from 'react';
 
 export default function JobPage({ job }: { job: App.Data.Jobs.JobData }) {
@@ -52,10 +53,6 @@ export default function JobPage({ job }: { job: App.Data.Jobs.JobData }) {
                                                     <Share2 className="mr-2 h-4 w-4" />
                                                     Share
                                                 </Button>
-                                                <Button variant="outline" size="sm" className="cursor-pointer">
-                                                    <Bookmark className="mr-2 h-4 w-4" />
-                                                    Save
-                                                </Button>
                                             </div>
                                         </div>
 
@@ -75,7 +72,7 @@ export default function JobPage({ job }: { job: App.Data.Jobs.JobData }) {
                                         </div>
 
                                         <div className="mt-3 text-lg font-medium">
-                                            {job.salary_min} - {job.salary_max}$
+                                            {moneyToHuman(job.salary_min)} - {moneyToHuman(job.salary_max)}
                                         </div>
 
                                         <div className="mt-6 flex flex-wrap gap-3">
@@ -218,7 +215,7 @@ export default function JobPage({ job }: { job: App.Data.Jobs.JobData }) {
                                             <Separator />
                                             <div className="flex items-center justify-between">
                                                 <span className="text-sm text-gray-600">Applicants</span>
-                                                <span className="text-sm font-medium">{job.apply_count}</span>
+                                                <span className="text-sm font-medium">{job.applications_count}</span>
                                             </div>
                                             <Separator />
                                             <div className="flex items-center justify-between">
