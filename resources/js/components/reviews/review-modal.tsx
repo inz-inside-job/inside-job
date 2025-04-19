@@ -187,7 +187,7 @@ export default function ReviewModal({ companySlug }: { companySlug: string }) {
     return (
         <>
             <Tooltip disableHoverableContent={false}>
-                <TooltipTrigger>
+                <TooltipTrigger asChild>
                     <Button disabled={!auth.user} className="cursor-pointer bg-orange-500 hover:bg-orange-600" onClick={() => setOpen(true)}>
                         <Star className="mr-2 h-4 w-4" />
                         Write a Review

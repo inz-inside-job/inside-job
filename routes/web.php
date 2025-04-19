@@ -8,36 +8,49 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomepageController::class, 'view'])->name('home');
 
-Route::get('/companies', [CompanyController::class, 'index'])
-    ->name('companies');
+Route::group(['prefix' => 'companies'], function () {
+    Route::get('/', [CompanyController::class, 'index'])
+        ->name('companies');
 
-Route::get('/companies/{slug}', [CompanyController::class, 'show'])
-    ->name('companies.show');
+    Route::get('{slug}', [CompanyController::class, 'show'])
+        ->name('companies.show');
 
-Route::post('companies/{company}/claim', [CompanyController::class, 'submitClaim'])
-    ->name('companies.submitClaim')
-    ->middleware('auth');
+    Route::group(['middleware' => 'auth'], function () {
+        Route::post('{company}/claim', [CompanyController::class, 'submitClaim'])
+            ->name('companies.submitClaim');
 
-Route::post('/companies/{company}/reviews', [CompanyController::class, 'storeReview'])
-    ->middleware('auth')
-    ->name('companies.reviews.store');
+        Route::post('{company}/reviews', [CompanyController::class, 'storeReview'])
+            ->name('companies.reviews.store');
 
-Route::post('/companies/submit', [CompanyController::class, 'submit'])
-    ->middleware('auth')
-    ->name('companies.submit');
+        Route::post('{company}/follow', [CompanyController::class, 'follow'])
+            ->name('companies.follow');
 
-Route::get('/jobs', [JobController::class, 'index'])
-    ->name('jobs');
+        Route::post('{company}/unfollow', [CompanyController::class, 'unfollow'])
+            ->name('companies.unfollow');
 
-Route::get('/jobs/{slug}/apply', [JobController::class, 'apply'])
-    ->middleware('auth')
-    ->name('jobs.apply');
+        Route::post('submit', [CompanyController::class, 'submit'])
+            ->name('companies.submit');
+    });
+});
+
+Route::group(['prefix' => 'jobs'], function () {
+
+    Route::get('/', [JobController::class, 'index'])
+        ->name('jobs');
+
+    Route::group(['middleware' => 'auth'], function () {
+        Route::get('{slug}', [JobController::class, 'show'])
+            ->name('jobs.show');
+
+        Route::get('{slug}/apply', [JobController::class, 'apply'])
+            ->name('jobs.apply');
+
+        Route::post('{job}/apply', [JobController::class, 'storeApplication'])
+            ->name('jobs.apply.store');
+    });
+});
 
 Route::get('/search', [GlobalSearchController::class, 'search'])->name('search');
-
-Route::post('/jobs/{job}/apply', [JobController::class, 'storeApplication'])
-    ->middleware('auth')
-    ->name('jobs.apply.store');
 
 Route::impersonate();
 
