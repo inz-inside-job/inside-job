@@ -101,6 +101,20 @@ declare module 'ziggy-js' {
             "binding": "id"
         }
     ],
+    "dashboard": [],
+    "dashboard.view": [
+        {
+            "name": "slug",
+            "required": true
+        }
+    ],
+    "dashboard.edit": [
+        {
+            "name": "company",
+            "required": true,
+            "binding": "slug"
+        }
+    ],
     "storage.local": [
         {
             "name": "path",

@@ -2,7 +2,9 @@
 
 namespace App\Http\Middleware;
 
+use App\Enums\CompanyUserPermission;
 use App\Enums\UserRole;
+use App\Models\CompanyUser;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Tighten\Ziggy\Ziggy;
@@ -44,6 +46,14 @@ class HandleInertiaRequests extends Middleware
                 'status' => $request->session()->get('status'),
                 'user' => $request->user(),
                 'isAdmin' => $request->user()?->hasRole(UserRole::ADMIN) ?? false,
+                'canViewDashboard' => $request->user() && (
+                    (
+                        CompanyUser::where('user_id', $request->user()->id)->get()->contains(function (CompanyUser $companyUser) {
+                            return $companyUser->hasPermissionTo(CompanyUserPermission::VIEW_COMPANY_DETAILS);
+                        })
+                        || $request->user()->hasRole(UserRole::ADMIN)
+                    )
+                ),
             ],
             'ziggy' => fn (): array => [
                 ...(new Ziggy)->toArray(),

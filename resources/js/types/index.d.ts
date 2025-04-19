@@ -5,6 +5,7 @@ export interface Auth {
     status?: string;
     user?: User;
     isAdmin?: boolean;
+    canViewDashboard?: boolean;
 }
 
 export interface BreadcrumbItem {

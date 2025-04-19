@@ -22,6 +22,16 @@ description: string;
 };
 }
 declare namespace App.Data.Company {
+export type CompanyDashboardData = {
+logo: string | null;
+id: number;
+name: string;
+location: string;
+description: string;
+industry: string;
+employee_count: number;
+slug: string;
+};
 export type CompanyData = {
 logo: string | null;
 header: string | null;
@@ -47,6 +57,22 @@ type: App.Enums.CompanyType;
 jobs_count: number;
 website: string | null;
 claimed: boolean;
+};
+export type CompanyEditData = {
+logo: string | null;
+header: string | null;
+name: string;
+description: string;
+website: string;
+industry: string;
+location: string;
+employee_count: number;
+ceo: string;
+mission: string | null;
+benefits: Array<string>;
+type: App.Enums.CompanyType;
+slug: string;
+id: number;
 };
 export type CompanyJobData = {
 id: number;
@@ -183,12 +209,12 @@ description: string;
 declare namespace App.Enums {
 export type ApplicationStatus = 'Applied' | 'Invited' | 'Rejected';
 export type CompanySubmissionStatus = 'pending' | 'approved' | 'rejected';
+export type CompanyType = 'Public' | 'Private' | 'Non-profit';
+export type CompanyUserPermission = 'view company details' | 'edit company details' | 'delete company' | 'view employee' | 'edit employee' | 'add employee' | 'delete employee' | 'view job' | 'edit job' | 'create job' | 'delete job' | 'view job application' | 'accept job application' | 'decline job application';
 export type UserPermission = {
 name: string;
 value: string;
 };
-export type CompanyType = 'Public' | 'Private' | 'Non-profit';
-export type CompanyUserPermission = 'view company details' | 'edit company details' | 'delete company' | 'view employee' | 'edit employee' | 'add employee' | 'delete employee' | 'view job' | 'edit job' | 'create job' | 'delete job' | 'view job application' | 'accept job application' | 'decline job application';
 export type CompanyUserRole = 'owner' | 'hr' | 'employee';
 export type EmploymentExperience = 'Entry Level' | 'Mid Level' | 'Senior Level' | 'Manager' | 'Director' | 'Executive';
 export type EmploymentType = 'Full Time' | 'Part Time' | 'Contract' | 'Internship' | 'Temporary' | 'Remote';
