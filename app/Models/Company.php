@@ -31,6 +31,9 @@ class Company extends Model
         'ceo',
         'type',
         'logo',
+        'header',
+        'benefits',
+        'mission',
     ];
 
     protected function casts(): array

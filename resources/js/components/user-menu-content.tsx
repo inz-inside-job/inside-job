@@ -8,9 +8,10 @@ import { Building2, LogOut, Settings } from 'lucide-react';
 interface UserMenuContentProps {
     user: User;
     isAdmin: boolean;
+    canViewDashboard: boolean;
 }
 
-export function UserMenuContent({ user, isAdmin }: UserMenuContentProps) {
+export function UserMenuContent({ user, isAdmin, canViewDashboard }: UserMenuContentProps) {
     const cleanup = useMobileNavigation();
     return (
         <>
@@ -36,6 +37,20 @@ export function UserMenuContent({ user, isAdmin }: UserMenuContentProps) {
                             <Link className="block w-full" href={route('admin.dashboard')} as="button" prefetch onClick={cleanup}>
                                 <Building2 className="mr-2" />
                                 Admin Dashboard
+                            </Link>
+                        </DropdownMenuItem>
+                    </DropdownMenuGroup>
+                    <DropdownMenuSeparator />
+                </>
+            ) : null}
+
+            {canViewDashboard ? (
+                <>
+                    <DropdownMenuGroup>
+                        <DropdownMenuItem asChild>
+                            <Link className="block w-full" href={route('dashboard')} as="button" prefetch onClick={cleanup}>
+                                <Building2 className="mr-2" />
+                                Companies Dashboard
                             </Link>
                         </DropdownMenuItem>
                     </DropdownMenuGroup>
