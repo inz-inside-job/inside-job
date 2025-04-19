@@ -259,7 +259,7 @@ export default function CompanyEdit({ company }: { company: App.Data.Company.Com
 
                             <Label className="text-base font-medium">Employee count</Label>
                             <Input
-                                type={'text'}
+                                type={'number'}
                                 placeholder="Employee Count"
                                 value={data.employee_count}
                                 onChange={(e) => setData('employee_count', parseInt(e.target.value))}
