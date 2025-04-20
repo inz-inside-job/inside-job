@@ -129,11 +129,30 @@ declare module 'ziggy-js' {
             "binding": "slug"
         }
     ],
+    "dashboard.applications": [
+        {
+            "name": "company",
+            "required": true,
+            "binding": "slug"
+        }
+    ],
     "dashboard.edit": [
         {
             "name": "company",
             "required": true,
             "binding": "slug"
+        }
+    ],
+    "dashboard.application.update": [
+        {
+            "name": "company",
+            "required": true,
+            "binding": "slug"
+        },
+        {
+            "name": "application",
+            "required": true,
+            "binding": "id"
         }
     ],
     "storage.local": [

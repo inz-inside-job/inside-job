@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Data\Applications\ApplicationData;
 use App\Data\Company\CompanyDashboardData;
 use App\Data\Company\CompanyEditData;
 use App\Enums\UserRole;
 use App\Http\Requests\Company\UpdateCompanyRequest;
+use App\Models\Application;
 use App\Models\Company;
 use Gate;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class CompanyDashboardController
@@ -88,5 +91,34 @@ class CompanyDashboardController
 
         return redirect()->route('dashboard.view', ['slug' => $company->slug])
             ->with('success', 'Company updated successfully.');
+    }
+
+    public function applications(Company $company)
+    {
+        // TODO: AUTHORIZE
+
+        $applications = Application::query()
+            ->whereHas('job', function ($query) use ($company) {
+                $query->where('company_id', $company->id);
+            })
+            ->with(['job', 'user'])
+            ->get();
+
+        return Inertia::render('applications', [
+            'applications' => ApplicationData::collect($applications)->toArray(),
+            'slug' => $company->slug,
+        ]);
+    }
+
+    public function updateApplication(Request $request, Company $company, Application $application)
+    {
+        // TODO: AUTHORIZE
+        // Gate::authorize('update', $application);
+        $application->update([
+            'status' => request()->input('status'),
+        ]);
+
+        return redirect()->back()
+            ->with('success', 'Application status updated successfully.');
     }
 }

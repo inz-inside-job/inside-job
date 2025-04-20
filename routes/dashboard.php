@@ -10,7 +10,13 @@ Route::group(['middleware' => 'auth', 'prefix' => 'dashboard'], function () {
         Route::get('edit', [CompanyDashboardController::class, 'edit'])
             ->name('dashboard.view');
 
+        Route::get('applications', [CompanyDashboardController::class, 'applications'])
+            ->name('dashboard.applications');
+
         Route::post('edit', [CompanyDashboardController::class, 'update'])
             ->name('dashboard.edit');
+
+        Route::post('applications/{application}', [CompanyDashboardController::class, 'updateApplication'])
+            ->name('dashboard.application.update');
     });
 });
