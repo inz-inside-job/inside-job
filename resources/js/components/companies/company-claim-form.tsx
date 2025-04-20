@@ -54,7 +54,7 @@ export function CompanyClaimDialog({ company }: { company: App.Data.Company.Comp
     return (
         <>
             <Tooltip disableHoverableContent={false}>
-                <TooltipTrigger>
+                <TooltipTrigger asChild>
                     <Button
                         disabled={!auth.user}
                         size={'sm'}

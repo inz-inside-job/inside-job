@@ -116,7 +116,7 @@ export function AppHeader() {
                                             </Button>
                                         </DropdownMenuTrigger>
                                         <DropdownMenuContent className="w-56" align="end">
-                                            <UserMenuContent user={auth.user} isAdmin={auth.isAdmin!} />
+                                            <UserMenuContent user={auth.user} isAdmin={auth.isAdmin!} canViewDashboard={auth.canViewDashboard!} />
                                         </DropdownMenuContent>
                                     </DropdownMenu>
                                 )

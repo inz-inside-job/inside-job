@@ -46,8 +46,8 @@ class AppServiceProvider extends ServiceProvider
         EncryptCookies::except('appearance');
 
         // Only allow admin users to perform any action
-        //        Gate::before(function ($user, $ability) {
-        //            return $user->hasRole(UserRole::ADMIN) ? true : null;
-        //        });
+        Gate::before(function ($user, $ability) {
+            return $user->hasRole(UserRole::ADMIN) ? true : null;
+        });
     }
 }

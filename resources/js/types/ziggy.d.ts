@@ -24,15 +24,34 @@ declare module 'ziggy-js' {
             "binding": "slug"
         }
     ],
+    "companies.follow": [
+        {
+            "name": "company",
+            "required": true,
+            "binding": "slug"
+        }
+    ],
+    "companies.unfollow": [
+        {
+            "name": "company",
+            "required": true,
+            "binding": "slug"
+        }
+    ],
     "companies.submit": [],
     "jobs": [],
+    "jobs.show": [
+        {
+            "name": "slug",
+            "required": true
+        }
+    ],
     "jobs.apply": [
         {
             "name": "slug",
             "required": true
         }
     ],
-    "search": [],
     "jobs.apply.store": [
         {
             "name": "job",
@@ -41,6 +60,7 @@ declare module 'ziggy-js' {
         }
     ],
     "about": [],
+    "search": [],
     "profile.edit": [],
     "profile.update": [],
     "profile.destroy": [],
@@ -100,6 +120,21 @@ declare module 'ziggy-js' {
             "name": "claim",
             "required": true,
             "binding": "id"
+        }
+    ],
+    "dashboard": [],
+    "dashboard.view": [
+        {
+            "name": "company",
+            "required": true,
+            "binding": "slug"
+        }
+    ],
+    "dashboard.edit": [
+        {
+            "name": "company",
+            "required": true,
+            "binding": "slug"
         }
     ],
     "storage.local": [

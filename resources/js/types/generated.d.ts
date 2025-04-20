@@ -22,6 +22,16 @@ description: string;
 };
 }
 declare namespace App.Data.Company {
+export type CompanyDashboardData = {
+logo: string | null;
+id: number;
+name: string;
+location: string;
+description: string;
+industry: string;
+employee_count: number;
+slug: string;
+};
 export type CompanyData = {
 logo: string | null;
 header: string | null;
@@ -47,6 +57,23 @@ type: App.Enums.CompanyType;
 jobs_count: number;
 website: string | null;
 claimed: boolean;
+followed: boolean;
+};
+export type CompanyEditData = {
+logo: string | null;
+header: string | null;
+name: string;
+description: string;
+website: string;
+industry: string;
+location: string;
+employee_count: number;
+ceo: string;
+mission: string | null;
+benefits: Array<string>;
+type: App.Enums.CompanyType;
+slug: string;
+id: number;
 };
 export type CompanyJobData = {
 id: number;
@@ -154,6 +181,13 @@ description: string;
 slug: string;
 rating: number;
 reviews_count: number;
+industry: string;
+employee_count: number;
+founded_year: string;
+type: App.Enums.CompanyType;
+ceo: string;
+website: string | null;
+approve_of_ceo: number;
 };
 export type JobData = {
 company: App.Data.Jobs.JobCompanyData;
@@ -169,6 +203,8 @@ salary_min: number;
 salary_max: number;
 description: string;
 requirements: Array<string>;
+visit_count: number;
+applications_count: number;
 };
 }
 declare namespace App.Data.Search {
