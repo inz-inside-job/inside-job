@@ -59,6 +59,7 @@ declare module 'ziggy-js' {
             "binding": "slug"
         }
     ],
+    "about": [],
     "search": [],
     "profile.edit": [],
     "profile.update": [],
