@@ -70,6 +70,7 @@ class Job extends Model
     protected function casts(): array
     {
         return [
+            'posted_date' => 'datetime',
             'employment_type' => EmploymentType::class,
             'employment_experience' => EmploymentExperience::class,
             'salary_min' => 'int',
