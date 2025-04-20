@@ -228,6 +228,16 @@ requirements: Array<string>;
 visit_count: number;
 applications_count: number;
 };
+export type JobFormData = {
+title: string;
+location: string;
+employment_type: App.Enums.EmploymentType;
+employment_experience: App.Enums.EmploymentExperience;
+salary_min: number;
+salary_max: number;
+description: string;
+requirements: Array<string>;
+};
 }
 declare namespace App.Data.Search {
 export type SearchResultData = {
@@ -247,6 +257,10 @@ export type UserPermission = {
 name: string;
 value: string;
 };
+export type ApplicationStatus = 'Applied' | 'Invited' | 'Rejected';
+export type CompanySubmissionStatus = 'pending' | 'approved' | 'rejected';
+export type CompanyType = 'Public' | 'Private' | 'Non-profit';
+export type CompanyUserPermission = 'view company details' | 'edit company details' | 'delete company' | 'view employee' | 'edit employee' | 'add employee' | 'delete employee' | 'view job' | 'edit job' | 'create job' | 'delete job' | 'view job application' | 'accept job application' | 'decline job application';
 export type CompanyUserRole = 'owner' | 'hr' | 'employee';
 export type EmploymentExperience = 'Entry Level' | 'Mid Level' | 'Senior Level' | 'Manager' | 'Director' | 'Executive';
 export type EmploymentType = 'Full Time' | 'Part Time' | 'Contract' | 'Internship' | 'Temporary' | 'Remote';

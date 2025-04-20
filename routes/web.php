@@ -52,6 +52,9 @@ Route::group(['prefix' => 'jobs'], function () {
 
 Route::get('/search', [GlobalSearchController::class, 'search'])->name('search');
 
+Route::inertia('/about', 'about')
+    ->name('about');
+
 Route::impersonate();
 
 require __DIR__.'/settings.php';

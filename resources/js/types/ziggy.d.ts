@@ -59,6 +59,7 @@ declare module 'ziggy-js' {
             "binding": "slug"
         }
     ],
+    "about": [],
     "search": [],
     "profile.edit": [],
     "profile.update": [],
@@ -144,6 +145,28 @@ declare module 'ziggy-js' {
         }
     ],
     "dashboard.application.update": [
+    "dashboard.jobs": [
+        {
+            "name": "company",
+            "required": true,
+            "binding": "slug"
+        }
+    ],
+    "dashboard.jobs.create": [
+        {
+            "name": "company",
+            "required": true,
+            "binding": "slug"
+        }
+    ],
+    "dashboard.jobs.store": [
+        {
+            "name": "company",
+            "required": true,
+            "binding": "slug"
+        }
+    ],
+    "dashboard.jobs.edit": [
         {
             "name": "company",
             "required": true,
@@ -153,6 +176,33 @@ declare module 'ziggy-js' {
             "name": "application",
             "required": true,
             "binding": "id"
+            "name": "job",
+            "required": true,
+            "binding": "slug"
+        }
+    ],
+    "dashboard.jobs.update": [
+        {
+            "name": "company",
+            "required": true,
+            "binding": "slug"
+        },
+        {
+            "name": "job",
+            "required": true,
+            "binding": "slug"
+        }
+    ],
+    "dashboard.jobs.destroy": [
+        {
+            "name": "company",
+            "required": true,
+            "binding": "slug"
+        },
+        {
+            "name": "job",
+            "required": true,
+            "binding": "slug"
         }
     ],
     "storage.local": [
