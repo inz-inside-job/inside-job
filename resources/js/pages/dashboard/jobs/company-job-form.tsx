@@ -243,7 +243,7 @@ export default function JobForm({ job, company }: { job: App.Data.Jobs.JobData |
                                 </div>
 
                                 <div className="flex justify-end gap-4">
-                                    <Link href="/jobs">
+                                    <Link href={route('dashboard.jobs', { company: company.slug })}>
                                         <Button variant="outline">Cancel</Button>
                                     </Link>
                                     <Button type="submit" className="bg-orange-500 hover:bg-orange-600" disabled={processing}>
