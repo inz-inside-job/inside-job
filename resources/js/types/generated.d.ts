@@ -22,6 +22,16 @@ description: string;
 };
 }
 declare namespace App.Data.Company {
+export type CompanyDashboardData = {
+logo: string | null;
+id: number;
+name: string;
+location: string;
+description: string;
+industry: string;
+employee_count: number;
+slug: string;
+};
 export type CompanyData = {
 logo: string | null;
 header: string | null;
@@ -48,6 +58,22 @@ jobs_count: number;
 website: string | null;
 claimed: boolean;
 followed: boolean;
+};
+export type CompanyEditData = {
+logo: string | null;
+header: string | null;
+name: string;
+description: string;
+website: string;
+industry: string;
+location: string;
+employee_count: number;
+ceo: string;
+mission: string | null;
+benefits: Array<string>;
+type: App.Enums.CompanyType;
+slug: string;
+id: number;
 };
 export type CompanyJobData = {
 id: number;
