@@ -17,18 +17,18 @@ export function Footer() {
                             transparency, InsideJob helps people find a job and company they love.
                         </p>
                         <div className="flex gap-4">
-                            <Link href="#" className="text-gray-400 transition-colors hover:text-white">
+                            <a href="https://www.facebook.com/redas.domkus" className="text-gray-400 transition-colors hover:text-white">
                                 <Facebook className="h-5 w-5" />
-                            </Link>
-                            <Link href="#" className="text-gray-400 transition-colors hover:text-white">
+                            </a>
+                            <a href="https://x.com/linasalexx" className="text-gray-400 transition-colors hover:text-white">
                                 <Twitter className="h-5 w-5" />
-                            </Link>
-                            <Link href="#" className="text-gray-400 transition-colors hover:text-white">
+                            </a>
+                            <a href="https://www.instagram.com/redasdom/" className="text-gray-400 transition-colors hover:text-white">
                                 <Instagram className="h-5 w-5" />
-                            </Link>
-                            <Link href="#" className="text-gray-400 transition-colors hover:text-white">
+                            </a>
+                            <a href="https://linkedin.com/in/redas-domkus-51a193303" className="text-gray-400 transition-colors hover:text-white">
                                 <Linkedin className="h-5 w-5" />
-                            </Link>
+                            </a>
                         </div>
                     </div>
 
@@ -36,28 +36,13 @@ export function Footer() {
                         <h3 className="mb-4 font-semibold text-white">For Job Seekers</h3>
                         <ul className="space-y-3 text-sm">
                             <li>
-                                <Link href="#" className="transition-colors hover:text-white">
+                                <Link href="jobs" className="transition-colors hover:text-white">
                                     Browse Jobs
                                 </Link>
                             </li>
                             <li>
                                 <Link href="#" className="transition-colors hover:text-white">
                                     Company Reviews
-                                </Link>
-                            </li>
-                            <li>
-                                <Link href="#" className="transition-colors hover:text-white">
-                                    Salary Calculator
-                                </Link>
-                            </li>
-                            <li>
-                                <Link href="#" className="transition-colors hover:text-white">
-                                    Interview Questions
-                                </Link>
-                            </li>
-                            <li>
-                                <Link href="#" className="transition-colors hover:text-white">
-                                    Career Advice
                                 </Link>
                             </li>
                         </ul>
@@ -73,22 +58,7 @@ export function Footer() {
                             </li>
                             <li>
                                 <Link href="#" className="transition-colors hover:text-white">
-                                    Employer Branding
-                                </Link>
-                            </li>
-                            <li>
-                                <Link href="#" className="transition-colors hover:text-white">
-                                    Recruiting Solutions
-                                </Link>
-                            </li>
-                            <li>
-                                <Link href="#" className="transition-colors hover:text-white">
-                                    Employer Blog
-                                </Link>
-                            </li>
-                            <li>
-                                <Link href="#" className="transition-colors hover:text-white">
-                                    Talent Solutions
+                                    Add Your Company
                                 </Link>
                             </li>
                         </ul>
@@ -98,29 +68,14 @@ export function Footer() {
                         <h3 className="mb-4 font-semibold text-white">About</h3>
                         <ul className="space-y-3 text-sm">
                             <li>
-                                <Link href="#" className="transition-colors hover:text-white">
+                                <Link href="about" className="transition-colors hover:text-white">
                                     About Us
                                 </Link>
                             </li>
                             <li>
-                                <Link href="#" className="transition-colors hover:text-white">
-                                    Careers
-                                </Link>
-                            </li>
-                            <li>
-                                <Link href="#" className="transition-colors hover:text-white">
-                                    Press
-                                </Link>
-                            </li>
-                            <li>
-                                <Link href="#" className="transition-colors hover:text-white">
-                                    Investor Relations
-                                </Link>
-                            </li>
-                            <li>
-                                <Link href="#" className="transition-colors hover:text-white">
+                                <a href="mailto: gintaras.gaucys@ktu.edu" className="transition-colors hover:text-white">
                                     Contact Us
-                                </Link>
+                                </a>
                             </li>
                         </ul>
                     </div>
