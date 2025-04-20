@@ -59,8 +59,8 @@ declare module 'ziggy-js' {
             "binding": "slug"
         }
     ],
-    "about": [],
     "search": [],
+    "about": [],
     "profile.edit": [],
     "profile.update": [],
     "profile.destroy": [],
@@ -135,6 +135,25 @@ declare module 'ziggy-js' {
             "name": "company",
             "required": true,
             "binding": "slug"
+        }
+    ],
+    "dashboard.applications": [
+        {
+            "name": "company",
+            "required": true,
+            "binding": "slug"
+        }
+    ],
+    "dashboard.application.update": [
+        {
+            "name": "company",
+            "required": true,
+            "binding": "slug"
+        },
+        {
+            "name": "application",
+            "required": true,
+            "binding": "id"
         }
     ],
     "dashboard.jobs": [

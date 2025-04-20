@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use App\Enums\ApplicationStatus;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
 /**
@@ -10,6 +12,8 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
  */
 class Application extends Pivot
 {
+    use HasFactory;
+
     public $incrementing = true;
 
     public $table = 'applications';
@@ -34,4 +38,14 @@ class Application extends Pivot
         'applied_date' => 'datetime',
         'status' => ApplicationStatus::class,
     ];
+
+    public function job(): BelongsTo
+    {
+        return $this->belongsTo(Job::class);
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 }

@@ -5,6 +5,28 @@ name: string;
 image: string | null;
 };
 }
+declare namespace App.Data.Applications {
+export type ApplicationData = {
+job: App.Data.Applications.ApplicationJobData;
+user: App.Data.Applications.ApplicationUserData;
+id: number;
+status: App.Enums.ApplicationStatus;
+applied_date: string;
+first_name: string;
+last_name: string;
+phone: string;
+linkedin: string;
+portfolio: string;
+resume: string;
+cover_letter: string;
+};
+export type ApplicationJobData = {
+title: string;
+};
+export type ApplicationUserData = {
+email: string;
+};
+}
 declare namespace App.Data.Companies {
 export type CompanyData = {
 logo: string | null;
@@ -227,6 +249,10 @@ description: string;
 };
 }
 declare namespace App.Enums {
+export type ApplicationStatus = 'Applied' | 'Invited' | 'Rejected';
+export type CompanySubmissionStatus = 'pending' | 'approved' | 'rejected';
+export type CompanyType = 'Public' | 'Private' | 'Non-profit';
+export type CompanyUserPermission = 'view company details' | 'edit company details' | 'delete company' | 'view employee' | 'edit employee' | 'add employee' | 'delete employee' | 'view job' | 'edit job' | 'create job' | 'delete job' | 'view job application' | 'accept job application' | 'decline job application';
 export type UserPermission = {
 name: string;
 value: string;

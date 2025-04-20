@@ -14,6 +14,12 @@ Route::group(['middleware' => 'auth', 'prefix' => 'dashboard'], function () {
         Route::post('edit', [CompanyDashboardController::class, 'update'])
             ->name('dashboard.edit');
 
+        Route::get('applications', [CompanyDashboardController::class, 'applications'])
+            ->name('dashboard.applications');
+
+        Route::post('applications/{application}', [CompanyDashboardController::class, 'updateApplication'])
+            ->name('dashboard.application.update');
+
         Route::group(['prefix' => 'jobs'], function () {
             Route::get('/', [CompanyJobsController::class, 'index'])
                 ->name('dashboard.jobs');
