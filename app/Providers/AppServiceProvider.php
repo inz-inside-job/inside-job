@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Enums\UserRole;
+use App\Extensions\LaravelData\PrecognitivelyValidatePropertiesDataPipe;
 use App\Search\GlobalSearch;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Database\Eloquent\Model;
@@ -10,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
+use Spatie\LaravelData\DataPipes\ValidatePropertiesDataPipe;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -32,6 +34,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // Replace validation pipe for laravel-data with a custom one that supports precognitive validation
+        $this->app->bind(ValidatePropertiesDataPipe::class, PrecognitivelyValidatePropertiesDataPipe::class);
+
         Vite::prefetch(concurrency: 3);
 
         // Register the global search

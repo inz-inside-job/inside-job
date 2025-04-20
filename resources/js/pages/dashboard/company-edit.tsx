@@ -113,7 +113,7 @@ export default function CompanyEdit({ company }: { company: App.Data.Company.Com
             <Head title="Edit Company" />
             <DashboardLayout>
                 <div className="mb-6">
-                    <Link href="/dashboard">
+                    <Link href={route('dashboard')}>
                         <Button variant="outline" size="sm">
                             <ArrowLeft className="mr-2 h-4 w-4" />
                             Back to Dashboard

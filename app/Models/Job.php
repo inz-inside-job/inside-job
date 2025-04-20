@@ -32,6 +32,7 @@ class Job extends Model
         'salary_max',
         'description',
         'visit_count',
+        'requirements',
     ];
 
     /**

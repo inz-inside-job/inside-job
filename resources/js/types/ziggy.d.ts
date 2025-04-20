@@ -136,6 +136,63 @@ declare module 'ziggy-js' {
             "binding": "slug"
         }
     ],
+    "dashboard.jobs": [
+        {
+            "name": "company",
+            "required": true,
+            "binding": "slug"
+        }
+    ],
+    "dashboard.jobs.create": [
+        {
+            "name": "company",
+            "required": true,
+            "binding": "slug"
+        }
+    ],
+    "dashboard.jobs.store": [
+        {
+            "name": "company",
+            "required": true,
+            "binding": "slug"
+        }
+    ],
+    "dashboard.jobs.edit": [
+        {
+            "name": "company",
+            "required": true,
+            "binding": "slug"
+        },
+        {
+            "name": "job",
+            "required": true,
+            "binding": "slug"
+        }
+    ],
+    "dashboard.jobs.update": [
+        {
+            "name": "company",
+            "required": true,
+            "binding": "slug"
+        },
+        {
+            "name": "job",
+            "required": true,
+            "binding": "slug"
+        }
+    ],
+    "dashboard.jobs.destroy": [
+        {
+            "name": "company",
+            "required": true,
+            "binding": "slug"
+        },
+        {
+            "name": "job",
+            "required": true,
+            "binding": "slug"
+        }
+    ],
     "storage.local": [
         {
             "name": "path",
