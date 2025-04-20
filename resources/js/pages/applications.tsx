@@ -178,7 +178,7 @@ export default function ApplicationsPage({ applications }: { applications: App.D
 
                                         <div>
                                             <Label className="text-muted-foreground mb-1 block">Resume</Label>
-                                            <a href={application.resume} download target="_blank">
+                                            <a href={application.resume} download target="_blank" rel="noopener noreferrer">
                                                 <Button variant="outline" size="sm">
                                                     <FileText className="mr-1 h-4 w-4" /> Download Resume
                                                 </Button>
