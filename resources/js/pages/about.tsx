@@ -64,7 +64,7 @@ export default function AboutPage() {
         {
             name: 'Redas Domkus',
             role: 'Developer',
-            image: 'https://cdn.discordapp.com/attachments/320547336319401984/1361524212724007024/vABfNPF.jpeg?ex=67ff11bc&is=67fdc03c&hm=b63e864db6f55b80a61c106afdb6a1178353a148204d0a9dafc638c4ef4d5a0f&',
+            image: '/redas.png',
             bio: 'Student at Kaunas University of Technology, specializing in Software Engineering. Focused on backend development and database management.',
             links: {
                 github: 'https://github.com/redas-dev',
@@ -75,7 +75,7 @@ export default function AboutPage() {
         {
             name: 'Gintaras Gaučys',
             role: 'Developer',
-            image: 'https://media.discordapp.net/attachments/320547336319401984/1361524653365137510/image.png?ex=67ff1225&is=67fdc0a5&hm=c06849e0e624d50aab7851dc82df5f897ffd738632ac8b347279c3cf29f4ea48&=&format=webp&quality=lossless',
+            image: '/gintaras.png',
             bio: 'Student at Kaunas University of Technology, specializing in Software Engineering. Focused on frontend development and user experience design.',
             links: {
                 github: 'https://github.com/gintaras741',
@@ -116,7 +116,7 @@ export default function AboutPage() {
 
                 {/* Simplified wave divider */}
                 <div
-                    className="h-16 bg-white"
+                    className="bg-background h-16"
                     style={{
                         clipPath: 'polygon(0 100%, 100% 100%, 100% 0, 75% 100%, 50% 0, 25% 100%, 0 0)',
                     }}
@@ -124,7 +124,7 @@ export default function AboutPage() {
             </section>
 
             {/* Mission Section */}
-            <section ref={missionRef} className="bg-white py-20">
+            <section ref={missionRef} className="bg-backgroound py-20">
                 <div className="container mx-auto px-4">
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}
@@ -134,38 +134,38 @@ export default function AboutPage() {
                     >
                         <Badge className="mb-4 bg-orange-100 text-orange-500 hover:bg-orange-100">Our Mission</Badge>
                         <h2 className="mb-6 text-3xl font-bold md:text-4xl">Reimagining Career Discovery</h2>
-                        <p className="mb-8 text-lg text-gray-700">
+                        <p className="text-muted-foreground mb-8 text-lg">
                             As part of our Software Systems Engineering class at Kaunas University of Technology, we were tasked with creating a group
                             project. We chose to create a Glassdoor type website because we believe in the power of transparency in the job market and
                             wanted to understand the technical challenges behind building such a platform.
                         </p>
                         <div className="grid gap-8 text-left md:grid-cols-3">
-                            <div className="rounded-lg bg-gray-50 p-6">
+                            <div className="bg-background rounded-lg p-6">
                                 <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-orange-100 p-3">
                                     <BookOpen className="h-6 w-6 text-orange-500" />
                                 </div>
                                 <h3 className="mb-2 text-xl font-semibold">Educational Purpose</h3>
-                                <p className="text-gray-600">
+                                <p className="text-muted-foreground">
                                     This project serves as a hands-on learning experience to apply web development concepts in a real-world scenario.
                                 </p>
                             </div>
 
-                            <div className="rounded-lg bg-gray-50 p-6">
+                            <div className="bg-background rounded-lg p-6">
                                 <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-orange-100 p-3">
                                     <Code className="h-6 w-6 text-orange-500" />
                                 </div>
                                 <h3 className="mb-2 text-xl font-semibold">Technical Challenge</h3>
-                                <p className="text-gray-600">
+                                <p className="text-muted-foreground">
                                     We challenged ourselves to implement complex features like job search, company reviews, and user authentication.
                                 </p>
                             </div>
 
-                            <div className="rounded-lg bg-gray-50 p-6">
+                            <div className="bg-background rounded-lg p-6">
                                 <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-orange-100 p-3">
                                     <Users className="h-6 w-6 text-orange-500" />
                                 </div>
                                 <h3 className="mb-2 text-xl font-semibold">Collaboration</h3>
-                                <p className="text-gray-600">
+                                <p className="text-muted-foreground">
                                     Working as a team allowed us to divide responsibilities, practice git workflows, and simulate a professional
                                     development environment.
                                 </p>
@@ -176,7 +176,7 @@ export default function AboutPage() {
             </section>
 
             {/* Team Section - Simplified animations */}
-            <section ref={teamRef} className="bg-gray-50 py-20">
+            <section ref={teamRef} className="bg-background py-20">
                 <div className="container mx-auto px-4">
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}
@@ -186,7 +186,7 @@ export default function AboutPage() {
                     >
                         <Badge className="mb-4 bg-orange-100 text-orange-500 hover:bg-orange-100">Our Team</Badge>
                         <h2 className="mb-6 text-3xl font-bold md:text-4xl">Meet the Developers</h2>
-                        <p className="text-lg text-gray-700">
+                        <p className="text-muted-foreground text-lg">
                             We're a team of three university students passionate about web development and user experience design.
                         </p>
                     </motion.div>
@@ -226,7 +226,7 @@ export default function AboutPage() {
                                 <CardContent className="p-6">
                                     <h3 className="mb-1 text-xl font-semibold">{member.name}</h3>
                                     <div className="mb-3 text-sm text-orange-500">{member.role}</div>
-                                    <p className="text-sm text-gray-600">{member.bio}</p>
+                                    <p className="text-muted-foreground text-sm">{member.bio}</p>
                                 </CardContent>
                             </Card>
                         ))}
@@ -235,7 +235,7 @@ export default function AboutPage() {
             </section>
 
             {/* Project Details Section - Simplified */}
-            <section ref={projectRef} className="bg-white py-20">
+            <section ref={projectRef} className="bg-background py-20">
                 <div className="container mx-auto px-4">
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}
@@ -246,7 +246,7 @@ export default function AboutPage() {
                         <div className="mb-12 text-center">
                             <Badge className="mb-4 bg-orange-100 text-orange-500 hover:bg-orange-100">Project Details</Badge>
                             <h2 className="mb-6 text-3xl font-bold md:text-4xl">About Our University Project</h2>
-                            <p className="text-lg text-gray-700">InsideJob was developed as our project for Software Systems Engineering</p>
+                            <p className="text-muted-foreground text-lg">InsideJob was developed as our project for Software Systems Engineering</p>
                         </div>
 
                         <div className="grid items-center gap-12 md:grid-cols-2">
@@ -259,7 +259,7 @@ export default function AboutPage() {
                                         </div>
                                         <div>
                                             <span className="block font-medium">Software Systems Engineering</span>
-                                            <span className="text-sm text-gray-600">Spring 2025 Semester</span>
+                                            <span className="text-muted-foreground text-sm">Spring 2025 Semester</span>
                                         </div>
                                     </li>
                                     <li className="flex items-start">
@@ -268,14 +268,14 @@ export default function AboutPage() {
                                         </div>
                                         <div>
                                             <span className="block font-medium">Project Duration: 1 Semester (~ 4months)</span>
-                                            <span className="text-sm text-gray-600">February 1 - May 30, 2025</span>
+                                            <span className="text-muted-foreground text-sm">February 1 - May 30, 2025</span>
                                         </div>
                                     </li>
                                 </ul>
 
                                 <div className="mt-8">
                                     <h3 className="mb-4 text-2xl font-bold">Project Requirements</h3>
-                                    <ul className="space-y-2 text-gray-700">
+                                    <ul className="text-muted-foreground space-y-2">
                                         <li className="flex items-center">
                                             <div className="mr-3 h-2 w-2 rounded-full bg-orange-500"></div>
                                             Create a functional clone Glassdoor
@@ -300,14 +300,14 @@ export default function AboutPage() {
                                 </div>
                             </div>
 
-                            <div className="rounded-lg bg-gray-100 p-8">
+                            <div className="bg-background rounded-lg p-8">
                                 <h3 className="mb-6 text-2xl font-bold">Our Process</h3>
 
                                 <div className="space-y-8">
                                     <div className="relative border-l-2 border-orange-200 pb-8 pl-8">
                                         <div className="absolute top-0 left-[-9px] h-4 w-4 rounded-full bg-orange-500"></div>
                                         <h4 className="mb-2 text-lg font-semibold">Research & Planning</h4>
-                                        <p className="text-sm text-gray-600">
+                                        <p className="text-muted-foreground text-sm">
                                             We analyzed Glassdoor's features, user flows, and design patterns to understand what makes the platform
                                             effective. Then we created wireframes and a project roadmap.
                                         </p>
@@ -316,7 +316,7 @@ export default function AboutPage() {
                                     <div className="relative border-l-2 border-orange-200 pb-8 pl-8">
                                         <div className="absolute top-0 left-[-9px] h-4 w-4 rounded-full bg-orange-500"></div>
                                         <h4 className="mb-2 text-lg font-semibold">Design & Development</h4>
-                                        <p className="text-sm text-gray-600">
+                                        <p className="text-muted-foreground text-sm">
                                             We built the frontend components using React and shadcn, implemented responsive design with Tailwind CSS,
                                             and created the backend with Laravel.
                                         </p>
@@ -325,7 +325,7 @@ export default function AboutPage() {
                                     <div className="relative pl-8">
                                         <div className="absolute top-0 left-[-9px] h-4 w-4 rounded-full bg-orange-500"></div>
                                         <h4 className="mb-2 text-lg font-semibold">Testing & Refinement</h4>
-                                        <p className="text-sm text-gray-600">
+                                        <p className="text-muted-foreground text-sm">
                                             We conducted user testing with classmates, gathered feedback, and made iterative improvements to enhance
                                             the user experience and fix bugs.
                                         </p>
@@ -338,7 +338,7 @@ export default function AboutPage() {
             </section>
 
             {/* Technologies Section - Simplified */}
-            <section ref={techRef} className="bg-gray-50 py-20">
+            <section ref={techRef} className="bg-background py-20">
                 <div className="container mx-auto px-4">
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}
@@ -348,7 +348,7 @@ export default function AboutPage() {
                     >
                         <Badge className="mb-4 bg-orange-100 text-orange-500 hover:bg-orange-100">Tech Stack</Badge>
                         <h2 className="mb-6 text-3xl font-bold md:text-4xl">Technologies We Used</h2>
-                        <p className="text-lg text-gray-700">
+                        <p className="text-muted-foreground text-lg">
                             Our project leverages modern web technologies to create a responsive and interactive user experience
                         </p>
                     </motion.div>
@@ -371,7 +371,7 @@ export default function AboutPage() {
                             ))}
                         </div>
 
-                        <div className="rounded-lg bg-white p-8 shadow-sm">
+                        <div className="bg-background rounded-lg p-8 shadow-sm">
                             <h3 className="mb-6 text-center text-xl font-bold">Learning Outcomes</h3>
                             <div className="grid gap-6 md:grid-cols-2">
                                 <div className="space-y-4">
@@ -381,7 +381,7 @@ export default function AboutPage() {
                                         </div>
                                         <div>
                                             <h4 className="font-semibold">Modern Web Development</h4>
-                                            <p className="text-sm text-gray-600">
+                                            <p className="text-muted-foreground text-sm">
                                                 Gained hands-on experience with React, Laravel, and TypeScript in a complex application
                                             </p>
                                         </div>
@@ -392,7 +392,7 @@ export default function AboutPage() {
                                         </div>
                                         <div>
                                             <h4 className="font-semibold">Team Collaboration</h4>
-                                            <p className="text-sm text-gray-600">
+                                            <p className="text-muted-foreground text-sm">
                                                 Practiced git workflows, code reviews, and agile development methodologies
                                             </p>
                                         </div>
@@ -406,7 +406,7 @@ export default function AboutPage() {
                                         </div>
                                         <div>
                                             <h4 className="font-semibold">Problem Solving</h4>
-                                            <p className="text-sm text-gray-600">
+                                            <p className="text-muted-foreground text-sm">
                                                 Developed critical thinking skills by tackling complex technical challenges
                                             </p>
                                         </div>
@@ -417,7 +417,7 @@ export default function AboutPage() {
                                         </div>
                                         <div>
                                             <h4 className="font-semibold">Real-world Application</h4>
-                                            <p className="text-sm text-gray-600">
+                                            <p className="text-muted-foreground text-sm">
                                                 Applied classroom concepts to build a practical, production-quality web application
                                             </p>
                                         </div>
