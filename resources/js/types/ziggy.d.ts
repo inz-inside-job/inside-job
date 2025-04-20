@@ -124,8 +124,9 @@ declare module 'ziggy-js' {
     "dashboard": [],
     "dashboard.view": [
         {
-            "name": "slug",
-            "required": true
+            "name": "company",
+            "required": true,
+            "binding": "slug"
         }
     ],
     "dashboard.edit": [

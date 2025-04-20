@@ -32,10 +32,8 @@ class CompanyDashboardController
         ]);
     }
 
-    public function edit(string $slug)
+    public function edit(Company $company)
     {
-        $company = Company::whereSlug($slug)->firstOrFail();
-
         Gate::authorize('view', $company);
 
         return Inertia::render('dashboard/company-edit', [

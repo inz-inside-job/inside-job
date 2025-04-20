@@ -39,19 +39,21 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
+        $admin = $request->user()?->hasRole(UserRole::ADMIN) ?? false;
+
         return [
             ...parent::share($request),
             'name' => config('app.name'),
             'auth' => [
                 'status' => $request->session()->get('status'),
                 'user' => $request->user(),
-                'isAdmin' => $request->user()?->hasRole(UserRole::ADMIN) ?? false,
+                'isAdmin' => $admin,
                 'canViewDashboard' => $request->user() && (
                     (
                         CompanyUser::where('user_id', $request->user()->id)->get()->contains(function (CompanyUser $companyUser) {
                             return $companyUser->hasPermissionTo(CompanyUserPermission::VIEW_COMPANY_DETAILS);
                         })
-                        || $request->user()->hasRole(UserRole::ADMIN)
+                        || $admin
                     )
                 ),
             ],

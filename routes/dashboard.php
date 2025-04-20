@@ -1,15 +1,16 @@
 <?php
 
 use App\Http\Controllers\Dashboard\CompanyDashboardController;
-use App\Http\Middleware\HandleEditDashboard;
-use App\Http\Middleware\HandleViewDashboard;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware(['auth', HandleViewDashboard::class])->group(function () {
-    Route::get('/dashboard', [CompanyDashboardController::class, 'dashboard'])->name('dashboard');
-    Route::get('/dashboard/{slug}/edit', [CompanyDashboardController::class, 'edit'])->name('dashboard.view');
+Route::group(['middleware' => 'auth', 'prefix' => 'dashboard'], function () {
+    Route::get('/', [CompanyDashboardController::class, 'dashboard'])->name('dashboard');
 
-    Route::post('/dashboard/{company}/edit', [CompanyDashboardController::class, 'update'])
-        ->middleware([HandleEditDashboard::class])
-        ->name('dashboard.edit');
+    Route::group(['prefix' => '{company}'], function () {
+        Route::get('edit', [CompanyDashboardController::class, 'edit'])
+            ->name('dashboard.view');
+
+        Route::post('edit', [CompanyDashboardController::class, 'update'])
+            ->name('dashboard.edit');
+    });
 });
