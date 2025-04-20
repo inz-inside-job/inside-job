@@ -64,6 +64,7 @@ export default function ApplicationsPage({ applications }: { applications: App.D
             onSuccess: () => {
                 toast.success(`Application status updated to ${data.status}`);
                 setConfirmationDialogOpen(false);
+                setModalOpen(false);
                 setSelectedApplication(null);
             },
             onError: () => {
@@ -177,9 +178,11 @@ export default function ApplicationsPage({ applications }: { applications: App.D
 
                                         <div>
                                             <Label className="text-muted-foreground mb-1 block">Resume</Label>
-                                            <Button variant="outline" size="sm">
-                                                <FileText className="mr-1 h-4 w-4" /> Download Resume
-                                            </Button>
+                                            <a href={application.resume} download target="_blank">
+                                                <Button variant="outline" size="sm">
+                                                    <FileText className="mr-1 h-4 w-4" /> Download Resume
+                                                </Button>
+                                            </a>
                                         </div>
                                     </div>
 

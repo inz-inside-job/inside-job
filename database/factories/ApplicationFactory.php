@@ -24,7 +24,7 @@ class ApplicationFactory extends Factory
             'phone' => $this->faker->phoneNumber,
             'linkedin' => $this->faker->url,
             'portfolio' => $this->faker->url,
-            'resume' => $this->faker->word.'.pdf',
+            'resume' => $this->faker->url,
             'cover_letter' => $this->faker->paragraph,
         ];
     }

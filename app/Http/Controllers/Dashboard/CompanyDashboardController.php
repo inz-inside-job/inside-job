@@ -95,7 +95,7 @@ class CompanyDashboardController
 
     public function applications(Company $company)
     {
-        // TODO: AUTHORIZE
+        Gate::authorize('index', $company);
 
         $applications = Application::query()
             ->whereHas('job', function ($query) use ($company) {
@@ -112,8 +112,8 @@ class CompanyDashboardController
 
     public function updateApplication(Request $request, Company $company, Application $application)
     {
-        // TODO: AUTHORIZE
-        // Gate::authorize('update', $application);
+        Gate::authorize('acceptOrDeny', [$application, 'update']);
+
         $application->update([
             'status' => request()->input('status'),
         ]);
