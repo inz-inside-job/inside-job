@@ -206,6 +206,16 @@ requirements: Array<string>;
 visit_count: number;
 applications_count: number;
 };
+export type JobFormData = {
+title: string;
+location: string;
+employment_type: App.Enums.EmploymentType;
+employment_experience: App.Enums.EmploymentExperience;
+salary_min: number;
+salary_max: number;
+description: string;
+requirements: Array<string>;
+};
 }
 declare namespace App.Data.Search {
 export type SearchResultData = {
