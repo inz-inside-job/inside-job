@@ -53,7 +53,7 @@ export default function AboutPage() {
         {
             name: 'Linas Aleksandravičius',
             role: 'Scrum Master',
-            image: 'https://avatars.fastly.steamstatic.com/0c14867f81304d13c601c0208128e245a0ea7c61_full.jpg',
+            image: '/images/linas.jpg',
             bio: 'Student at Kaunas University of Technology, specializing in Software Engineering. Responsible for project management and team coordination.',
             links: {
                 github: 'https://github.com/Linux123123',
@@ -64,7 +64,7 @@ export default function AboutPage() {
         {
             name: 'Redas Domkus',
             role: 'Developer',
-            image: '/redas.png',
+            image: '/images/redas.png',
             bio: 'Student at Kaunas University of Technology, specializing in Software Engineering. Focused on backend development and database management.',
             links: {
                 github: 'https://github.com/redas-dev',
@@ -75,7 +75,7 @@ export default function AboutPage() {
         {
             name: 'Gintaras Gaučys',
             role: 'Developer',
-            image: '/gintaras.png',
+            image: '/images/gintaras.png',
             bio: 'Student at Kaunas University of Technology, specializing in Software Engineering. Focused on frontend development and user experience design.',
             links: {
                 github: 'https://github.com/gintaras741',
