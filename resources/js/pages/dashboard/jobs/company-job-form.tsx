@@ -63,7 +63,7 @@ export default function JobForm({ job, company }: { job: App.Data.Jobs.JobData |
                                 <CardTitle>{isEditMode ? 'Edit Job' : 'Create New Job'}</CardTitle>
                                 {/* TODO: implement link */}
                                 {isEditMode && job && (
-                                    <Link href={`/dashboard/jobs/${company.slug}/applications`}>
+                                    <Link href={route('dashboard.applications', { company: company.slug })}>
                                         <Button variant="outline">
                                             <Users className="mr-2 h-4 w-4" />
                                             Applications ({job.applications_count})
