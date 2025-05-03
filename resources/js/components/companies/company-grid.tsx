@@ -40,13 +40,19 @@ export function CompanyGrid() {
                 <div className="flex items-center gap-2">
                     <span className="text-sm text-gray-500">Sort by:</span>
                     <Select defaultValue="rating" value={sortOption} onValueChange={onSortChange}>
-                        <SelectTrigger className="w-[180px]">
+                        <SelectTrigger className="w-[180px] cursor-pointer">
                             <SelectValue placeholder="Sort by" />
                         </SelectTrigger>
                         <SelectContent>
-                            <SelectItem value="rating">Highest Rating</SelectItem>
-                            <SelectItem value="reviews">Most Reviews</SelectItem>
-                            <SelectItem value="recommend">Most Recommended</SelectItem>
+                            <SelectItem className={'cursor-pointer'} value="rating">
+                                Highest Rating
+                            </SelectItem>
+                            <SelectItem className={'cursor-pointer'} value="reviews">
+                                Most Reviews
+                            </SelectItem>
+                            <SelectItem className={'cursor-pointer'} value="recommend">
+                                Most Recommended
+                            </SelectItem>
                         </SelectContent>
                     </Select>
                 </div>

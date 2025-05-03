@@ -130,7 +130,9 @@ export default function ClaimsTable({ status }: ClaimsTableProps) {
                                             </DropdownMenuTrigger>
                                             <DropdownMenuContent align="end">
                                                 <DropdownMenuItem asChild>
-                                                    <Link href={`/admin/claims/${claim.id}`}>View Details</Link>
+                                                    <Link className={'cursor-pointer'} href={`/admin/claims/${claim.id}`}>
+                                                        View Details
+                                                    </Link>
                                                 </DropdownMenuItem>
                                             </DropdownMenuContent>
                                         </DropdownMenu>

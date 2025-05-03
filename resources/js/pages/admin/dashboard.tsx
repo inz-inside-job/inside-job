@@ -20,9 +20,15 @@ export default function AdminDashboard() {
 
                 <Tabs defaultValue="pending" className="space-y-4">
                     <TabsList>
-                        <TabsTrigger value="pending">Pending</TabsTrigger>
-                        <TabsTrigger value="approved">Approved</TabsTrigger>
-                        <TabsTrigger value="rejected">Rejected</TabsTrigger>
+                        <TabsTrigger className={'cursor-pointer'} value="pending">
+                            Pending
+                        </TabsTrigger>
+                        <TabsTrigger className={'cursor-pointer'} value="approved">
+                            Approved
+                        </TabsTrigger>
+                        <TabsTrigger className={'cursor-pointer'} value="rejected">
+                            Rejected
+                        </TabsTrigger>
                     </TabsList>
                     <TabsContent value="pending" className="space-y-4">
                         <Card>
