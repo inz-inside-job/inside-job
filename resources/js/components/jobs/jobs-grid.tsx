@@ -39,13 +39,19 @@ export function JobList() {
                 <div className="flex items-center gap-2">
                     <span className="text-sm text-gray-500">Sort by:</span>
                     <Select defaultValue={sortOption} onValueChange={onSortChange}>
-                        <SelectTrigger className="w-[180px]">
+                        <SelectTrigger className="w-[180px] cursor-pointer">
                             <SelectValue placeholder="Sort by" />
                         </SelectTrigger>
                         <SelectContent>
-                            <SelectItem value="datePosted">Date Posted</SelectItem>
-                            <SelectItem value="relevance">Relevance</SelectItem>
-                            <SelectItem value="salary">Salary</SelectItem>
+                            <SelectItem className={'cursor-pointer'} value="datePosted">
+                                Date Posted
+                            </SelectItem>
+                            <SelectItem className={'cursor-pointer'} value="relevance">
+                                Relevance
+                            </SelectItem>
+                            <SelectItem className={'cursor-pointer'} value="salary">
+                                Salary
+                            </SelectItem>
                         </SelectContent>
                     </Select>
                 </div>

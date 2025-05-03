@@ -19,7 +19,7 @@ export function AdminSidebar() {
     ];
 
     return (
-        <div className="bg-background hidden h-screen w-fit border-r md:block">
+        <div>
             <div className="flex h-full max-h-screen flex-col gap-2">
                 <div className="flex items-center border-b px-4 py-2">
                     <Link href="/admin" className="flex items-center gap-2 font-semibold">

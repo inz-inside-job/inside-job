@@ -85,28 +85,28 @@ export function JobFilters() {
 
             <Accordion type="multiple" defaultValue={['jobType']}>
                 <AccordionItem value="datePosted">
-                    <AccordionTrigger>Date Posted</AccordionTrigger>
+                    <AccordionTrigger className={'cursor-pointer'}>Date Posted</AccordionTrigger>
                     <AccordionContent>
                         <div className="space-y-2">
-                            <div className="flex items-center space-x-2">
+                            <div className="flex cursor-pointer items-center space-x-2">
                                 <Checkbox id="date-any" checked={datePosted === 'any'} onCheckedChange={() => setDatePosted('any')} />
                                 <label htmlFor="date-any" className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
                                     Any time
                                 </label>
                             </div>
-                            <div className="flex items-center space-x-2">
+                            <div className="flex cursor-pointer items-center space-x-2">
                                 <Checkbox id="date-day" checked={datePosted === '1 day ago'} onCheckedChange={() => setDatePosted('1 day ago')} />
                                 <label htmlFor="date-day" className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
                                     Past 24 hours
                                 </label>
                             </div>
-                            <div className="flex items-center space-x-2">
+                            <div className="flex cursor-pointer items-center space-x-2">
                                 <Checkbox id="date-week" checked={datePosted === '1 week ago'} onCheckedChange={() => setDatePosted('1 week ago')} />
                                 <label htmlFor="date-week" className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
                                     Past week
                                 </label>
                             </div>
-                            <div className="flex items-center space-x-2">
+                            <div className="flex cursor-pointer items-center space-x-2">
                                 <Checkbox
                                     id="date-month"
                                     checked={datePosted === '1 month ago'}
@@ -124,19 +124,20 @@ export function JobFilters() {
                 </AccordionItem>
 
                 <AccordionItem value="jobType">
-                    <AccordionTrigger>Job Type</AccordionTrigger>
+                    <AccordionTrigger className={'cursor-pointer'}>Job Type</AccordionTrigger>
                     <AccordionContent>
                         <div className="space-y-2">
                             {jobTypes.map((type) => (
-                                <div key={type} className="flex items-center space-x-2">
+                                <div key={type} className="flexitems-center cursor-pointer space-x-2">
                                     <Checkbox
+                                        className={'cursor-pointer'}
                                         id={`type-${type}`}
                                         checked={selectedJobTypes.includes(type)}
                                         onCheckedChange={() => toggleJobType(type)}
                                     />
                                     <label
                                         htmlFor={`type-${type}`}
-                                        className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                        className="cursor-pointer text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                                     >
                                         {type}
                                     </label>
@@ -147,7 +148,7 @@ export function JobFilters() {
                 </AccordionItem>
 
                 <AccordionItem value="salary">
-                    <AccordionTrigger>Salary Range</AccordionTrigger>
+                    <AccordionTrigger className={'cursor-pointer'}>Salary Range</AccordionTrigger>
                     <AccordionContent>
                         <div className="space-y-4">
                             <div className="flex items-center justify-between">
@@ -164,19 +165,20 @@ export function JobFilters() {
                 </AccordionItem>
 
                 <AccordionItem value="experience">
-                    <AccordionTrigger>Experience Level</AccordionTrigger>
+                    <AccordionTrigger className={'cursor-pointer'}>Experience Level</AccordionTrigger>
                     <AccordionContent>
                         <div className="space-y-2">
                             {experienceLevels.map((level) => (
-                                <div key={level} className="flex items-center space-x-2">
+                                <div key={level} className="flex cursor-pointer items-center space-x-2">
                                     <Checkbox
+                                        className={'cursor-pointer'}
                                         id={`level-${level}`}
                                         checked={selectedExperienceLevels.includes(level)}
                                         onCheckedChange={() => toggleExperienceLevel(level)}
                                     />
                                     <label
                                         htmlFor={`level-${level}`}
-                                        className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                        className="cursor-pointer text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                                     >
                                         {level}
                                     </label>
@@ -187,19 +189,20 @@ export function JobFilters() {
                 </AccordionItem>
 
                 <AccordionItem value="industry">
-                    <AccordionTrigger>Industry</AccordionTrigger>
+                    <AccordionTrigger className={'cursor-pointer'}>Industry</AccordionTrigger>
                     <AccordionContent>
                         <div className="max-h-60 space-y-2 overflow-y-auto pr-2">
                             {industries.map((industry) => (
-                                <div key={industry} className="flex items-center space-x-2">
+                                <div key={industry} className="flex cursor-pointer items-center space-x-2">
                                     <Checkbox
+                                        className={'cursor-pointer'}
                                         id={`industry-${industry}`}
                                         checked={selectedIndustries.includes(industry)}
                                         onCheckedChange={() => toggleIndustry(industry)}
                                     />
                                     <label
                                         htmlFor={`industry-${industry}`}
-                                        className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                        className="cursor-pointer text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                                     >
                                         {industry}
                                     </label>
@@ -210,7 +213,7 @@ export function JobFilters() {
                 </AccordionItem>
 
                 <AccordionItem value="location">
-                    <AccordionTrigger>Location</AccordionTrigger>
+                    <AccordionTrigger className={'cursor-pointer'}>Location</AccordionTrigger>
                     <AccordionContent>
                         <Input
                             placeholder="City, state, or zip code"

@@ -93,7 +93,7 @@ export function CompanyFilters() {
 
             <Accordion type="multiple" defaultValue={['rating']}>
                 <AccordionItem value="rating">
-                    <AccordionTrigger>Overall Rating</AccordionTrigger>
+                    <AccordionTrigger className={'cursor-pointer'}>Overall Rating</AccordionTrigger>
                     <AccordionContent>
                         <div className="space-y-4">
                             <div className="flex items-center justify-between">
@@ -113,19 +113,20 @@ export function CompanyFilters() {
                 </AccordionItem>
 
                 <AccordionItem value="industry">
-                    <AccordionTrigger>Industry</AccordionTrigger>
+                    <AccordionTrigger className={'cursor-pointer'}>Industry</AccordionTrigger>
                     <AccordionContent>
                         <div className="max-h-60 space-y-3 overflow-y-auto pr-2">
                             {industries.map((industry) => (
-                                <div key={industry} className="flex items-center space-x-2">
+                                <div key={industry} className="flex cursor-pointer items-center space-x-2">
                                     <Checkbox
+                                        className={'cursor-pointer'}
                                         id={`industry-${industry}`}
                                         checked={selectedIndustries.includes(industry)}
                                         onCheckedChange={() => toggleIndustry(industry)}
                                     />
                                     <label
                                         htmlFor={`industry-${industry}`}
-                                        className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                        className="cursor-pointer text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                                     >
                                         {industry}
                                     </label>
@@ -136,19 +137,20 @@ export function CompanyFilters() {
                 </AccordionItem>
 
                 <AccordionItem value="size">
-                    <AccordionTrigger>Company Size</AccordionTrigger>
+                    <AccordionTrigger className={'cursor-pointer'}>Company Size</AccordionTrigger>
                     <AccordionContent>
                         <div className="space-y-3">
                             {companySize.map((size) => (
-                                <div key={size.label} className="flex items-center space-x-2">
+                                <div key={size.label} className="flex cursor-pointer items-center space-x-2">
                                     <Checkbox
+                                        className={'cursor-pointer'}
                                         id={`size-${size.label}`}
                                         checked={selectedCompanySizes.some((item) => item.min === size.min && item.max === size.max)}
                                         onCheckedChange={() => toggleCompanySize(size)}
                                     />
                                     <label
                                         htmlFor={`size-${size.label}`}
-                                        className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                        className="cursor-pointer text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                                     >
                                         {size.label}
                                     </label>
@@ -159,7 +161,7 @@ export function CompanyFilters() {
                 </AccordionItem>
 
                 <AccordionItem value="location">
-                    <AccordionTrigger>Location</AccordionTrigger>
+                    <AccordionTrigger className={'cursor-pointer'}>Location</AccordionTrigger>
                     <AccordionContent>
                         <Input
                             placeholder="City, state, or zip code"

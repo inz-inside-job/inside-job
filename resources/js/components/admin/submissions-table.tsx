@@ -133,7 +133,9 @@ export function SubmissionsTable({ status }: SubmissionsTableProps) {
                                             </DropdownMenuTrigger>
                                             <DropdownMenuContent align="end">
                                                 <DropdownMenuItem asChild>
-                                                    <Link href={`/admin/submissions/${submission.id}`}>View Details</Link>
+                                                    <Link className={'cursor-pointer'} href={`/admin/submissions/${submission.id}`}>
+                                                        View Details
+                                                    </Link>
                                                 </DropdownMenuItem>
                                             </DropdownMenuContent>
                                         </DropdownMenu>
