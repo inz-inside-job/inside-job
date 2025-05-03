@@ -128,7 +128,7 @@ export function JobFilters() {
                     <AccordionContent>
                         <div className="space-y-2">
                             {jobTypes.map((type) => (
-                                <div key={type} className="flexitems-center cursor-pointer space-x-2">
+                                <div key={type} className="flex cursor-pointer items-center space-x-2">
                                     <Checkbox
                                         className={'cursor-pointer'}
                                         id={`type-${type}`}
