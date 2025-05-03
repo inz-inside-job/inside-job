@@ -249,10 +249,6 @@ description: string;
 };
 }
 declare namespace App.Enums {
-export type ApplicationStatus = 'Applied' | 'Invited' | 'Rejected';
-export type CompanySubmissionStatus = 'pending' | 'approved' | 'rejected';
-export type CompanyType = 'Public' | 'Private' | 'Non-profit';
-export type CompanyUserPermission = 'view company details' | 'edit company details' | 'delete company' | 'view employee' | 'edit employee' | 'add employee' | 'delete employee' | 'view job' | 'edit job' | 'create job' | 'delete job' | 'view job application' | 'accept job application' | 'decline job application';
 export type UserPermission = {
 name: string;
 value: string;
