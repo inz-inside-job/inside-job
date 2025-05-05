@@ -54,6 +54,17 @@ jobs:
   phpstan:
     name: PHPStan
     runs-on: ubuntu-latest
+
+    services:
+      database:
+        image: docker.io/library/mariadb:10.6
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
+          MYSQL_DATABASE: testing
+        ports:
+          - 3306/tcp
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
     steps:
       - uses: actions/checkout@v4
       - uses: shivammathur/setup-php@v2
@@ -70,6 +81,8 @@ jobs:
           DB_PORT: ${{ job.services.database.ports[3306] }}
         run: php artisan migrate --force
       - name: Ide Helper
+        env:
+          DB_PORT: ${{ job.services.database.ports[3306] }}
         run: php artisan ide-helper:all
       - name: Run PHPStan
         run: vendor/bin/phpstan analyse --memory-limit=2G --error-format=github
