@@ -63,6 +63,12 @@ jobs:
         run: php -r "file_exists('.env') || copy('.env.ci.example', '.env');"
       - name: Install Composer Dependencies
         run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+      - name: Generate key
+        run: php artisan key:generate
+      - name: Migrate database
+        env:
+          DB_PORT: ${{ job.services.database.ports[3306] }}
+        run: php artisan migrate --force
       - name: Ide Helper
         run: php artisan ide-helper:all
       - name: Run PHPStan
