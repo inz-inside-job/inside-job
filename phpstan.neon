@@ -3,13 +3,10 @@ includes:
     - vendor/nesbot/carbon/extension.neon
 
 parameters:
-
     paths:
         - app/
 
-    level: 5
+    scanFiles:
+        - _ide_helper_models.php
 
-    ignoreErrors:
-        -
-            message: '#PHPDoc tag @mixin contains unknown class App\\Models\\[a-zA-Z0-9\\_]+.#'
-            path: app
+    level: 5

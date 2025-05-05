@@ -63,5 +63,7 @@ jobs:
         run: php -r "file_exists('.env') || copy('.env.ci.example', '.env');"
       - name: Install Composer Dependencies
         run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+      - name: Ide Helper
+        run: php artisan ide-helper:all
       - name: Run PHPStan
         run: vendor/bin/phpstan analyse --memory-limit=2G --error-format=github
