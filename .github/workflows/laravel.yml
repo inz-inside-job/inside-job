@@ -83,6 +83,7 @@ jobs:
       - name: Ide Helper
         env:
           DB_PORT: ${{ job.services.database.ports[3306] }}
+          NO_CACHE: 'true'
         run: php artisan ide-helper:all
       - name: Run PHPStan
         run: vendor/bin/phpstan analyse --memory-limit=2G --error-format=github
