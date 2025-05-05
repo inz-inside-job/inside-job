@@ -1,4 +1,4 @@
-name: Tests
+name: Laravel
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
 
 jobs:
   tests:
-    name: Laravel Tests
+    name: Tests
     runs-on: ubuntu-latest
 
     services:
@@ -50,3 +50,18 @@ jobs:
         env:
           DB_PORT: ${{ job.services.database.ports[3306] }}
         run: php artisan test --coverage
+
+  phpstan:
+    name: PHPStan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+      - name: Copy .env
+        run: php -r "file_exists('.env') || copy('.env.ci.example', '.env');"
+      - name: Install Composer Dependencies
+        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+      - name: Run PHPStan
+        run: vendor/bin/phpstan analyse --memory-limit=2G
