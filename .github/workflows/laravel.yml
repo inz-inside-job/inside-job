@@ -79,6 +79,7 @@ jobs:
       - name: Migrate database
         env:
           DB_PORT: ${{ job.services.database.ports[3306] }}
+          NO_CACHE: 'true'
         run: php artisan migrate --force
       - name: Ide Helper
         env:
