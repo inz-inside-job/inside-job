@@ -42,8 +42,6 @@ class AdminUser extends Command implements PromptsForMissingInput
 
     /**
      * Prompt for missing input arguments using the returned questions.
-     *
-     * @return array<string, string>
      */
     protected function promptForMissingArgumentsUsing(): array
     {

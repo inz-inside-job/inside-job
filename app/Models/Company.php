@@ -63,10 +63,10 @@ class Company extends Model
             ->using(CompanyFollowed::class);
     }
 
-    public function getFollowedAttribute(): ?float
+    public function getFollowedAttribute(): bool
     {
         // If scoped with followed
-        if (isset($this->attributes['followed']) && $this->attributes['followed'] !== null) {
+        if (isset($this->attributes['followed']) && $this->attributes['followed'] != null) {
             return $this->attributes['followed'];
         }
 
@@ -107,7 +107,7 @@ class Company extends Model
     public function getRatingAttribute(): ?float
     {
         // If scoped with rating
-        if (isset($this->attributes['rating']) && $this->attributes['rating'] !== null) {
+        if (isset($this->attributes['rating']) && $this->attributes['rating'] != null) {
             return $this->attributes['rating'];
         }
 
@@ -128,7 +128,7 @@ class Company extends Model
     public function getRecommendAttribute(): ?float
     {
         // If scoped with recommended
-        if (isset($this->attributes['recommend']) && $this->attributes['recommend'] !== null) {
+        if (isset($this->attributes['recommend']) && $this->attributes['recommend'] != null) {
             return $this->attributes['recommend'];
         }
 
@@ -156,7 +156,7 @@ class Company extends Model
     public function getAverageSalarayAttribute(): ?float
     {
         // If scoped with rating
-        if (isset($this->attributes['average_salary']) && $this->attributes['average_salary'] !== null) {
+        if (isset($this->attributes['average_salary']) && $this->attributes['average_salary'] != null) {
             return $this->attributes['average_salary'];
         }
 
@@ -186,7 +186,7 @@ class Company extends Model
     public function getApproveOfCeoAttribute(): ?float
     {
         // If scoped with approve_of_ceo
-        if (isset($this->attributes['approve_of_ceo']) && $this->attributes['approve_of_ceo'] !== null) {
+        if (isset($this->attributes['approve_of_ceo']) && $this->attributes['approve_of_ceo'] != null) {
             return $this->attributes['approve_of_ceo'];
         }
 

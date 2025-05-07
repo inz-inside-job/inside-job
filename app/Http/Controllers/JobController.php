@@ -10,7 +10,6 @@ use App\Models\Application;
 use App\Models\Job;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Inertia\Inertia;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedSort;
@@ -23,7 +22,8 @@ class JobController extends Controller
         $params = $request->validated();
 
         $query = Job::with([
-            'company' => fn (BelongsTo $query) => $query->withRating()->withCount('reviews')->withApproveOfCeo(),
+            'company' => fn ($query) => (
+                $query->withRating()->withCount('reviews')->withApproveOfCeo()),
         ])
             ->withCount('applications')
             ->when(! empty($params['query']), function (Builder $query) use ($params) {
@@ -83,7 +83,7 @@ class JobController extends Controller
     public function apply(string $slug)
     {
         $job = Job::whereSlug($slug)->with([
-            'company' => function (BelongsTo $query) {
+            'company' => function ($query) {
                 $query->withRating()->withCount('reviews');
             },
         ])->withCount('applications')->firstOrFail();
@@ -130,7 +130,7 @@ class JobController extends Controller
     public function show(string $slug)
     {
         $job = Job::whereSlug($slug)->with([
-            'company' => fn (BelongsTo $query) => $query->withRating()->withCount('reviews')->withApproveOfCeo(),
+            'company' => fn ($query) => $query->withRating()->withCount('reviews')->withApproveOfCeo(),
         ])->withCount('applications')->firstOrFail();
 
         $job->increment('visit_count');
