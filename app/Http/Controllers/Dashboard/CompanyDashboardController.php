@@ -50,44 +50,12 @@ class CompanyDashboardController
 
         $validated = $request->validated();
 
-        if ($request->file('logo') != null) {
-            $logoPath = $request->file('logo')->store('logos', 'public');
-
-            if (! $logoPath) {
-                return redirect()->back()
-                    ->withErrors('Logo upload failed.');
-            }
-
-            $company->update([
-                'logo' => $logoPath,
-            ]);
+        if (! $this->updateLogoheader($request, $company)) {
+            return redirect()->back()
+                ->with('error', 'Failed to upload logo or header image.');
         }
 
-        if ($request->file('header') != null) {
-            $headerPath = $request->file('header')->store('headers', 'public');
-
-            if (! $headerPath) {
-                return redirect()->back()
-                    ->withErrors('Header upload failed.');
-            }
-
-            $company->update([
-                'header' => $headerPath,
-            ]);
-        }
-
-        $company->update([
-            'name' => $validated['name'],
-            'description' => $validated['description'],
-            'website' => $validated['website'],
-            'industry' => $validated['industry'],
-            'location' => $validated['location'],
-            'mission' => $validated['mission'],
-            'employee_count' => $validated['employee_count'],
-            'type' => $validated['type'],
-            'ceo' => $validated['ceo'],
-            'benefits' => $validated['benefits'],
-        ]);
+        $this->updateCompany($company, $validated);
 
         return redirect()->route('dashboard.view', ['slug' => $company->slug])
             ->with('success', 'Company updated successfully.');
@@ -120,5 +88,50 @@ class CompanyDashboardController
 
         return redirect()->back()
             ->with('success', 'Application status updated successfully.');
+    }
+
+    private function updateLogoheader(UpdateCompanyRequest $request, Company $company): bool
+    {
+        if ($request->file('logo') != null) {
+            $logoPath = $request->file('logo')->store('logos', 'public');
+
+            if (! $logoPath) {
+                return false; // Added return to stop execution if logo upload fails
+            }
+
+            $company->update([
+                'logo' => $logoPath,
+            ]);
+        }
+
+        if ($request->file('header') != null) {
+            $headerPath = $request->file('header')->store('headers', 'public');
+
+            if (! $headerPath) {
+                return false;
+            }
+
+            $company->update([
+                'header' => $headerPath,
+            ]);
+        }
+
+        return true;
+    }
+
+    public function updateCompany(Company $company, mixed $validated): void
+    {
+        $company->update([
+            'name' => $validated['name'],
+            'description' => $validated['description'],
+            'website' => $validated['website'],
+            'industry' => $validated['industry'],
+            'location' => $validated['location'],
+            'mission' => $validated['mission'],
+            'employee_count' => $validated['employee_count'],
+            'type' => $validated['type'],
+            'ceo' => $validated['ceo'],
+            'benefits' => $validated['benefits'],
+        ]);
     }
 }

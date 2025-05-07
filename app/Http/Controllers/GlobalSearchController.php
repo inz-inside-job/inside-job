@@ -28,26 +28,30 @@ class GlobalSearchController extends Controller
                 }
             })
             ->get()
-            /** @phpstan-ignore-next-line */
-            ->map(function (Model $result): SearchResultData {
-                $data = $result->toArray();
-                if ($result instanceof Company) {
-                    $data['logo'] = $result->logo;
-                    $data['link'] = route('companies.show', $result->slug);
-                    $data['id'] = "company-{$result->id}";
-                } elseif ($result instanceof Job) {
-                    $data['name'] = $result->title;
-                    $data['logo'] = $result->company->logo;
-                    $data['link'] = route('jobs.show', $result->slug);
-                    $data['id'] = "job-{$result->id}";
-                } else {
-                    // Unreachable
-                    throw new Exception('Unknown model type');
-                }
-
-                return SearchResultData::from($data);
-            });
+            ->map($this->serialize());
 
         return response()->json($results);
+    }
+
+    public function serialize(): \Closure
+    {
+        return function (Model $result): SearchResultData {
+            $data = $result->toArray();
+            if ($result instanceof Company) {
+                $data['logo'] = $result->logo;
+                $data['link'] = route('companies.show', $result->slug);
+                $data['id'] = "company-{$result->id}";
+            } elseif ($result instanceof Job) {
+                $data['name'] = $result->title;
+                $data['logo'] = $result->company->logo;
+                $data['link'] = route('jobs.show', $result->slug);
+                $data['id'] = "job-{$result->id}";
+            } else {
+                // Unreachable
+                throw new Exception('Unknown model type');
+            }
+
+            return SearchResultData::from($data);
+        };
     }
 }
