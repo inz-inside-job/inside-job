@@ -53,7 +53,7 @@ export default function AboutPage() {
         {
             name: 'Linas Aleksandravičius',
             role: 'Scrum Master',
-            image: 'https://media.licdn.com/dms/image/v2/D4D03AQGIp7ORCk_OPA/profile-displayphoto-shrink_800_800/B4DZZcsuhRGsAc-/0/1745311951346?e=1751500800&v=beta&t=BveKZA6AD84P0QkNJToYq4MDYxfmxO0KfDTKd-_iu6s',
+            image: '/images/linas.jpg',
             bio: 'Student at Kaunas University of Technology, specializing in Software Engineering. Responsible for project management and team coordination.',
             links: {
                 github: 'https://github.com/Linux123123',
