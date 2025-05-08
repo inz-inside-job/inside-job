@@ -18,29 +18,7 @@ class AdminDashboardController
 {
     public function index()
     {
-        $submissions = QueryBuilder::for(
-            CompanySubmission::query()->with('user')
-        )
-            ->defaultSort('-name')
-            ->allowedSorts([
-                AllowedSort::field('name'),
-                AllowedSort::field('industry'),
-                AllowedSort::field('created_at'),
-            ])
-            ->cursorPaginate(20)
-            ->withQueryString();
-
-        $aggregates = CompanySubmission::query()
-            ->selectRaw("
-                SUM(CASE WHEN status = 'pending' THEN 1 ELSE 0 END) AS pending,
-                SUM(CASE WHEN status = 'approved' THEN 1 ELSE 0 END) AS approved,
-                SUM(CASE WHEN status = 'rejected' THEN 1 ELSE 0 END) AS rejected,
-                COUNT(*) AS total
-            ")
-            ->first()
-            ->toArray();
-
-        $paginated = $submissions->toArray();
+        [$aggregates, $paginated] = $this->getData();
 
         $data = CompanySubmissionData::collect($paginated['data']);
 
@@ -155,5 +133,34 @@ class AdminDashboardController
         }
 
         return redirect()->route('admin.claim', $claim);
+    }
+
+    public function getData(): array
+    {
+        $submissions = QueryBuilder::for(
+            CompanySubmission::query()->with('user')
+        )
+            ->defaultSort('-name')
+            ->allowedSorts([
+                AllowedSort::field('name'),
+                AllowedSort::field('industry'),
+                AllowedSort::field('created_at'),
+            ])
+            ->cursorPaginate(20)
+            ->withQueryString();
+
+        $aggregates = CompanySubmission::query()
+            ->selectRaw("
+                SUM(CASE WHEN status = 'pending' THEN 1 ELSE 0 END) AS pending,
+                SUM(CASE WHEN status = 'approved' THEN 1 ELSE 0 END) AS approved,
+                SUM(CASE WHEN status = 'rejected' THEN 1 ELSE 0 END) AS rejected,
+                COUNT(*) AS total
+            ")
+            ->first()
+            ->toArray();
+
+        $paginated = $submissions->toArray();
+
+        return [$aggregates, $paginated];
     }
 }

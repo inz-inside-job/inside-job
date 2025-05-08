@@ -10,19 +10,15 @@ use App\Search\GlobalSearch;
 use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Illuminate\Http\JsonResponse;
 
 class GlobalSearchController extends Controller
 {
     /**
      * Handle the global search request.
-     *
-     * @return Response
      */
-    public function search(GlobalSearchRequest $request)
+    public function search(GlobalSearchRequest $request): JsonResponse
     {
-        // @codeCoverageIgnoreStart
         $query = $request->validated('query');
 
         $results = GlobalSearch::search($query)
@@ -32,27 +28,30 @@ class GlobalSearchController extends Controller
                 }
             })
             ->get()
-            ->map(function (Model $result) {
-                $data = $result->toArray();
-                if ($result instanceof Company) {
-                    $data['logo'] = $result->logo;
-                    $data['link'] = route('companies.show', $result->slug);
-                    $data['id'] = "company-{$result->id}";
-                } elseif ($result instanceof Job) {
-                    $data['name'] = $result->title;
-                    $data['logo'] = $result->company->logo;
-                    // TODO: Add proper job link when we have job page
-                    $data['link'] = '/jobs';
-                    $data['id'] = "job-{$result->id}";
-                } else {
-                    // Unreachable
-                    throw new Exception('Unknown model type');
-                }
-
-                return SearchResultData::from($data);
-            });
-        // @codeCoverageIgnoreEnd
+            ->map($this->serialize());
 
         return response()->json($results);
+    }
+
+    public function serialize(): \Closure
+    {
+        return function (Model $result): SearchResultData {
+            $data = $result->toArray();
+            if ($result instanceof Company) {
+                $data['logo'] = $result->logo;
+                $data['link'] = route('companies.show', $result->slug);
+                $data['id'] = "company-{$result->id}";
+            } elseif ($result instanceof Job) {
+                $data['name'] = $result->title;
+                $data['logo'] = $result->company->logo;
+                $data['link'] = route('jobs.show', $result->slug);
+                $data['id'] = "job-{$result->id}";
+            } else {
+                // Unreachable
+                throw new Exception('Unknown model type');
+            }
+
+            return SearchResultData::from($data);
+        };
     }
 }

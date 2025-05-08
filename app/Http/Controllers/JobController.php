@@ -10,7 +10,6 @@ use App\Models\Application;
 use App\Models\Job;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Inertia\Inertia;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedSort;
@@ -22,54 +21,11 @@ class JobController extends Controller
     {
         $params = $request->validated();
 
-        $query = Job::with([
-            'company' => fn (BelongsTo $query) => $query->withRating()->withCount('reviews')->withApproveOfCeo(),
-        ])
-            ->withCount('applications')
-            ->when(! empty($params['query']), function (Builder $query) use ($params) {
-                $searchResults = Job::search($params['query'])->raw();
-                $ids = collect($searchResults['hits'])->pluck('id');
+        $query = $this->getQuery($params);
 
-                $query->whereIn('jobs.id', $ids);
-            });
+        $jobs = $this->buildQuery($query);
 
-        $jobs = QueryBuilder::for($query)
-            ->allowedSorts(
-                [
-                    AllowedSort::field('posted_date'),
-                    AllowedSort::callback('relevance', function ($query, $decending) {
-                        // sort by posted_date idk how else to do it
-                        $query->orderBy('posted_date', $decending ? 'desc' : 'asc');
-                    }),
-                    AllowedSort::callback('salary', function ($query, $decending) {
-                        $query->orderBy('salary_min', $decending ? 'desc' : 'asc');
-                    }),
-                ]
-            )
-            ->defaultSort('-posted_date')
-            ->allowedFilters(
-                [
-                    AllowedFilter::exact('employment_type'),
-                    AllowedFilter::exact('employment_experience'),
-                    AllowedFilter::partial('location'),
-                    AllowedFilter::callback('salary', function ($query, $value) {
-                        $query->where('salary_min', '>=', $value);
-                    })->default(50000),
-                    AllowedFilter::callback('posted_in', function (Builder $query, $value) {
-                        try {
-                            $date = Carbon::parse($value);
-                        } catch (\Exception $e) {
-                            return;
-                        }
-                        $query->where('posted_date', '>=', $date);
-                    }),
-                    AllowedFilter::exact('company.industry'),
-                ]
-            )
-            ->orderByDesc('id')
-            ->cursorPaginate(10)
-            ->withQueryString();
-
+        /** @phpstan-ignore-next-line */
         $paginatedResponse = $jobs->toArray();
 
         $data = JobData::collect($paginatedResponse['data']);
@@ -83,7 +39,7 @@ class JobController extends Controller
     public function apply(string $slug)
     {
         $job = Job::whereSlug($slug)->with([
-            'company' => function (BelongsTo $query) {
+            'company' => function ($query) {
                 $query->withRating()->withCount('reviews');
             },
         ])->withCount('applications')->firstOrFail();
@@ -109,6 +65,89 @@ class JobController extends Controller
             return redirect()->back()->withErrors('Failed to upload resume.');
         }
 
+        $this->createApplication($job, $request, $resume_path);
+
+        return redirect()->route('jobs');
+
+    }
+
+    public function show(string $slug)
+    {
+        $job = Job::whereSlug($slug)->with([
+            'company' => fn ($query) => $query->withRating()->withCount('reviews')->withApproveOfCeo(),
+        ])->withCount('applications')->firstOrFail();
+
+        $job->increment('visit_count');
+
+        return Inertia::render('job', [
+            'job' => JobData::from($job),
+        ]);
+    }
+
+    public function getQuery(mixed $params): \Illuminate\Support\HigherOrderWhenProxy|Builder
+    {
+        $query = Job::with([
+            'company' => fn ($query) => (
+                $query->withRating()->withCount('reviews')->withApproveOfCeo()),
+        ])
+            ->withCount('applications')
+            ->when(! empty($params['query']), function (Builder $query) use ($params) {
+                $searchResults = Job::search($params['query'])->raw();
+                $ids = collect($searchResults['hits'])->pluck('id');
+
+                $query->whereIn('jobs.id', $ids);
+            });
+
+        return $query;
+    }
+
+    public function buildQuery(Builder|\Illuminate\Support\HigherOrderWhenProxy $query): \Illuminate\Contracts\Pagination\CursorPaginator
+    {
+        return QueryBuilder::for($query)
+            ->allowedSorts(
+                [
+                    AllowedSort::field('posted_date'),
+                    AllowedSort::callback('relevance', function ($query, $decending) {
+                        // sort by posted_date idk how else to do it
+                        $query->orderBy('posted_date', $decending ? 'desc' : 'asc');
+                    }),
+                    AllowedSort::callback('salary', function ($query, $decending) {
+                        $query->orderBy('salary_min', $decending ? 'desc' : 'asc');
+                    }),
+                ]
+            )
+            ->defaultSort('-posted_date')
+            ->allowedFilters(
+                $this->getFilters()
+            )
+            ->orderByDesc('id')
+            ->cursorPaginate(10)
+            ->withQueryString();
+    }
+
+    public function getFilters(): array
+    {
+        return [
+            AllowedFilter::exact('employment_type'),
+            AllowedFilter::exact('employment_experience'),
+            AllowedFilter::partial('location'),
+            AllowedFilter::callback('salary', function ($query, $value) {
+                $query->where('salary_min', '>=', $value);
+            })->default(50000),
+            AllowedFilter::callback('posted_in', function (Builder $query, $value) {
+                try {
+                    $date = Carbon::parse($value);
+                } catch (\Exception $e) {
+                    return;
+                }
+                $query->where('posted_date', '>=', $date);
+            }),
+            AllowedFilter::exact('company.industry'),
+        ];
+    }
+
+    public function createApplication(Job $job, StoreJobApplicationRequest $request, string $resume_path): void
+    {
         Application::create([
             'job_id' => $job->id,
             'user_id' => auth()->id(),
@@ -121,22 +160,6 @@ class JobController extends Controller
             'portfolio' => $request->input('portfolio'),
             'resume' => $resume_path,
             'cover_letter' => $request->input('cover_letter'),
-        ]);
-
-        return redirect()->route('jobs');
-
-    }
-
-    public function show(string $slug)
-    {
-        $job = Job::whereSlug($slug)->with([
-            'company' => fn (BelongsTo $query) => $query->withRating()->withCount('reviews')->withApproveOfCeo(),
-        ])->withCount('applications')->firstOrFail();
-
-        $job->increment('visit_count');
-
-        return Inertia::render('job', [
-            'job' => JobData::from($job),
         ]);
     }
 }

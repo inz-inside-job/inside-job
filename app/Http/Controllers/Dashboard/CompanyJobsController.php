@@ -8,7 +8,6 @@ use App\Data\Jobs\JobFormData;
 use App\Http\Controllers\Controller;
 use App\Models\Company;
 use App\Models\Job;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 
@@ -23,7 +22,7 @@ class CompanyJobsController extends Controller
         $jobs = $company->jobs()
             ->withCount('applications')
             ->with([
-                'company' => function (BelongsTo $query) {
+                'company' => function ($query) {
                     $query->withCount('reviews');
                 },
             ])
@@ -54,7 +53,7 @@ class CompanyJobsController extends Controller
 
         $company = Company::where('slug', $company->slug)->withCount('reviews')->firstOrFail();
         $job = Job::where('id', $job->id)->with([
-            'company' => function (BelongsTo $query) {
+            'company' => function ($query) {
                 $query->withCount('reviews');
             },
         ])->withCount('applications')->firstOrFail();

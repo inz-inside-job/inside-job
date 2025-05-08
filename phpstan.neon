@@ -1,0 +1,15 @@
+includes:
+    - vendor/larastan/larastan/extension.neon
+    - vendor/nesbot/carbon/extension.neon
+
+rules:
+    - App\PHPStan\Rules\FunctionLengthRule
+
+parameters:
+    paths:
+        - app/
+
+    scanFiles:
+        - _ide_helper_models.php
+
+    level: 5
