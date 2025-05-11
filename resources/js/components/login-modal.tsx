@@ -35,8 +35,11 @@ export default function LoginModal({ open, onOpenChange }: LoginModalProps) {
     const onSubmit: FormEventHandler = (e) => {
         e.preventDefault();
         submit({
-            onFinish: () => {
+            onError: () => {
                 reset('password');
+            },
+            onSuccess: () => {
+                reset('password', 'email', 'remember');
                 onOpenChange(false);
             },
         });

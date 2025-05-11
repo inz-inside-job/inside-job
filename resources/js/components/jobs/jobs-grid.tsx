@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { QueryBuilderParams, useGetQueryParams, withQueryBuilderParams } from '@/lib/utils';
 import { router, type PageProps } from '@inertiajs/core';
 import { usePage } from '@inertiajs/react';
 import { useCallback, useState } from 'react';
@@ -15,18 +16,33 @@ export function JobList() {
 
     const [sortOption, setSortOption] = useState('datePosted');
 
-    const onSortChange = useCallback((sortValue: string) => {
-        setSortOption(sortValue);
-        const sort = sortValue === 'datePosted' ? null : `-${sortValue}`;
+    const queryParams = useGetQueryParams();
 
-        router.reload({
-            only: ['jobs', 'next_cursor'],
-            replace: true,
-            reset: ['jobs'],
-            // Force cursor to be null as this is a new sort
-            data: { sort, cursor: null },
-        });
-    }, []);
+    const onSortChange = useCallback(
+        (sortValue: string) => {
+            setSortOption(sortValue);
+            const sorts = {} as NonNullable<QueryBuilderParams['sorts']>;
+
+            if (sortValue !== 'datePosted') {
+                sorts[sortValue] = 'desc';
+            }
+
+            const query = withQueryBuilderParams({
+                ...queryParams,
+                sorts,
+                cursor: undefined,
+            });
+
+            router.get(route('jobs'), query, {
+                only: ['jobs', 'next_cursor'],
+                reset: ['jobs'],
+                replace: true,
+                preserveState: true,
+                preserveScroll: true,
+            });
+        },
+        [queryParams],
+    );
 
     const onLoadMore = useCallback(() => {
         router.reload({ data: { cursor: next_cursor! }, replace: true, only: ['jobs', 'next_cursor'] });
